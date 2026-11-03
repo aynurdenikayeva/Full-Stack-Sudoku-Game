@@ -1,0 +1,349 @@
+﻿
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] | AXIOMIX</title>
+
+    <meta name="description"
+          content="Sudoku ilə məntiqini inkişaf etdir, Sudoku tapmacalarını həll et və nəticələrini yaxşılaşdır." />
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet" />
+
+
+
+    <link rel="stylesheet"
+          href="~/css/style.css"
+          asp-append-version="true" />
+
+    <!-- Layout CSS -->
+    <link rel="stylesheet"
+          href="~/css/layout.css"
+          asp-append-version="true" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+ 
+
+    <!-- Page-specific CSS -->
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body >
+    <!-- HEADER -->
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="header-inner">
+
+            <!-- Logo -->
+            <a class="site-logo"
+               asp-controller="Home"
+               asp-action="Index"
+               aria-label="AXIOMIX ana səhifə">
+
+                <span class="logo-icon">
+                    <i class="fa fa-th" aria-hidden="true"></i>
+                </span>
+
+                <span class="logo-text">AXIOMIX</span>
+            </a>
+
+            <!-- Mobil menyu düyməsi -->
+            <button class="menu-toggle"
+                    id="menuToggle"
+                    type="button"
+                    aria-label="Menyunu aç"
+                    aria-controls="siteNav"
+                    aria-expanded="false">
+
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </button>
+
+            <!-- Naviqasiya: yalnız bir dəfə olmalıdır -->
+            <nav class="site-nav" id="siteNav">
+
+                <a class="nav-link-custom"
+                   asp-controller="Home"
+                   asp-action="Index">
+                    Ana səhifə
+                </a>
+
+                <a class="nav-link-custom"
+                   asp-controller="About"
+                   asp-action="Index">
+                    Haqqımızda
+                </a>
+
+                <a class="nav-link-custom"
+                   asp-controller="FAQ"
+                   asp-action="Index">
+                    FAQ
+                </a>
+
+                <a class="nav-link-custom"
+                   asp-controller="Blog"
+                   asp-action="Index">
+                    Bloq
+                </a>
+
+                <a class="nav-link-custom"
+                   asp-controller="LeaderBoard"
+                   asp-action="Index">
+                    Liderlər
+                </a>
+
+                <a class="nav-link-custom"
+                   asp-controller="Contact"
+                   asp-action="Index">
+                    Əlaqə
+                </a>
+
+                <!-- İstifadəçi hesabı -->
+                <!-- İstifadəçi hesabı -->
+                <div class="auth-links">
+
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <!-- İstifadəçi daxil olubsa menyu bloku -->
+                        <div class="dropdown d-inline-block">
+
+                            <a class="nav-link dropdown-toggle login-btn"
+                               href="#"
+                               id="layoutUserDropdown"
+                               role="button"
+                               data-bs-toggle="dropdown"
+                               aria-expanded="false"
+                               style="border: none; background: transparent;">
+                                <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                @User.Identity.Name
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-end"
+                                aria-labelledby="layoutUserDropdown">
+
+                                <li>
+                                    <a class="dropdown-item"
+                                       asp-controller="Profile"
+                                       asp-action="Index">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        Profilim
+                                    </a>
+                                </li>
+
+                                <li><hr class="dropdown-divider"></li>
+
+                                <li>
+                                    <!-- Çıxış düyməsi Post metodu ilə və təhlükəsiz ötürülür -->
+                                    <form asp-controller="SignUp"
+                                          asp-action="Logout"
+                                          method="post"
+                                          class="px-2">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit"
+                                                class="btn btn-sm btn-danger w-100 text-start text-white">
+                                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                            Çıxış et
+                                        </button>
+                                    </form>
+                                </li>
+
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <!-- İstifadəçi daxil olmayıbsa görünən standart düymələr -->
+                        <a class="login-btn" href="/signin">
+                            Daxil ol
+                        </a>
+
+                        <a class="signup-btn"
+                           asp-controller="SignUp"
+                           asp-action="Register">
+                            Qeydiyyat
+                            <i class="fa fa-arrow-right"
+                               aria-hidden="true"></i>
+                        </a>
+                    }
+
+                </div>
+               
+
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="site-main">
+        @RenderBody()
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+
+        <div class="footer-container">
+
+            <!-- Brand -->
+            <div class="footer-brand">
+
+                <a class="site-logo footer-logo"
+                   asp-controller="Home"
+                   asp-action="Index">
+
+                    <span class="logo-icon">
+                        <i class="fa fa-th" aria-hidden="true"></i>
+                    </span>
+
+                    <span class="logo-text">
+                        AXIOMIX
+                    </span>
+                </a>
+
+                <p class="footer-description">
+                    Məntiqini inkişaf etdir, diqqətini gücləndir
+                    və hər gün yeni Sudoku tapmacaları həll et.
+                </p>
+                
+                <div class="social-links">
+                    <a href="https://www.facebook.com/"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Facebook">
+                        <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+                    </a>
+
+                    <a href="https://www.instagram.com/"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Instagram">
+                        <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                    </a>
+
+                    <a href="https://www.linkedin.com/"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+                    </a>
+                </div>
+               
+            </div>
+
+            <!-- Quick links -->
+            <div class="footer-column">
+                <h3>Keçidlər</h3>
+
+                <a asp-controller="Home" asp-action="Index">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    Ana səhifə
+                </a>
+
+                <a asp-controller="About" asp-action="Index">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    Haqqımızda
+                </a>
+
+                <a asp-controller="Blog" asp-action="Index">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    Bloq
+                </a>
+
+                <a asp-controller="LeaderBoard" asp-action="Index">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    Liderlər siyahısı
+                </a>
+            </div>
+
+            <!-- Help -->
+            <div class="footer-column">
+                <h3>Kömək və dəstək</h3>
+
+                <a asp-controller="FAQ" asp-action="Index">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    Tez-tez verilən suallar
+                </a>
+
+                <a asp-controller="Contact" asp-action="Index">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    Bizimlə əlaqə
+                </a>
+            </div>
+
+            <!-- Account -->
+            <div class="footer-column">
+                <h3>Hesab</h3>
+
+                <a href="/signin">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    Daxil ol
+                </a>
+
+                <a asp-controller="SignUp" asp-action="Register">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    Qeydiyyatdan keç
+                </a>
+
+                <div class="footer-note">
+                    <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+                    <span>Hər gün bir tapmaca, daha güclü məntiq.</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer bottom -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-inner">
+
+                <p>
+                    &copy; @DateTime.Now.Year AXIOMIX.
+                    Bütün hüquqlar qorunur.
+                </p>
+         
+
+            </div>
+        </div>
+
+    </footer>
+    <!-- Back to Top Button -->
+    <button id="backToTop"
+            class="back-to-top"
+            type="button"
+            aria-label="Səhifənin yuxarısına qayıt"
+            title="Yuxarı qalx">
+
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+    <script src="~/js/layout.js"
+            asp-append-version="true"></script>
+    <script src="~/js/sudoku.js"
+            asp-append-version="true"></script>
+
+    <!-- Page-specific JavaScript -->
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

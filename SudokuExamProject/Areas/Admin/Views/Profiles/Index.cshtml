@@ -1,0 +1,289 @@
+﻿@model SudokuExamProject.Models.Profile
+
+@{
+    ViewData["Title"] = "İstifadəçi profili";
+}
+
+<main class="dashboard-content">
+    <div class="container-fluid px-3 px-lg-4 py-4">
+
+        <!-- Başlıq -->
+        <div class="d-flex justify-content-between align-items-center
+                    flex-wrap gap-3 mb-4">
+
+            <div class="d-flex align-items-center gap-3">
+                <div class="d-flex align-items-center justify-content-center
+                            rounded-3"
+                     style="width:55px;height:55px;
+                            background:#eeeaff;color:#7965e8;">
+                    <i class="bi bi-person-badge fs-3"></i>
+                </div>
+
+                <div>
+                    <p class="text-primary small fw-bold mb-1">
+                        PROFİL İDARƏETMƏSİ
+                    </p>
+
+                    <h1 class="h3 fw-bold mb-1">
+                        İstifadəçi profili
+                    </h1>
+
+                    <p class="text-muted mb-0">
+                        Profilin şəxsi və əlaqə məlumatları.
+                    </p>
+                </div>
+            </div>
+
+            <a asp-area="Admin"
+               asp-controller="Profiles"
+               asp-action="Index"
+               asp-route-id="@Model.Id"
+               class="btn btn-light border">
+                <i class="bi bi-arrow-left me-1"></i>
+                Profilə qayıt
+            </a>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Sol tərəf: Profil kartı -->
+            <div class="col-12 col-xl-4">
+                <div class="card border-0 shadow-sm h-100 overflow-hidden">
+
+                    <div style="height:125px;
+                                background:linear-gradient(
+                                135deg,#7965e8,#604bc8);">
+                    </div>
+
+                    <div class="card-body text-center px-4 pb-4">
+
+                        <!-- Profil şəkli -->
+                        <div class="d-flex align-items-center
+                                    justify-content-center mx-auto
+                                    rounded-circle bg-white shadow-sm
+                                    overflow-hidden"
+                             style="width:100px;height:100px;
+                                    margin-top:-65px;position:relative;
+                                    border:3px solid #fff;">
+
+                            @if (!string.IsNullOrWhiteSpace(Model.Image))
+                            {
+                                <img src="@Model.Image"
+                                     alt="Profil şəkli"
+                                     class="w-100 h-100 object-fit-cover" />
+                            }
+                            else
+                            {
+                                <i class="bi bi-person-fill
+                                              text-secondary fs-1"></i>
+                            }
+                        </div>
+
+                        <h2 class="h4 fw-bold mt-3 mb-1">
+                            @(Model.Name ?? "") @(Model.Surname ?? "")
+                        </h2>
+
+                        <p class="text-muted mb-3">
+                            @(string.IsNullOrWhiteSpace(Model.UserName)
+                                                        ? "İstifadəçi adı yoxdur"
+                                                        : "@" + Model.UserName)
+                        </p>
+
+                        <span class="badge rounded-pill px-3 py-2"
+                              style="background:#eeeaff;color:#604bc8;">
+                            <i class="bi bi-person-check me-1"></i>
+                            Profil
+                        </span>
+
+                        <hr class="my-4" />
+
+                        <!-- Əlaqə məlumatları -->
+                        <div class="text-start">
+
+                            <div class="d-flex gap-3 align-items-start mb-4">
+                                <i class="bi bi-envelope text-primary fs-5"></i>
+
+                                <div class="overflow-hidden">
+                                    <small class="text-muted d-block mb-1">
+                                        Email ünvanı
+                                    </small>
+
+                                    <span class="fw-semibold text-break">
+                                        @(string.IsNullOrWhiteSpace(Model.Email)
+                                                                                ? "Qeyd edilməyib"
+                                                                                : Model.Email)
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-3 align-items-start mb-4">
+                                <i class="bi bi-telephone text-primary fs-5"></i>
+
+                                <div>
+                                    <small class="text-muted d-block mb-1">
+                                        Telefon nömrəsi
+                                    </small>
+
+                                    <span class="fw-semibold text-break">
+                                        @(string.IsNullOrWhiteSpace(
+                                                                                Model.TelephonNumber)
+                                                                                ? "Qeyd edilməyib"
+                                                                                : Model.TelephonNumber)
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-3 align-items-start">
+                                <i class="bi bi-person-vcard text-primary fs-5"></i>
+
+                                <div>
+                                    <small class="text-muted d-block mb-1">
+                                        Profil ID-si
+                                    </small>
+
+                                    <span class="fw-semibold">
+                                        #@Model.Id
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sağ tərəf: Ətraflı məlumatlar -->
+            <div class="col-12 col-xl-8">
+
+                <!-- Şəxsi məlumatlar -->
+                <div class="card border-0 shadow-sm mb-4">
+
+                    <div class="card-header bg-white p-4">
+                        <h2 class="h5 fw-bold mb-1">
+                            <i class="bi bi-person-lines-fill
+                                       text-primary me-2"></i>
+                            Şəxsi məlumatlar
+                        </h2>
+
+                        <p class="text-muted small mb-0">
+                            Profil üçün qeyd edilmiş şəxsi məlumatlar.
+                        </p>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+
+                            <div class="col-md-6">
+                                <small class="text-muted d-block mb-2">
+                                    Ad
+                                </small>
+
+                                <div class="fw-semibold">
+                                    @(string.IsNullOrWhiteSpace(Model.Name)
+                                                                        ? "—" : Model.Name)
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <small class="text-muted d-block mb-2">
+                                    Soyad
+                                </small>
+
+                                <div class="fw-semibold">
+                                    @(string.IsNullOrWhiteSpace(Model.Surname)
+                                                                        ? "—" : Model.Surname)
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <small class="text-muted d-block mb-2">
+                                    İstifadəçi adı
+                                </small>
+
+                                <div class="fw-semibold">
+                                    @(string.IsNullOrWhiteSpace(Model.UserName)
+                                                                        ? "—" : Model.UserName)
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <small class="text-muted d-block mb-2">
+                                    Email ünvanı
+                                </small>
+
+                                <div class="fw-semibold text-break">
+                                    @(string.IsNullOrWhiteSpace(Model.Email)
+                                                                        ? "—" : Model.Email)
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <small class="text-muted d-block mb-2">
+                                    Telefon nömrəsi
+                                </small>
+
+                                <div class="fw-semibold">
+                                    @(string.IsNullOrWhiteSpace(
+                                                                        Model.TelephonNumber)
+                                                                        ? "—" : Model.TelephonNumber)
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <small class="text-muted d-block mb-2">
+                                    Profil ID-si
+                                </small>
+
+                                <div class="fw-semibold">
+                                    #@Model.Id
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Qeyd -->
+                <div class="card border-0 shadow-sm mb-4">
+
+                    <div class="card-header bg-white p-4">
+                        <h2 class="h5 fw-bold mb-1">
+                            <i class="bi bi-card-text text-primary me-2"></i>
+                            Əlavə məlumat
+                        </h2>
+
+                        <p class="text-muted small mb-0">
+                            Profil haqqında qeyd.
+                        </p>
+                    </div>
+
+                    <div class="card-body p-4">
+                        @if (!string.IsNullOrWhiteSpace(Model.Note))
+                        {
+                            <p class="mb-0 text-break"
+                               style="white-space:pre-wrap;">@Model.Note</p>
+                        }
+                        else
+                        {
+                            <p class="text-muted mb-0">
+                                Əlavə məlumat qeyd edilməyib.
+                            </p>
+                        }
+                    </div>
+                </div>
+
+                <!-- Geri düyməsi -->
+                <div class="d-flex justify-content-end">
+                    <a asp-area="Admin"
+                       asp-controller="Users"
+                       asp-action="Index"
+                       class="btn btn-light border">
+                        <i class="bi bi-arrow-left me-1"></i>
+                        İstifadəçilərə qayıt
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>

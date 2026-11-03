@@ -1,0 +1,240 @@
+﻿@import url('https://googleapis.com');
+
+/* Bütün elementlər üçün ümumi parametrlər */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Səhifənin ümumi görünüşü */
+body {
+    font-family: 'Poppins';
+    background: #f4f4f4;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Sudoku-nu əhatə edən əsas blok */
+.sudoku-container {
+    width: fit-content;
+    max-width: 100%;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+/* Başlıq */
+h1 {
+    margin-bottom: 12px;
+    font-size: 40px;
+    color: #222;
+}
+
+/* Başlığın altındakı mətn */
+.subtitle {
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 15px;
+}
+
+/* Xəbərdarlıq və nəticə mesajları */
+.message {
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    background: #fff3cd;
+    color: #856404;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.completed-message {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #dcfce7;
+    color: #166534;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Sudoku cədvəli */
+.sudoku-board {
+    border-collapse: collapse;
+    margin: 0 auto;
+    border: 3px solid #222;
+}
+
+    .sudoku-board td {
+        width: 55px;
+        height: 55px;
+        padding: 0;
+        border: 1px solid #ccc;
+        text-align: center;
+        vertical-align: middle;
+        background: white;
+    }
+
+        /* Hər 3 sütundan sonra qalın sərhəd */
+        .sudoku-board td.right-border {
+            border-right: 3px solid #222 !important;
+        }
+
+        /* Hər 3 sətirdən sonra qalın sərhəd */
+        .sudoku-board td.bottom-border {
+            border-bottom: 3px solid #222 !important;
+        }
+
+/* Əvvəlcədən verilmiş rəqəmlər */
+.fixed-number {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #222;
+    background: #eee;
+}
+
+/* Hər boş xana üçün forma */
+.cell-form {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* İstifadəçinin daxil etdiyi rəqəm */
+.cell-input {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #1976d2;
+    background: #f8fbff;
+}
+
+    /* Xana seçildikdə */
+    .cell-input:focus {
+        background: #e3f2fd;
+        box-shadow: inset 0 0 0 2px #1976d2;
+    }
+
+    /* Rəqəm inputunun ox düymələrini gizlət */
+    .cell-input::-webkit-inner-spin-button,
+    .cell-input::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+.cell-input {
+    -moz-appearance: textfield;
+}
+
+/* Təlimatlar */
+.info {
+    margin-top: 20px;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* Yeni oyun forması */
+.new-game-form {
+    margin-top: 20px;
+}
+
+/* Yeni oyun düyməsi */
+.new-game-btn {
+    border: none;
+    padding: 12px 30px;
+    background: #16a34a;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+    .new-game-btn:hover {
+        background: #15803d;
+    }
+
+/* Telefonlar üçün uyğunlaşdırma */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+        align-items: flex-start;
+    }
+
+    .sudoku-container {
+        width: 100%;
+        padding: 15px 8px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    .sudoku-board td {
+        width: 10vw;
+        height: 10vw;
+        max-width: 40px;
+        max-height: 40px;
+    }
+
+    .cell-input,
+    .fixed-number {
+        font-size: 18px;
+    }
+
+    .info {
+        font-size: 12px;
+    }
+
+    .new-game-btn {
+        padding: 10px 22px;
+    }
+}
+
+/* Header, orta hissə və footer alt-alta yerləşsin */
+html,
+body {
+    min-height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    width: 100%;
+    flex-shrink: 0;
+}
+
+main {
+    display: block;
+    width: 100%;
+    flex: 1;
+}
+
+footer {
+    width: 100%;
+    flex-shrink: 0;
+    margin-top: auto;
+}

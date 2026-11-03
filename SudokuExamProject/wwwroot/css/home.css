@@ -1,0 +1,1548 @@
+﻿/* =========================================
+   SUDOKUGAME — ANA SƏHİFƏ (DÜZƏLDİLMİŞ VERSİYA)
+   Dizayn dəyişməyib. Düzəlişlər:
+   1. Hero konteyneri masaüstündə flex (mətn solda, şəkil sağda)
+   2. Mobil input şrifti ≥ 16px (iOS zoom problemi)
+   3. Mobil lövhə 100% enində
+   4. Tamamlanmış düymə: !important yoxdur, prefikslidir
+   5. Ölü və təkrarlanan qaydalar silinib
+   Breakpoint-lər: 992px, 600px, 380px.
+   ========================================= */
+
+:root {
+    --home-primary: #7965e8;
+    --home-primary-dark: #604bc8;
+    --home-primary-light: #eeeaff;
+    --home-text: #292641;
+    --home-muted: #73718e;
+    --home-border: #e7e4ff;
+    --home-surface: #ffffff;
+    --home-background: #f8f9ff;
+    --home-shadow: 0 12px 35px rgba(83, 68, 190, 0.09);
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+}
+
+body:has(.home-page) {
+    width: 100%;
+    margin: 0;
+    background: var(--home-background);
+    color: var(--home-text);
+    overflow-x: hidden;
+}
+
+.home-page,
+.home-page *,
+.home-page *::before,
+.home-page *::after {
+    box-sizing: border-box;
+}
+
+.home-page {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0 3% 55px;
+    font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+    .home-page a,
+    .home-page a:hover {
+        text-decoration: none;
+    }
+
+    /* =========================================
+   HERO — ANA TANITIM BÖLMƏSİ
+========================================= */
+
+    .home-page .hero-section {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        min-height: 480px;
+        margin: 30px 10px 45px;
+        padding: 60px 35px;
+        border-radius: 28px;
+        background: radial-gradient(circle at 82% 30%, rgba(192, 178, 255, 0.45), transparent 32%), radial-gradient(circle at 5% 100%, rgba(225, 219, 255, 0.42), transparent 35%), linear-gradient(120deg, #f0edff 0%, #fbfaff 52%, #eeebff 100%);
+    }
+
+        /* Dekorativ dairə */
+        .home-page .hero-section::before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            top: 8%;
+            right: 7%;
+            width: 340px;
+            height: 340px;
+            border: 1px solid rgba(121, 101, 232, 0.13);
+            border-radius: 50%;
+            background: rgba(151, 132, 255, 0.06);
+            pointer-events: none;
+        }
+
+        /* Dekorativ 9 × 9 elementi */
+        .home-page .hero-section::after {
+            content: "9 × 9";
+            position: absolute;
+            z-index: -1;
+            right: 34%;
+            bottom: 8%;
+            display: grid;
+            place-items: center;
+            width: 85px;
+            height: 85px;
+            border: 1px solid rgba(121, 101, 232, 0.12);
+            border-radius: 20px;
+            color: rgba(96, 75, 200, 0.15);
+            font-size: 23px;
+            font-weight: 800;
+            transform: rotate(-12deg);
+            pointer-events: none;
+        }
+
+    /* Masaüstü: mətn solda, şəkil sağda */
+    .home-page .hero-container {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+        width: 100%;
+        max-width: 1250px;
+    }
+
+    .home-page .hero-content {
+        position: relative;
+        z-index: 2;
+        flex: 1 1 auto;
+        width: 100%;
+        max-width: 650px;
+    }
+
+    .home-page .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 20px;
+        margin-bottom: 25px;
+        border: 1px solid rgba(121, 101, 232, 0.12);
+        border-radius: 50px;
+        background: rgba(255, 255, 255, 0.88);
+        color: #7455ed;
+        font-size: 13px;
+        font-weight: 750;
+        box-shadow: 0 5px 18px rgba(121, 101, 232, 0.06);
+    }
+
+        .home-page .hero-badge i {
+            font-size: 16px;
+        }
+
+    .home-page .hero-title {
+        max-width: 680px;
+        margin: 0 0 22px;
+        color: #211c61;
+        font-size: clamp(40px, 4.5vw, 64px);
+        font-weight: 850;
+        line-height: 1.12;
+        letter-spacing: -1.8px;
+    }
+
+        .home-page .hero-title span {
+            color: #7965e8;
+        }
+
+    .home-page .hero-description {
+        max-width: 590px;
+        margin: 0 0 29px;
+        color: #625d80;
+        font-size: 16px;
+        line-height: 1.9;
+    }
+
+    /* Oyuna başla düyməsi */
+    .home-page .hero-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        min-height: 54px;
+        padding: 0 30px;
+        border: none;
+        border-radius: 50px;
+        background: linear-gradient(115deg, #603cf5, #8975f5);
+        color: #fff;
+        font-size: 15px;
+        font-weight: 750;
+        box-shadow: 0 10px 24px rgba(104, 73, 237, 0.24);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+        .home-page .hero-button i {
+            font-size: 15px;
+            transition: transform 0.25s ease;
+        }
+
+        .home-page .hero-button:hover {
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(104, 73, 237, 0.32);
+        }
+
+            .home-page .hero-button:hover i {
+                transform: translateX(4px);
+            }
+
+    /* Üstünlüklər */
+    .home-page .hero-features {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 24px;
+        margin-top: 27px;
+    }
+
+        .home-page .hero-features span {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: #625d80;
+            font-size: 13px;
+            font-weight: 650;
+        }
+
+        .home-page .hero-features i {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #9b83ff;
+            color: #fff;
+            font-size: 11px;
+        }
+
+    /* Sağ tərəf — şəkil */
+    .home-page .hero-image-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 1 440px;
+        width: 100%;
+        max-width: 440px;
+        min-height: 370px;
+        margin: 0 auto;
+    }
+
+    .home-page .hero-image-decoration {
+        position: absolute;
+        width: 320px;
+        height: 320px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(190, 174, 255, 0.4), rgba(218, 210, 255, 0.12) 65%, transparent 72%);
+    }
+
+    .home-page .hero-image {
+        position: relative;
+        z-index: 1;
+        display: block;
+        width: 100%;
+        max-width: 390px;
+        height: 350px;
+        object-fit: contain;
+        filter: drop-shadow(0 18px 25px rgba(75, 57, 155, 0.14));
+        animation: sudokuFloat 4s ease-in-out infinite;
+    }
+
+    /* Şəklin üzərində məlumat kartı */
+    .home-page .hero-floating-card {
+        position: absolute;
+        z-index: 3;
+        right: -8px;
+        bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 17px;
+        border: 1px solid rgba(121, 101, 232, 0.1);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.94);
+        box-shadow: 0 12px 30px rgba(49, 38, 105, 0.12);
+        backdrop-filter: blur(10px);
+    }
+
+    .home-page .hero-floating-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 43px;
+        height: 43px;
+        border-radius: 13px;
+        background: #eee9ff;
+        color: #7455ed;
+        font-size: 18px;
+    }
+
+    .home-page .hero-floating-text strong {
+        display: block;
+        margin-bottom: 5px;
+        color: #292354;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    .home-page .hero-floating-text span {
+        display: block;
+        color: #817b9a;
+        font-size: 11px;
+    }
+
+@keyframes sudokuFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* =========================================
+   BÖLMƏ BAŞLIQLARI
+========================================= */
+
+.home-page .section-heading {
+    width: 100%;
+    margin: 0 auto 30px;
+    text-align: center;
+}
+
+    .home-page .section-heading h2 {
+        margin: 0 0 12px;
+        color: var(--home-text);
+        font-size: clamp(25px, 3vw, 36px);
+        font-weight: 800;
+        letter-spacing: -0.7px;
+    }
+
+    .home-page .section-heading p {
+        max-width: 700px;
+        margin: 0 auto;
+        color: var(--home-muted);
+        font-size: 15px;
+        line-height: 1.8;
+    }
+
+.home-page .game-eyebrow {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: var(--home-primary);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+/* =========================================
+   SUDOKU OYUN BÖLMƏSİ
+========================================= */
+
+.home-page .game-section {
+    width: 100%;
+    padding: 12px 0 55px;
+    scroll-margin-top: 25px;
+}
+
+.home-page .sudoku-game-section {
+    padding-top: 0;
+}
+
+.home-page .game-section .section-heading {
+    margin-bottom: 28px;
+}
+
+.home-page .sudoku-game-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    align-items: start;
+    gap: 30px;
+    width: 70%; /* yalnız masaüstü; tablet və mobildə 100% */
+    max-width: none;
+    margin: 0 auto;
+    padding: 32px;
+    border: 1px solid rgba(220, 216, 255, 0.9);
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 15px 45px rgba(76, 65, 170, 0.09);
+}
+
+.home-page .sudoku-left-column,
+.home-page .sudoku-right-column {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    width: 100%;
+}
+
+.home-page .sudoku-right-column {
+    gap: 20px;
+}
+
+/* Oyun başlığı */
+.home-page .sudoku-game-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 23px;
+}
+
+.home-page .game-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+    .home-page .game-heading h2,
+    .home-page .game-heading h3 {
+        margin: 0 0 3px;
+        color: var(--home-text);
+        font-size: 21px;
+        font-weight: 800;
+    }
+
+    .home-page .game-heading p {
+        margin: 0;
+        color: var(--home-muted);
+        font-size: 13px;
+    }
+
+.home-page .game-icon {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    background: var(--home-primary);
+    color: #ffffff;
+    font-size: 23px;
+}
+
+.home-page .difficulty-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 50px;
+    background: #e6f9f0;
+    color: #1b9e70;
+    font-size: 13px;
+    font-weight: 750;
+}
+
+/* =========================================
+   SUDOKU LÖVHƏSİ
+========================================= */
+
+.home-page .sudoku-board-container {
+    width: 100%;
+    max-width: none;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto 20px;
+    overflow: hidden;
+    border: 3px solid #5c48cc;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 5px 18px rgba(83, 68, 190, 0.06);
+}
+
+.home-page .sudoku-board.professional-board {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border: 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+    background: #ffffff;
+}
+
+    .home-page .sudoku-board.professional-board td {
+        width: 11.111%;
+        height: 11.111%;
+        padding: 0;
+        border: 1px solid #beb5d8;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .home-page .sudoku-board.professional-board tr:nth-child(3n):not(:last-child) td {
+        border-bottom: 3px solid #5c48cc;
+    }
+
+    .home-page .sudoku-board.professional-board td:nth-child(3n):not(:last-child) {
+        border-right: 3px solid #5c48cc;
+    }
+
+    .home-page .sudoku-board.professional-board tr:last-child td {
+        border-bottom: 0;
+    }
+
+    .home-page .sudoku-board.professional-board td:last-child {
+        border-right: 0;
+    }
+
+    .home-page .sudoku-board.professional-board .fixed-number,
+    .home-page .sudoku-board.professional-board .cell-input {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        font-family: inherit;
+        font-size: clamp(16px, 1.8vw, 25px);
+        line-height: 1;
+        text-align: center;
+    }
+
+    .home-page .sudoku-board.professional-board .fixed-number {
+        background: #ffffff;
+        color: #292641;
+        font-weight: 800;
+        user-select: none;
+    }
+
+    .home-page .sudoku-board.professional-board .cell-input {
+        outline: none;
+        background: #ffffff;
+        color: #5c48cc;
+        font-weight: 700;
+        caret-color: #5c48cc;
+        transition: background 0.15s ease;
+    }
+
+        .home-page .sudoku-board.professional-board .cell-input:focus {
+            outline: 2px solid #7965e8;
+            outline-offset: -2px;
+            background: #eeeaff;
+        }
+
+        .home-page .sudoku-board.professional-board .cell-input:disabled {
+            opacity: 1;
+        }
+
+/* =========================================
+   MƏLUMAT, MESAJ VƏ TAMAMLANMA
+========================================= */
+
+.home-page .sudoku-info-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 2px;
+    padding: 14px 16px;
+    border: 1px solid #e6e0ff;
+    border-radius: 14px;
+    background: #f2f0ff;
+    color: #5c48cc;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+    .home-page .sudoku-info-box .info-icon {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        width: 27px;
+        height: 27px;
+        border-radius: 50%;
+        background: #5c48cc;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+/* Class və ID eyni elementdədirsə, yalnız birini saxlaya bilərsiniz */
+.home-page .sudoku-message,
+.home-page #gameMessage {
+    margin: 12px 0 10px;
+    padding: 12px 14px;
+    border: 1px solid #e7e2ff;
+    border-radius: 12px;
+    background: #f8f6ff;
+    color: #5445b5;
+    font-size: 13px;
+    font-weight: 650;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+    .home-page .sudoku-message:empty,
+    .home-page #gameMessage:empty {
+        display: none;
+    }
+
+.home-page .sudoku-completed,
+.home-page #completedMessage {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 14px 0 10px;
+    padding: 16px;
+    border: 1px solid #bcebd7;
+    border-radius: 14px;
+    background: #effcf6;
+    color: #167a57;
+}
+
+    .home-page .sudoku-completed[hidden],
+    .home-page #completedMessage[hidden] {
+        display: none;
+    }
+
+    .home-page .sudoku-completed > span {
+        display: grid;
+        flex-shrink: 0;
+        place-items: center;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background: #d4f5e5;
+        font-size: 20px;
+        font-weight: 800;
+    }
+
+    .home-page .sudoku-completed strong {
+        display: block;
+        margin-bottom: 3px;
+    }
+
+    .home-page .sudoku-completed p {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+.home-page .game-footnote {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    margin: 16px 0 0;
+    color: #85839e;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+/* =========================================
+   SAĞ PANEL VƏ STATİSTİKA
+========================================= */
+
+.home-page .right-panel-box {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 24px;
+    border: 1px solid #eeebf7;
+    border-radius: 20px;
+    background: #faf9ff;
+}
+
+.home-page .sudoku-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0;
+}
+
+.home-page .sudoku-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    padding: 16px 8px;
+    border: 1px solid #eeebff;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #faf9ff, #f0eeff);
+    text-align: center;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+    .home-page .sudoku-stat:hover {
+        border-color: #d2caff;
+        transform: translateY(-2px);
+    }
+
+.home-page .stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 7px;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #5c48cc;
+    font-size: 17px;
+}
+
+    .home-page .stat-icon.red-icon {
+        color: #e64e4e;
+    }
+
+    .home-page .stat-icon.purple-icon {
+        color: #5c48cc;
+    }
+
+.home-page .stat-label {
+    margin-bottom: 5px;
+    color: var(--home-muted);
+    font-size: 11px;
+    font-weight: 650;
+    line-height: 1.4;
+}
+
+.home-page .sudoku-stat strong {
+    color: #30276e;
+    font-size: 23px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+/* =========================================
+   RƏQƏM SEÇİMİ — 3 × 3
+========================================= */
+
+.home-page .number-picker-section {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    margin: 0;
+    padding: 20px;
+    border: 1px solid #eeebff;
+    border-radius: 18px;
+    background: #ffffff;
+}
+
+.home-page .number-picker-heading strong {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--home-text);
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.home-page .number-picker-heading span {
+    display: block;
+    color: var(--home-muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.home-page .number-keypad {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0;
+}
+
+    .home-page .number-keypad .number-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-width: 0;
+        min-height: 58px;
+        padding: 8px;
+        border: 1px solid transparent;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #8170f2, #654de0);
+        color: #ffffff;
+        font-size: 23px;
+        font-weight: 800;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(108, 88, 224, 0.16);
+        transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+        .home-page .number-keypad .number-button:hover {
+            background: linear-gradient(135deg, #6d58e9, #5137ca);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 17px rgba(104, 73, 237, 0.22);
+        }
+
+        .home-page .number-keypad .number-button:active {
+            transform: scale(0.97);
+        }
+
+        /* Tamamlanmış rəqəm düyməsi (hover/active qaydalarından sonra gəlir, !important lazım deyil) */
+        .home-page .number-keypad .number-button:disabled,
+        .home-page .number-keypad .number-button.completed,
+        .home-page .number-keypad .number-button:disabled:hover,
+        .home-page .number-keypad .number-button.completed:hover,
+        .home-page .number-keypad .number-button:disabled:active,
+        .home-page .number-keypad .number-button.completed:active {
+            background: #f1f5f9;
+            border-color: #e2e8f0;
+            color: #94a3b8;
+            opacity: 0.55;
+            box-shadow: none;
+            transform: none;
+            cursor: not-allowed;
+        }
+
+/* =========================================
+   İPUCU, TƏMİZLƏ, GERİ QAYTAR
+========================================= */
+
+.home-page .game-actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0;
+}
+
+.home-page .game-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-width: 0;
+    min-height: 72px;
+    padding: 12px 6px;
+    border: 1px solid #e7e3ff;
+    border-radius: 14px;
+    background: #f2f0ff;
+    color: #4e3ac5;
+    font-size: 12px;
+    font-weight: 750;
+    line-height: 1.4;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+    .home-page .game-action:hover {
+        background: #e6e1ff;
+        transform: translateY(-2px);
+    }
+
+.home-page .action-icon {
+    font-size: 20px;
+    line-height: 1;
+}
+
+/* Fokus görünüşü */
+.home-page .number-button:focus-visible,
+.home-page .game-action:focus-visible,
+.home-page .new-game-button:focus-visible,
+.home-page .hero-button:focus-visible {
+    outline: 3px solid #b7aaff;
+    outline-offset: 3px;
+}
+
+/* =========================================
+   YENİ OYUN FORMU
+========================================= */
+
+.home-page .professional-new-game {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 0;
+    padding: 19px;
+    border: 1px solid #e9e5ff;
+    border-radius: 17px;
+    background: #ffffff;
+}
+
+.home-page .difficulty-control {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+    gap: 7px;
+}
+
+    .home-page .difficulty-control label {
+        display: block;
+        margin: 0;
+        color: var(--home-text);
+        font-size: 13px;
+        font-weight: 750;
+    }
+
+    .home-page .difficulty-control select {
+        width: 100%;
+        min-height: 45px;
+        padding: 10px 12px;
+        border: 1px solid #dcd6ff;
+        border-radius: 11px;
+        background: #ffffff;
+        color: var(--home-text);
+        font: inherit;
+        font-size: 14px;
+        outline: none;
+    }
+
+        .home-page .difficulty-control select:focus {
+            border-color: var(--home-primary);
+            box-shadow: 0 0 0 3px rgba(121, 101, 232, 0.12);
+        }
+
+.home-page .new-game-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    flex-shrink: 0;
+    min-height: 45px;
+    padding: 11px 20px;
+    margin: 0;
+    border: 0;
+    border-radius: 12px;
+    background: linear-gradient(120deg, #26ad8b, #159579);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 750;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .home-page .new-game-button:hover {
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 7px 15px rgba(21, 149, 121, 0.2);
+    }
+
+/* =========================================
+   ÇƏTİNLİK SƏVİYYƏLƏRİ
+========================================= */
+
+.home-page .difficulty-section {
+    width: 100%;
+    padding: 15px 0 35px;
+}
+
+.home-page .difficulty-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.home-page .difficulty-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+    min-height: 160px;
+    padding: 24px;
+    overflow: hidden;
+    border: 1px solid var(--home-border);
+    border-radius: 19px;
+    background: #ffffff;
+    box-shadow: 0 5px 20px rgba(76, 65, 170, 0.035);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+    .home-page .difficulty-card:hover {
+        border-color: #c9c0ff;
+        transform: translateY(-4px);
+        box-shadow: var(--home-shadow);
+    }
+
+    .home-page .difficulty-card h3 {
+        margin: 0 0 9px;
+        color: var(--home-text);
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+    .home-page .difficulty-card p {
+        margin: 0;
+        color: var(--home-muted);
+        font-size: 14px;
+        line-height: 1.75;
+    }
+
+    /* Kartlar üçün rəng fərqləri */
+    .home-page .difficulty-card:nth-child(1) {
+        border-color: #bdebd9;
+        background: linear-gradient(145deg, #f5fff9, #ffffff);
+    }
+
+    .home-page .difficulty-card:nth-child(2) {
+        border-color: #cbdcff;
+        background: linear-gradient(145deg, #f5f8ff, #ffffff);
+    }
+
+    .home-page .difficulty-card:nth-child(3) {
+        border-color: #ffddbd;
+        background: linear-gradient(145deg, #fff9f1, #ffffff);
+    }
+
+    .home-page .difficulty-card:nth-child(4) {
+        background: linear-gradient(145deg, #f8f5ff, #ffffff);
+    }
+
+    .home-page .difficulty-card:nth-child(5) {
+        background: linear-gradient(145deg, #f4f5ff, #ffffff);
+    }
+
+    .home-page .difficulty-card:nth-child(6) {
+        border-color: #ffd1dc;
+        background: linear-gradient(145deg, #fff5f7, #ffffff);
+    }
+
+/* =========================================
+   ÖYRƏNMƏ BÖLMƏSİ
+========================================= */
+
+.home-page .learning-section {
+    width: 100%;
+    padding: 35px 0;
+}
+
+    .home-page .learning-section .section-heading {
+        margin-bottom: 20px;
+    }
+
+/* Gələcək əlavə kartlar üçün saxlanılır */
+.home-page .discovery-section {
+    padding: 38px 0;
+}
+
+.home-page .discovery-grid,
+.home-page .learning-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.home-page .discovery-card,
+.home-page .learning-card {
+    padding: 24px;
+    border: 1px solid var(--home-border);
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 5px 18px rgba(76, 65, 170, 0.035);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .home-page .discovery-card:hover,
+    .home-page .learning-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--home-shadow);
+    }
+
+    .home-page .discovery-card h3,
+    .home-page .learning-card h3 {
+        margin: 0 0 10px;
+        color: var(--home-text);
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+    .home-page .discovery-card p,
+    .home-page .learning-card p {
+        margin: 0;
+        color: var(--home-muted);
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+    .home-page .discovery-card a,
+    .home-page .learning-card a {
+        display: inline-block;
+        margin-top: 15px;
+        color: var(--home-primary-dark);
+        font-size: 14px;
+        font-weight: 750;
+    }
+
+/* =========================================
+   SON MOTİVASİYA BÖLMƏSİ (.final-cta)
+========================================= */
+
+.home-page .final-cta {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 28px;
+    padding: 32px 38px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: linear-gradient(115deg, #6545e8, #8d87f7);
+    color: #ffffff;
+    box-shadow: 0 12px 30px rgba(104, 73, 237, 0.17);
+}
+
+    .home-page .final-cta h2 {
+        margin: 0 0 10px;
+        color: #ffffff;
+        font-size: clamp(22px, 3vw, 30px);
+        font-weight: 800;
+    }
+
+    .home-page .final-cta p {
+        max-width: 650px;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 15px;
+        line-height: 1.8;
+    }
+
+    .home-page .final-cta a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        min-height: 47px;
+        padding: 12px 23px;
+        border-radius: 50px;
+        background: #ffffff;
+        color: #6249d5;
+        font-size: 14px;
+        font-weight: 800;
+        transition: transform 0.2s ease;
+    }
+
+        .home-page .final-cta a:hover {
+            color: #6249d5;
+            transform: translateY(-3px);
+        }
+
+/* =========================================
+   RESPONSİV — PLANŞET (≤ 992px)
+========================================= */
+
+@media (max-width: 992px) {
+    .home-page {
+        padding-right: 22px;
+        padding-left: 22px;
+    }
+
+        /* Hero */
+        .home-page .hero-section {
+            width: calc(100% + 44px);
+            min-height: 340px;
+            margin: 20px -22px 35px;
+            padding: 42px 30px;
+        }
+
+        .home-page .hero-container {
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .home-page .hero-content {
+            flex: 0 1 auto;
+            max-width: 700px;
+            text-align: center;
+        }
+
+        .home-page .hero-title,
+        .home-page .hero-description {
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .home-page .hero-features {
+            justify-content: center;
+        }
+
+        .home-page .hero-image-wrapper {
+            flex: 0 1 400px;
+            min-height: 340px;
+        }
+
+        .home-page .hero-image {
+            max-width: 350px;
+            height: 320px;
+        }
+
+        .home-page .hero-floating-card {
+            right: 0;
+        }
+
+        /* Oyun kartı */
+        .home-page .sudoku-game-card {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 25px;
+            width: 100%;
+            padding: 24px;
+        }
+
+        .home-page .sudoku-board-container {
+            max-width: 600px;
+        }
+
+        .home-page .right-panel-box {
+            padding: 22px;
+        }
+
+        /* Kart şəbəkələri */
+        .home-page .difficulty-grid,
+        .home-page .discovery-grid,
+        .home-page .learning-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+}
+
+/* =========================================
+   RESPONSİV — MOBİL (≤ 600px)
+========================================= */
+
+@media (max-width: 600px) {
+    .home-page {
+        padding: 0 12px 30px;
+    }
+
+        /* Hero */
+        .home-page .hero-section {
+            width: calc(100% + 24px);
+            min-height: 310px;
+            margin: 25px -12px 25px;
+            padding: 35px 20px;
+            border-radius: 22px;
+        }
+
+            .home-page .hero-section::before {
+                top: 15%;
+                right: -130px;
+                width: 260px;
+                height: 260px;
+            }
+
+            .home-page .hero-section::after {
+                right: -12px;
+                bottom: 3%;
+                width: 90px;
+                height: 90px;
+                border-radius: 18px;
+                font-size: 23px;
+            }
+
+        .home-page .hero-container {
+            align-items: stretch;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Mobildə şəkil və məlumat kartı gizlədilir */
+        .home-page .hero-image-wrapper,
+        .home-page .hero-floating-card {
+            display: none;
+        }
+
+        .home-page .hero-badge {
+            margin-bottom: 15px;
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+
+        .home-page .hero-title {
+            font-size: clamp(34px, 9vw, 43px);
+            line-height: 1.17;
+            letter-spacing: -1px;
+        }
+
+        .home-page .hero-description {
+            max-width: 100%;
+            font-size: 15px;
+            line-height: 1.75;
+        }
+
+        .home-page .hero-button {
+            min-height: 46px;
+            padding: 0 23px;
+            font-size: 14px;
+        }
+
+        .home-page .hero-features {
+            justify-content: center;
+            gap: 13px;
+            margin-top: 23px;
+        }
+
+            .home-page .hero-features span {
+                gap: 6px;
+                font-size: 11px;
+            }
+
+        /* Bölmə başlıqları */
+        .home-page .section-heading {
+            margin-bottom: 22px;
+        }
+
+            .home-page .section-heading h2 {
+                font-size: 26px;
+            }
+
+            .home-page .section-heading p {
+                font-size: 14px;
+            }
+
+        .home-page .game-section {
+            padding-bottom: 35px;
+        }
+
+        /* Oyun kartı */
+        .home-page .sudoku-game-card {
+            gap: 12px;
+            padding: 12px;
+            border-radius: 18px;
+        }
+
+        .home-page .sudoku-right-column {
+            gap: 12px;
+        }
+
+        .home-page .sudoku-game-topbar {
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .home-page .game-heading {
+            gap: 10px;
+        }
+
+            .home-page .game-heading h2,
+            .home-page .game-heading h3 {
+                font-size: 18px;
+            }
+
+        .home-page .game-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+        }
+
+        .home-page .difficulty-badge {
+            padding: 7px 10px;
+            font-size: 11px;
+        }
+
+        /* Sudoku lövhəsi: tam en, toxunmaq üçün rahat xanalar */
+        .home-page .sudoku-board-container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto 10px;
+            border-width: 2px;
+            border-radius: 7px;
+        }
+
+        /* 16px-dən kiçik olmamalıdır: iOS fokus zamanı zoom etməsin */
+        .home-page .sudoku-board.professional-board .fixed-number,
+        .home-page .sudoku-board.professional-board .cell-input {
+            font-size: clamp(16px, 4.8vw, 22px);
+        }
+
+        .home-page .sudoku-info-box {
+            gap: 9px;
+            padding: 11px;
+            font-size: 12px;
+        }
+
+        .home-page .game-footnote {
+            margin-top: 8px;
+            font-size: 10px;
+        }
+
+        /* Sağ panel */
+        .home-page .right-panel-box {
+            gap: 12px;
+            padding: 12px;
+            border-radius: 14px;
+        }
+
+        /* Rəqəm seçimi — birinci */
+        .home-page .number-picker-section {
+            order: 1;
+            gap: 9px;
+            padding: 12px;
+            border-radius: 14px;
+        }
+
+        .home-page .number-picker-heading strong {
+            font-size: 14px;
+        }
+
+        .home-page .number-picker-heading span {
+            font-size: 11px;
+        }
+
+        .home-page .number-keypad {
+            grid-template-columns: repeat(9, minmax(0, 1fr));
+            gap: 5px;
+        }
+
+            .home-page .number-keypad .number-button {
+                min-height: 43px;
+                padding: 4px 0;
+                border-radius: 8px;
+                font-size: 16px;
+            }
+
+        /* Statistika — ikinci */
+        .home-page .sudoku-stats {
+            order: 2;
+            gap: 6px;
+        }
+
+        .home-page .sudoku-stat {
+            min-height: 65px;
+            padding: 8px 3px;
+            border-radius: 10px;
+        }
+
+        .home-page .stat-icon {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+
+        .home-page .stat-label {
+            font-size: 10px;
+            overflow-wrap: anywhere;
+        }
+
+        .home-page .sudoku-stat strong {
+            font-size: 17px;
+        }
+
+        /* Əməliyyat düymələri — üçüncü */
+        .home-page .game-actions {
+            order: 3;
+            gap: 7px;
+        }
+
+        .home-page .game-action {
+            min-height: 58px;
+            padding: 7px 3px;
+            gap: 5px;
+            border-radius: 10px;
+            font-size: 10px;
+            overflow-wrap: anywhere;
+        }
+
+        .home-page .action-icon {
+            font-size: 17px;
+        }
+
+        /* Çətinlik və yeni oyun — dördüncü */
+        .home-page .professional-new-game {
+            order: 4;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
+            padding: 12px;
+        }
+
+        .home-page .difficulty-control select {
+            min-height: 43px;
+        }
+
+        .home-page .new-game-button {
+            width: 100%;
+            min-height: 44px;
+        }
+
+        /* Kart şəbəkələri */
+        .home-page .difficulty-grid,
+        .home-page .discovery-grid,
+        .home-page .learning-grid {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 13px;
+        }
+
+        .home-page .difficulty-card {
+            min-height: auto;
+            padding: 19px;
+        }
+
+        .home-page .discovery-card,
+        .home-page .learning-card {
+            padding: 20px;
+        }
+
+        /* Son CTA */
+        .home-page .final-cta {
+            align-items: stretch;
+            flex-direction: column;
+            padding: 25px 21px;
+        }
+
+            .home-page .final-cta a {
+                width: 100%;
+            }
+}
+
+/* =========================================
+   ÇOX KİÇİK TELEFONLAR (≤ 380px)
+========================================= */
+
+@media (max-width: 380px) {
+    .home-page .sudoku-game-card {
+        padding: 8px;
+    }
+
+    .home-page .game-actions {
+        gap: 4px;
+    }
+
+    .home-page .game-action {
+        font-size: 9px;
+    }
+
+    .home-page .number-keypad {
+        gap: 3px;
+    }
+
+        .home-page .number-keypad .number-button {
+            min-height: 38px;
+            font-size: 14px;
+        }
+}
+
+/* =========================================
+   HƏRƏKƏTİN AZALDILMASI
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .home-page .hero-image {
+        animation: none;
+    }
+
+    .home-page .hero-button,
+    .home-page .hero-button i {
+        transition: none;
+    }
+}

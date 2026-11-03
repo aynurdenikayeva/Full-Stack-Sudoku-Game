@@ -1,0 +1,159 @@
+﻿@model SudokuExamProject.Models.SudokuGame
+
+@{
+    ViewData["Title"] = "Sudoku";
+}
+
+
+
+<main class="sudoku-page">
+    <header class="sudoku-page-header">
+        <h1>Sudoku</h1>
+        <p>Rəqəmləri düzgün yerləşdir və bütün xanaları tamamla.</p>
+    </header>
+
+    <section class="sudoku-panel">
+        <div class="sudoku-stats">
+            <div class="sudoku-stat">
+                <span>Çətinlik</span>
+                <strong>@Model.Difficulty</strong>
+            </div>
+            <div class="sudoku-stat">
+                <span>Səhvlər</span>
+                <strong>@Model.Mistakes</strong>
+            </div>
+            <div class="sudoku-stat">
+                <span>İpucları</span>
+                <strong>@Model.HintsUsed</strong>
+            </div>
+        </div>
+
+        <table class="sudoku-board" aria-label="Sudoku lövhəsi">
+            <tbody>
+                @for (int row = 0; row < 9; row++)
+                {
+                    <tr>
+                        @for (int col = 0; col < 9; col++)
+                        {
+                            <td>
+                                @if (Model.Fixed[row, col])
+                                {
+                                    <span class="fixed-number">
+                                        @Model.Board[row, col]
+                                    </span>
+                                }
+                                else
+                                {
+                                    <form asp-controller="Sudoku"
+                                          asp-action="Add"
+                                          method="post"
+                                          class="cell-form">
+                                        @Html.AntiForgeryToken()
+
+                                        <input type="hidden" name="row" value="@row" />
+                                        <input type="hidden" name="col" value="@col" />
+
+                                        <input type="number"
+                                               name="number"
+                                               class="cell-input"
+                                               min="1"
+                                               max="9"
+                                               id="numberInp"
+                                               value="@(Model.Board[row, col] == 0 ? "" : Model.Board[row, col].ToString())"
+                                               aria-label="@($"{row + 1}-ci sətir, {col + 1}-ci sütun")"
+                                               onchange="this.form.requestSubmit()" />
+                                    </form>
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <p class="sudoku-message">
+            @Model.Message
+        </p>
+
+        @if (Model.Completed)
+        {
+            <p class="sudoku-message">🎉 Təbriklər! Sudoku tamamlandı!</p>
+        }
+
+        <div class="sudoku-actions">
+            <button type="button" onclick="submitSelected('Hint')">
+                💡 İpucu
+            </button>
+
+            <button type="button" onclick="submitSelected('Clear')">
+                ⌫ Təmizlə
+            </button>
+
+            <form asp-controller="Sudoku"
+                  asp-action="Undo"
+                  method="post">
+                @Html.AntiForgeryToken()
+                <button type="submit">↶ Geri qaytar</button>
+            </form>
+
+            <a asp-controller="Home" asp-action="Index">
+                Ana səhifə
+            </a>
+        </div>
+
+        <form asp-controller="Sudoku"
+              asp-action="New"
+              method="post"
+              class="sudoku-new-game">
+            @Html.AntiForgeryToken()
+
+            <label for="sudokuDifficulty">Çətinlik:</label>
+
+            <select id="sudokuDifficulty" name="difficulty">
+                <option value="Asan" selected="@(Model.Difficulty == "Asan")">Asan</option>
+                <option value="Orta" selected="@(Model.Difficulty == "Orta")">Orta</option>
+                <option value="Çətin" selected="@(Model.Difficulty == "Çətin")">Çətin</option>
+                <option value="Ekspert" selected="@(Model.Difficulty == "Ekspert")">Ekspert</option>
+                <option value="Usta" selected="@(Model.Difficulty == "Usta")">Usta</option>
+                <option value="Ekstremal" selected="@(Model.Difficulty == "Ekstremal")">Ekstremal</option>
+            </select>
+
+            <button type="submit">Yeni oyun</button>
+        </form>
+    </section>
+</main>
+
+<form id="selectedCellForm" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="row" id="selectedRow" />
+    <input type="hidden" name="col" id="selectedCol" />
+</form>
+
+<script>
+    function submitSelected(action) {
+        const selected = document.activeElement;
+        const cells = document.querySelectorAll(".sudoku-page .cell-input");
+
+        let target = selected && selected.classList.contains("cell-input")
+            ? selected
+            : null;
+
+        if (!target) {
+            target = Array.from(cells).find(cell => cell.value === "") || null;
+        }
+
+        if (!target) {
+            alert("Əvvəlcə boş xana seç.");
+            return;
+        }
+
+        const form = document.getElementById("selectedCellForm");
+        document.getElementById("selectedRow").value =
+            target.closest("form").querySelector('[name="row"]').value;
+        document.getElementById("selectedCol").value =
+            target.closest("form").querySelector('[name="col"]').value;
+
+        form.action = "/Sudoku/" + action;
+        form.submit();
+    }
+</script>

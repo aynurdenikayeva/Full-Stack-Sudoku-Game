@@ -1,0 +1,95 @@
+﻿@{
+    ViewData["Title"] = "Haqqımızda";
+}
+
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/about.css"
+          asp-append-version="true" />
+}
+
+<main class="about-page">
+
+    <!-- Başlıq -->
+    <section class="about-hero">
+        <span class="about-label">HAQQIMIZDA</span>
+
+        <h1>AXIOMIX haqqında</h1>
+
+        <p>
+            Sudoku oynamağın, zehnini sınamağın və məntiqi düşünmə
+            bacarıqlarını inkişaf etdirməyin daha maraqlı yolunu kəşf et.
+        </p>
+    </section>
+
+    <!-- Əsas məlumatlar -->
+    <section class="about-content">
+
+        <article class="about-card">
+            <h2>Biz kimik?</h2>
+
+            <p>
+                AXIOMIX məntiqi tapmacaları sevən, zehnini sınamaq
+                və problem həll etmə bacarıqlarını inkişaf etdirmək
+                istəyən istifadəçilər üçün hazırlanmış onlayn platformadır.
+            </p>
+
+            <p>
+                İstər yeni başlayan, istərsə də təcrübəli oyunçu ol,
+                platformamız sənə sadə və maraqlı Sudoku təcrübəsi təqdim edir.
+            </p>
+        </article>
+
+        <article class="about-card">
+            <h2>Məqsədimiz</h2>
+
+            <p>
+                Məqsədimiz Sudoku oyununu hər kəs üçün əlçatan, maraqlı
+                və düşündürücü etməkdir. İnanırıq ki, tapmacalar həll etmək
+                məntiqi düşünməyi, diqqəti və səbrli olmağı inkişaf etdirməyin
+                əla yollarından biridir.
+            </p>
+        </article>
+
+        <article class="about-card">
+            <h2>Sizə nə təklif edirik?</h2>
+
+            <ul class="about-list">
+                <li>Hər səviyyəyə uyğun müxtəlif çətinlik dərəcələri</li>
+                <li>Sadə və istifadəsi rahat interfeys</li>
+                <li>Telefon və kompüterlər üçün uyğun dizayn</li>
+                <li>Zehni aktiv saxlamaq üçün gündəlik tapşırıqlar</li>
+                <li>Maraqlı və rahat Sudoku oyun təcrübəsi</li>
+            </ul>
+        </article>
+
+        <article class="about-card">
+            <h2>Niyə Sudoku oynamalısınız?</h2>
+
+            <p>
+                Sudoku məntiqi düşünməyi, detallara diqqət yetirməyi
+                və düzgün strategiya qurmağı inkişaf etdirir. Hər yeni
+                tapmaca özünü sınamaq və yeni bacarıqlar qazanmaq üçün
+                bir fürsətdir.
+            </p>
+        </article>
+
+    </section>
+
+    <!-- Oyuna dəvət -->
+    <section class="about-cta">
+        <h2>Zehnini sınamağa hazırsan?</h2>
+
+        <p>
+            Sudoku tapmacalarını həll etməyə başla və bu oyunun
+            nə qədər maraqlı olduğunu kəşf et!
+        </p>
+
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="about-button">
+            Oyuna başla
+        </a>
+    </section>
+
+</main>

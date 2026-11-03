@@ -1,0 +1,158 @@
+﻿@model SudokuExamProject.Models.BlogArticle
+
+@{
+    ViewData["Title"] = Model.Title;
+
+    var previous = ViewBag.PreviousArticle
+        as SudokuExamProject.Models.BlogArticle;
+
+    var next = ViewBag.NextArticle
+        as SudokuExamProject.Models.BlogArticle;
+
+    var related = ViewBag.RelatedArticles
+        as List<SudokuExamProject.Models.BlogArticle>
+        ?? new List<SudokuExamProject.Models.BlogArticle>();
+}
+
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/blog.css"
+          asp-append-version="true" />
+}
+
+<main class="blog-page blog-detail-page">
+
+    <article class="blog-detail">
+
+        <a asp-controller="Blog"
+           asp-action="Index"
+           class="blog-back">
+            <span>←</span> Bütün məqalələrə qayıt
+        </a>
+
+        <header class="blog-detail-header">
+
+            <span class="article-category">
+                @Model.Category
+            </span>
+
+            <h1>@Model.Title</h1>
+
+            <p class="blog-detail-date">
+                <span>Yayımlanma tarixi:</span>
+                @Model.Date
+            </p>
+
+            <div class="detail-header-line"></div>
+        </header>
+
+        <div class="blog-detail-content">
+
+            <section class="detail-introduction">
+                <span class="detail-eyebrow">MƏQALƏ HAQQINDA</span>
+
+                <h2>Giriş</h2>
+
+                <p>@Model.Introduction</p>
+            </section>
+
+            @foreach (var articleSection in Model.Sections)
+            {
+                <section class="detail-section">
+
+                    <h2>@articleSection.Heading</h2>
+
+                    @foreach (var paragraph in articleSection.Paragraphs)
+                    {
+                        <p>@paragraph</p>
+                    }
+
+                    @if (articleSection.Points != null &&
+                                    articleSection.Points.Count > 0)
+                    {
+                        <ul class="detail-points">
+                            @foreach (var point in articleSection.Points)
+                            {
+                                <li>
+                                    <span class="point-check">✓</span>
+                                    <span>@point</span>
+                                </li>
+                            }
+                        </ul>
+                    }
+
+                </section>
+            }
+
+            <div class="detail-summary">
+                <span class="summary-icon">✦</span>
+
+                <div>
+                    <h3>Yadda saxla</h3>
+
+                    <p>
+                        Sudoku həll edərkən tələsmə, qaydaları yoxla
+                        və hər addımın məntiqi əsasını tap.
+                        Müntəzəm məşq daha təcrübəli olmağa kömək edir.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        @if (related.Count > 0)
+        {
+            <section class="related-articles">
+
+                <div class="related-heading">
+                    <span class="section-eyebrow">
+                        OXUMAĞA DAVAM ET
+                    </span>
+
+                    <h2>Əlaqəli məqalələr</h2>
+                </div>
+
+                <div class="related-grid">
+
+                    @foreach (var item in related)
+                    {
+                        <a asp-controller="Blog"
+                           asp-action="Details"
+                           asp-route-slug="@item.Slug"
+                           class="related-card">
+
+                            <span class="article-category">
+                                @item.Category
+                            </span>
+
+                            <h3>@item.Title</h3>
+
+                            <p>Ətraflı oxu <span>→</span></p>
+                        </a>
+                    }
+
+                </div>
+            </section>
+        }
+
+        
+
+          
+
+   
+
+        <div class="blog-detail-footer">
+
+            <a asp-controller="Blog"
+               asp-action="Index">
+                ← Bloqa qayıt
+            </a>
+
+            <a asp-controller="Home"
+               asp-action="Index">
+                Sudoku oyununa keç →
+            </a>
+
+        </div>
+
+    </article>
+</main>

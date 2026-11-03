@@ -1,0 +1,177 @@
+﻿
+/* ABOUT PAGE */
+
+.about-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+    color: #25243a;
+}
+
+/* Hero section */
+
+.about-hero {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 45px;
+}
+
+.about-label {
+    display: inline-block;
+    margin-bottom: 14px;
+    color: #7965e8;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.about-hero h1 {
+    margin-bottom: 18px;
+    font-size: clamp(32px, 5vw, 46px);
+    font-weight: 750;
+    line-height: 1.2;
+}
+
+.about-hero p {
+    margin: 0;
+    color: #77758a;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+/* Content cards */
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.about-card {
+    padding: 28px 30px;
+    background: #fff;
+    border: 1px solid #eae8f4;
+    border-radius: 14px;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+    .about-card:hover {
+        border-color: #c9c0fa;
+        box-shadow: 0 8px 25px rgba(79, 61, 150, 0.06);
+    }
+
+    .about-card h2 {
+        margin: 0 0 15px;
+        color: #30284f;
+        font-size: 21px;
+        font-weight: 700;
+    }
+
+    .about-card p {
+        margin: 0 0 12px;
+        color: #6f6d80;
+        font-size: 15px;
+        line-height: 1.9;
+    }
+
+        .about-card p:last-child {
+            margin-bottom: 0;
+        }
+
+/* List */
+
+.about-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+    .about-list li {
+        position: relative;
+        padding-left: 28px;
+        color: #6f6d80;
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+        .about-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 1px;
+            color: #7965e8;
+            font-weight: 800;
+        }
+
+/* Call to action */
+
+.about-cta {
+    margin-top: 35px;
+    padding: 40px 25px;
+    border-radius: 16px;
+    background: #f5f2ff;
+    text-align: center;
+}
+
+    .about-cta h2 {
+        margin: 0 0 12px;
+        color: #30284f;
+        font-size: 25px;
+        font-weight: 750;
+    }
+
+    .about-cta p {
+        margin: 0 0 24px;
+        color: #77758a;
+        font-size: 15px;
+        line-height: 1.8;
+    }
+
+.about-button {
+    display: inline-block;
+    padding: 13px 26px;
+    border-radius: 8px;
+    background: #7965e8;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 650;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+    .about-button:hover {
+        background: #6550d0;
+        color: #fff;
+        transform: translateY(-2px);
+    }
+
+/* Responsive design */
+
+@media (max-width: 600px) {
+    .about-page {
+        padding: 40px 16px 55px;
+    }
+
+    .about-hero {
+        margin-bottom: 30px;
+    }
+
+    .about-card {
+        padding: 22px 20px;
+    }
+
+        .about-card h2 {
+            font-size: 19px;
+        }
+
+    .about-cta {
+        padding: 32px 18px;
+    }
+
+        .about-cta h2 {
+            font-size: 22px;
+        }
+}

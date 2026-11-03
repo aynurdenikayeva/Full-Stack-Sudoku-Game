@@ -1,0 +1,562 @@
+﻿@{
+    ViewData["Title"] = "Sudoku haqqında tez-tez verilən suallar";
+}
+
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/faq.css"
+          asp-append-version="true" />
+}
+
+<section class="faq-page">
+
+    <!-- FAQ BAŞLIQ HİSSƏSİ -->
+    <div class="faq-hero">
+        <span class="faq-badge">AXIOMIX — KÖMƏK MƏRKƏZİ</span>
+
+        <h1>Sudoku haqqında suallar</h1>
+
+        <p>
+            Sudoku qaydaları, həll üsulları, strategiyalar və oyunun
+            xüsusiyyətləri haqqında ən çox verilən sualların cavablarını tap.
+        </p>
+
+        <div class="faq-search">
+            <span aria-hidden="true">⌕</span>
+
+            <input type="search"
+                   id="faqSearch"
+                   placeholder="Sualını axtar..."
+                   aria-label="Suallar arasında axtarış" />
+        </div>
+
+        <p class="faq-search-status"
+           id="faqSearchStatus"
+           aria-live="polite"></p>
+    </div>
+
+    <!-- FAQ MƏZMUNU -->
+    <div class="faq-container">
+
+        <div class="faq-intro">
+            <h2>Tez-tez verilən suallar</h2>
+            <p>Sudoku oyununu daha yaxşı öyrənmək üçün bilməli olduğun hər şey.</p>
+        </div>
+
+        <!-- 1. SUDOKU HAQQINDA ƏSAS MƏLUMATLAR -->
+        <section class="faq-category">
+            <h3 class="faq-category-title">
+                <span class="faq-category-icon">◎</span>
+                Sudoku haqqında əsas məlumatlar
+            </h3>
+
+            <div class="faq-list">
+
+                <article class="faq-item">
+                    <button class="faq-question" type="button" aria-expanded="false">
+                        <span>Sudoku nədir?</span>
+                        <span class="faq-chevron" aria-hidden="true">+</span>
+                    </button>
+
+                    <div class="faq-answer" hidden>
+                        <p>
+                            Sudoku məntiqə əsaslanan rəqəm tapmacasıdır.
+                            Məqsəd 9×9 ölçülü cədvəli 1-dən 9-a qədər rəqəmlərlə
+                            doldurmaqdır. Hər sətirdə, hər sütunda və hər 3×3
+                            xanalar blokunda bütün rəqəmlər yalnız bir dəfə
+                            iştirak etməlidir.
+                        </p>
+                        <p>
+                            Sudoku oynamaq üçün yüksək riyazi biliklərə ehtiyac
+                            yoxdur. Əsas olan məntiqi düşünmək, diqqətli olmaq
+                            və səbir göstərməkdir.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="faq-item">
+                    <button class="faq-question" type="button" aria-expanded="false">
+                        <span>Sudokunun əsas qaydaları hansılardır?</span>
+                        <span class="faq-chevron" aria-hidden="true">+</span>
+                    </button>
+
+                    <div class="faq-answer" hidden>
+                        <p>Sudokunun üç əsas qaydası var:</p>
+                        <ul>
+                            <li><strong>Sətir qaydası:</strong> Hər sətirdə 1-dən 9-a qədər rəqəmlər təkrarlanmadan yerləşməlidir.</li>
+                            <li><strong>Sütun qaydası:</strong> Hər sütunda 1-dən 9-a qədər rəqəmlər təkrarlanmadan yerləşməlidir.</li>
+                            <li><strong>3×3 blok qaydası:</strong> Hər 3×3 blokda 1-dən 9-a qədər bütün rəqəmlər yalnız bir dəfə olmalıdır.</li>
+                        </ul>
+                        <p>
+                            Hər boş xanaya bu üç qaydanın hamısına uyğun gələn
+                            rəqəm yerləşdirilməlidir.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="faq-item">
+                    <button class="faq-question" type="button" aria-expanded="false">
+                        <span>Sudokuda xana nədir?</span>
+                        <span class="faq-chevron" aria-hidden="true">+</span>
+                    </button>
+
+                    <div class="faq-answer" hidden>
+                        <p>
+                            Xana Sudoku cədvəlindəki kiçik kvadratların hər
+                            biridir. 9×9 cədvəldə ümumilikdə 81 xana olur.
+                            Hər xana 1-dən 9-a qədər bir rəqəmlə doldurulmalıdır.
+                            Həmin rəqəm eyni sətirdə, sütunda və 3×3 blokda
+                            təkrarlanmamalıdır.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="faq-item">
+                    <button class="faq-question" type="button" aria-expanded="false">
+                        <span>Sudokunun ən vacib bir qaydası hansıdır?</span>
+                        <span class="faq-chevron" aria-hidden="true">+</span>
+                    </button>
+
+                    <div class="faq-answer" hidden>
+                        <p>
+                            Əsas qayda budur: 1-dən 9-a qədər hər rəqəm hər
+                            sətirdə, hər sütunda və hər 3×3 blokda yalnız
+                            bir dəfə yerləşməlidir.
+                        </p>
+                        <p>
+                            Sudokunun bütün həll üsulları bu qaydaya əsaslanır.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="faq-item">
+                    <button class="faq-question" type="button" aria-expanded="false">
+                        <span>Sudokuda 3 qaydası nə deməkdir?</span>
+                        <span class="faq-chevron" aria-hidden="true">+</span>
+                    </button>
+
+                    <div class="faq-answer" hidden>
+                        <p>
+                            Bu ifadə adətən 3×3 blok qaydasını bildirir.
+                            Hər 3×3 blokda 1-dən 9-a qədər olan bütün rəqəmlər
+                            təkrarlanmadan yerləşdirilməlidir.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- 2. HƏLL ÜSULLARI VƏ STRATEGİYALAR -->
+        <section class="faq-category">
+            <h3 class="faq-category-title">
+                <span class="faq-category-icon">✦</span>
+                Məsləhətlər və həll strategiyaları
+            </h3>
+
+            <div class="faq-list">
+
+                <article class="faq-item">
+                    <button class="faq-question" type="button" aria-expanded="false">
+                        <span>Sudokunu daha sürətli necə həll etmək olar?</span>
+                        <span class="faq-chevron" aria-hidden="true">+</span>
+                    </button>
+
+                    <div class="faq-answer" hidden>
+                        <ol>
+                            <li>Sətirləri, sütunları və 3×3 blokları sistemli şəkildə yoxla.</li>
+                            <li>Yalnız bir mümkün rəqəmi olan xanalardan başla.</li>
+                            <li>Mümkün olmayan rəqəmləri namizədlər siyahısından çıxar.</li>
+                            <li>Hər xananın mümkün rəqəmlərini qeyd et.</li>
+                            <li>Mütəmadi məşq et və tez-tez rast gəlinən nümunələri öyrən.</li>
+                        </ol>
+                        <p>
+                            İlk növbədə düzgün həll etməyə diqqət yetir.
+                            Təcrübən artdıqca sürətin də yüksələcək.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="faq-item">
+                    <button class="faq-question" type="button" aria-expanded="false">
+                        <span>Ən yaxşı Sudoku strategiyaları hansılardır?</span>
+                        <span class="faq-chevron" aria-hidden="true">+</span>
+                    </button>
+
+                    <div class="faq-answer" hidden>
+                        <h4>Əsas strategiyalar</h4>
+                        <ul>
+                            <li><strong>Tək namizəd:</strong> Xanaya yerləşdirilə bilən yalnız bir rəqəm qalır.</li>
+                            <li><strong>Yeganə mövqe:</strong> Müəyyən rəqəm sətirdə, sütunda və ya blokda yalnız bir xanaya yerləşə bilir.</li>
+                            <li><strong>İstisna etmə:</strong> Qaydalara uyğun olmayan rəqəmlər mümkün variantlardan çıxarılır.</li>
+                        </ul>
+
+                        <h4>İrəli səviyyə strategiyaları</h4>
+                        <ul>
+                            <li><strong>Açıq cütlər və üçlüklər:</strong> Eyni namizədlərə malik iki və ya üç xana digər xanalardakı variantları azaltmağa kömək edir.</li>
+                            <li><strong>Gizli cütlər və üçlüklər:</strong> Müəyyən rəqəmlərin yalnız konkret xanalarda yerləşə bildiyi müəyyən edilir.</li>
+                            <li><strong>X-Wing:</strong> İki sətir və ya sütundakı müəyyən rəqəm mövqelərindən istifadə etməklə digər namizədlər çıxarılır.</li>
+                            <li><strong>Swordfish:</strong> Üç sətir və ya sütun arasında tətbiq olunan daha mürəkkəb istisna etmə üsuludur.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="faq-item">
+                    <button class="faq-question" type="button" aria-expanded="false">
+                        <span>Sudokunu həll etməyin əsas sirri nədir?</span>
+                        <span class="faq-chevron" aria-hidden="true">+</span>
+                    </button>
+
+                    <div class="faq-answer" hidden>
+                        <p>
+                            Əsas üsul mümkün olmayan rəqəbləri ardıcıl şəkildə
+                            istisna etməkdir. Sətirdə, sütunda və ya blokda hansı
+                            rəqəmlərin çatışmadığını müəyyən et və hər xanaya
+                            uyğun gəlməyən variantları sil.
+                        </p>
+                        <p>
+                            Mümkün rəqəmləri qeyd etmək və gizli tək rəqəmləri
+                            tapmaq gözdən qaçan imkanları aşkar etməyə kömək edir.
+                            Sudoku təsadüfi təxminlərdən çox məntiqə əsaslanır.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="faq-item">
+                    <button class="faq-question" type="button" aria-expanded="false">
+                        <span>Sudokunu təxmin etmədən həll etmək mümkündürmü?</span>
+                        <span class="faq-chevron" aria-hidden="true">+</span>
+                    </button>
+
+                    <div class="faq-answer" hidden>
+                        <p>
+                            Bəli. Yeganə həlli olan düzgün qurulmuş Sudoku
+                            tapmacalarını məntiqi üsullarla həll etmək mümkündür.
+                            Sadəcə çətin tapmacalarda daha mürəkkəb strategiyalar
+                            tələb oluna bilər.
+                        </p>
+                        <p>
+                            Çətinlik çəkəndə mümkün rəqəmləri qeyd et, sətirləri
+                            və blokları yenidən yoxla, başqa bir istisna etmə
+                            üsulunu sına.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="faq-item">
+                    <button class="faq-question" type="button" aria-expanded="false">
+                        <span>Sudoku oynayarkən hansı səhvlərdən qaçmaq lazımdır?</span>
+                        <span class="faq-chevron" aria-hidden="true">+</span>
+                    </button>
+
+                    <div class="faq-answer" hidden>
+                        <ul>
+                            <li>Rəqəmi yerləşdirməzdən əvvəl sətiri, sütunu və bloku yoxlamamaq.</li>
+                            <li>Rəqəm yerləşdirildikdən sonra mümkün variantları yeniləməmək.</li>
+                            <li>Yalnız bir yerdə yerləşə bilən rəqəmləri nəzərdən qaçırmaq.</li>
+                            <li>Tələsmək və hər addımı yoxlamamaq.</li>
+                            <li>Çətinlik yarananda eyni üsulu təkrar-təkrar sınamaq.</li>
+                        </ul>
+                        <p>
+                            Səbirli ol, hər addımı yoxla və mümkün rəqəmləri
+                            qeyd etməklə səhvlərin qarşısını al.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- 3. ÇƏTİNLİK SƏVİYYƏLƏRİ -->
+        <section class="faq-category">
+            <h3 class="faq-category-title">
+                <span class="faq-category-icon">◈</span>
+                Çətinlik səviyyələri
+            </h3>
+
+            <div class="faq-list">
+
+                <article class="faq-item">
+                    <button class="faq-question" type="button" aria-expanded="false">
+                        <span>Sudokunun hansı çətinlik səviyyələri var?</span>
+                        <span class="faq-chevron" aria-hidden="true">+</span>
+                    </button>
+
+                    <div class="faq-answer" hidden>
+                        <p>
+                            Sudoku tapmacaları adətən bir neçə çətinlik
+                            səviyyəsinə bölünür. Səviyyələrin adları və
+                            qiymətləndirilməsi saytdan-sayta dəyişə bilər.
+                        </p>
+
+                        <h4>Asan</h4>
+                        <p>
+                            Yeni başlayanlar üçün uyğundur. Əsasən sadə
+                            yerləşdirmə və rəqəmlərin istisna edilməsi
+                            üsulları tələb olunur.
+                        </p>
+
+                        <h4>Orta</h4>
+                        <p>
+                            Daha diqqətli yoxlama, mümkün rəqəmlərin qeydi
+                            və gizli tək rəqəmlərin tapılması lazım ola bilər.
+                        </p>
+
+                        <h4>Çətin</h4>
+                        <p>
+                            Bir neçə məntiqi addım və cütlər kimi daha
+                            mürəkkəb üsullar tələb edə bilər.
+                        </p>
+
+                        <h4>Ekspert</h4>
+                        <p>
+                            Güclü məntiqi düşüncə və bir neçə irəli səviyyə
+                            strategiyasının tətbiqini tələb edir.
+                        </p>
+
+                        <h4>Usta</h4>
+                        <p>
+                            Mürəkkəb nümunələri tanımağı və uzun məntiqi
+                            ardıcıllıqları qurmağı bacaran təcrübəli
+                            oyunçular üçün nəzərdə tutulur.
+                        </p>
+
+                        <h4>Ekstremal</h4>
+                        <p>
+                            Ən çətin tapmacalar üçün istifadə edilən
+                            səviyyədir. Belə tapmacalarda bir neçə mürəkkəb
+                            həll strategiyasına ehtiyac yarana bilər.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="faq-item">
+                    <button class="faq-question" type="button" aria-expanded="false">
+                        <span>Ən çətin Sudoku tapmacası hansıdır?</span>
+                        <span class="faq-chevron" aria-hidden="true">+</span>
+                    </button>
+
+                    <div class="faq-answer" hidden>
+                        <p>
+                            Dünyanın hamı tərəfindən qəbul edilmiş vahid
+                            ən çətin Sudoku tapmacası yoxdur. Çətinlik
+                            tapmacanı həll etmək üçün lazım olan məntiqi
+                            üsullardan və onların mürəkkəbliyindən asılıdır.
+                        </p>
+                        <p>
+                            Çox çətin tapmacalarda XY-Wing, XYZ-Wing,
+                            Remote Pairs, Unique Rectangle və mürəkkəb
+                            məntiqi zəncirlər kimi üsullar tələb oluna bilər.
+                        </p>
+                        <p>
+                            Çətinliyi yalnız verilmiş rəqəmlərin sayı
+                            müəyyən etmir. Klassik 9×9 Sudoku tapmacasının
+                            yeganə həlli olması üçün ən azı 17 başlanğıc
+                            rəqəmi olmalıdır.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- 4. FAYDALAR VƏ ONLAYN OYUN -->
+        <section class="faq-category">
+            <h3 class="faq-category-title">
+                <span class="faq-category-icon">♡</span>
+                Faydalar və onlayn oyun
+            </h3>
+
+            <div class="faq-list">
+
+                <article class="faq-item">
+                    <button class="faq-question" type="button" aria-expanded="false">
+                        <span>Sudoku oynamağın hansı faydaları var?</span>
+                        <span class="faq-chevron" aria-hidden="true">+</span>
+                    </button>
+
+                    <div class="faq-answer" hidden>
+                        <ul>
+                            <li><strong>Diqqət:</strong> Diqqəti uzun müddət bir iş üzərində saxlamağa kömək edir.</li>
+                            <li><strong>Məntiqi düşüncə:</strong> Məntiqi nəticə çıxarma və problem həll etmə bacarıqlarını məşq etdirir.</li>
+                            <li><strong>Nümunələri tanıma:</strong> Rəqəm düzülüşlərini daha tez fərq etməyə kömək edir.</li>
+                            <li><strong>Rahatlama:</strong> Gündəlik işlərdən qısa fasilə almaq üçün xoş fəaliyyət ola bilər.</li>
+                            <li><strong>Özünəinam:</strong> Çətin tapmacanı həll etmək məmnunluq hissi yarada bilər.</li>
+                        </ul>
+                        <p>
+                            Sudoku faydalı zehni məşğələdir, lakin yaddaşın
+                            bütün aspektlərini yaxşılaşdıracağına və ya
+                            koqnitiv zəifləmənin qarşısını alacağına zəmanət
+                            vermir.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="faq-item">
+                    <button class="faq-question" type="button" aria-expanded="false">
+                        <span>Sudoku beyin üçün faydalıdırmı?</span>
+                        <span class="faq-chevron" aria-hidden="true">+</span>
+                    </button>
+
+                    <div class="faq-answer" hidden>
+                        <p>
+                            Sudoku diqqəti, məntiqi düşüncəni və nümunələri
+                            tanıma bacarığını məşq etdirir. Bir çox insan
+                            tapmacaları həll etməyi rahatlaşdırıcı və
+                            maraqlı fəaliyyət hesab edir.
+                        </p>
+                        <p>
+                            Bununla belə, Sudokunun bütün sağlamlıq
+                            faydalarına zəmanət verilmir. Onu fiziki
+                            aktivlik, keyfiyyətli yuxu və digər zehni
+                            fəaliyyətlərlə birlikdə gündəlik həyatın
+                            bir hissəsi kimi qəbul etmək daha düzgündür.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="faq-item">
+                    <button class="faq-question" type="button" aria-expanded="false">
+                        <span>Onlayn Sudoku kağız üzərində oynamaqdan daha yaxşıdırmı?</span>
+                        <span class="faq-chevron" aria-hidden="true">+</span>
+                    </button>
+
+                    <div class="faq-answer" hidden>
+                        <h4>Onlayn Sudokunun üstünlükləri</h4>
+                        <ul>
+                            <li>Müxtəlif çətinlik səviyyələrində tapmacalar oynamaq.</li>
+                            <li>Mövcud olduqda ipuclarından və səhv yoxlamasından istifadə etmək.</li>
+                            <li>Kağız və qələm olmadan oynamaq.</li>
+                            <li>Sayt dəstəkləyirsə, irəliləyişi izləmək.</li>
+                        </ul>
+
+                        <h4>Kağız üzərində Sudokunun üstünlükləri</h4>
+                        <ul>
+                            <li>Ekrandan istifadə etmədən tapmaca həll etmək.</li>
+                            <li>Mümkün rəqəmləri birbaşa kağız üzərində qeyd etmək.</li>
+                            <li>Tapmaca kitablarından istənilən yerdə istifadə etmək.</li>
+                        </ul>
+
+                        <p>
+                            Hər iki üsulun öz üstünlükləri var.
+                            Sənə daha rahat olan variantı seçə bilərsən.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- OYUNA DƏVƏT -->
+        <div class="faq-cta">
+            <div class="faq-cta-icon" aria-hidden="true">▦</div>
+
+            <h2>Sudoku bacarıqlarını sınamağa hazırsan?</h2>
+
+            <p>
+                Biliklərini yoxla və yeni Sudoku tapmacası həll et.
+                Asan səviyyədən başla və tədricən daha çətin tapmacalara keç.
+            </p>
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="faq-play-button">
+                Pulsuz Sudoku oyna <span aria-hidden="true">→</span>
+            </a>
+        </div>
+
+        <p class="faq-no-results" id="faqNoResults" hidden>
+            Heç bir uyğun sual tapılmadı. Başqa sözlə axtarış et.
+        </p>
+
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const faqItems = document.querySelectorAll(".faq-item");
+            const searchInput = document.getElementById("faqSearch");
+            const noResults = document.getElementById("faqNoResults");
+            const searchStatus = document.getElementById("faqSearchStatus");
+
+            // Sualları açmaq və bağlamaq
+            faqItems.forEach(function (item) {
+
+                const question = item.querySelector(".faq-question");
+                const answer = item.querySelector(".faq-answer");
+                const icon = question.querySelector(".faq-chevron");
+
+                question.addEventListener("click", function () {
+
+                    const isOpen =
+                        question.getAttribute("aria-expanded") === "true";
+
+                    question.setAttribute(
+                        "aria-expanded",
+                        String(!isOpen)
+                    );
+
+                    answer.hidden = isOpen;
+                    item.classList.toggle("is-open", !isOpen);
+
+                    icon.textContent = isOpen ? "+" : "−";
+                });
+            });
+
+            // Suallar və cavablar arasında axtarış
+            searchInput.addEventListener("input", function () {
+
+                const searchTerm = searchInput.value
+                    .trim()
+                    .toLocaleLowerCase("az");
+
+                let visibleCount = 0;
+
+                faqItems.forEach(function (item) {
+
+                    const question = item.querySelector(".faq-question");
+                    const answer = item.querySelector(".faq-answer");
+
+                    const content = item.textContent.toLocaleLowerCase("az");
+                    const matches = content.includes(searchTerm);
+
+                    item.hidden = !matches;
+
+                    if (matches) {
+                        visibleCount++;
+                    } else {
+                        question.setAttribute("aria-expanded", "false");
+                        answer.hidden = true;
+                        item.classList.remove("is-open");
+
+                        question.querySelector(
+                            ".faq-chevron"
+                        ).textContent = "+";
+                    }
+                });
+
+                // Uyğun sualı olmayan bölmələri gizlət
+                document.querySelectorAll(".faq-category").forEach(
+                    function (category) {
+
+                        const hasVisibleItems = Array.from(
+                            category.querySelectorAll(".faq-item")
+                        ).some(function (item) {
+                            return !item.hidden;
+                        });
+
+                        category.hidden = !hasVisibleItems;
+                    }
+                );
+
+                noResults.hidden = visibleCount !== 0;
+
+                searchStatus.textContent = searchTerm
+                    ? visibleCount + " uyğun sual tapıldı"
+                    : "";
+            });
+        });
+    </script>
+}

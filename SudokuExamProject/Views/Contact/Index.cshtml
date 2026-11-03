@@ -1,0 +1,226 @@
+﻿@model SudokuExamProject.Models.ContactViewModel
+
+@{
+    ViewData["Title"] = "Bizimlə əlaqə";
+}
+
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/contact.css"
+          asp-append-version="true" />
+}
+
+<section id="mu-contact">
+    <div class="container">
+
+        <!-- Səhifənin başlığı -->
+        <div class="contact-heading">
+            <span class="contact-eyebrow">ƏLAQƏ</span>
+
+            <h1>Gəlin, əlaqə saxlayaq.</h1>
+
+            <p>
+                Sualınız, təklifiniz və ya fikriniz var?
+                Aşağıdakı formu doldurun, sizə geri dönüş edək.
+            </p>
+        </div>
+
+        <div class="contact-layout">
+
+            <!-- SOL TƏRƏF: Əlaqə forması -->
+            <div class="contact-form-section">
+
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="contact-alert contact-alert-success"
+                         role="status">
+                        <span class="alert-icon" aria-hidden="true">✓</span>
+                        <span>@TempData["SuccessMessage"]</span>
+                    </div>
+                }
+
+                @if (TempData["WarningMessage"] != null)
+                {
+                    <div class="contact-alert contact-alert-warning"
+                         role="alert">
+                        <span class="alert-icon" aria-hidden="true">!</span>
+                        <span>@TempData["WarningMessage"]</span>
+                    </div>
+                }
+
+                <div class="section-heading">
+                    <h2>Bizə mesaj yazın</h2>
+                    <p>Bütün xanaları düzgün doldurmağınız xahiş olunur.</p>
+                </div>
+
+                <form asp-controller="Contact"
+                      asp-action="Index"
+                      method="post"
+                      class="contact-form">
+
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="validation-summary"></div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label asp-for="Name"></label>
+
+                            <input asp-for="Name"
+                                   class="form-control"
+                                   placeholder="Adınızı daxil edin"
+                                   autocomplete="name" />
+
+                            <span asp-validation-for="Name"
+                                  class="field-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Email"></label>
+
+                            <input asp-for="Email"
+                                   class="form-control"
+                                   placeholder="name@gmail.com"
+                                   autocomplete="email" />
+
+                            <span asp-validation-for="Email"
+                                  class="field-error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Subject"></label>
+
+                        <input asp-for="Subject"
+                               class="form-control"
+                               placeholder="Mesajınızın mövzusu" />
+
+                        <span asp-validation-for="Subject"
+                              class="field-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Message"></label>
+
+                        <textarea asp-for="Message"
+                                  class="form-control"
+                                  rows="6"
+                                  placeholder="Mesajınızı burada yazın..."></textarea>
+
+                        <span asp-validation-for="Message"
+                              class="field-error"></span>
+                    </div>
+
+                    <button type="submit" class="contact-submit">
+                        <span>Mesajı göndər</span>
+                        <span class="submit-arrow" aria-hidden="true">→</span>
+                    </button>
+
+                    <p class="form-note">
+                        Mesajınız diqqətlə nəzərdən keçiriləcək.
+                    </p>
+
+                </form>
+            </div>
+
+            <!-- SAĞ TƏRƏF: Əlaqə məlumatları -->
+            <aside class="contact-sidebar">
+
+                <div class="sidebar-section">
+                    <span class="sidebar-eyebrow">BİZİ TAPIN</span>
+                    <h2>Əlaqə məlumatları</h2>
+
+                    <p class="sidebar-description">
+                        Bizimlə əlaqə saxlamaq üçün aşağıdakı
+                        məlumatlardan istifadə edə bilərsiniz.
+                    </p>
+
+                    <div class="contact-info-list">
+
+                        <div class="contact-info-item">
+                            <div class="info-icon" aria-hidden="true">
+                                <i class="fa fa-phone"></i>
+                            </div>
+
+                            <div class="info-content">
+                                <span class="info-label">Telefon</span>
+
+                                <a href="tel:+994XXXXXXXXX">
+                                    +994 50 775 67 53
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="contact-info-item">
+                            <div class="info-icon" aria-hidden="true">
+                                <i class="fa-regular fa-envelope"></i>
+                            </div>
+
+                            <div class="info-content">
+                                <span class="info-label">Gmail</span>
+
+                                <a href="mailto:example@email.com">
+                                    denikayevaaynur@gmail.com
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="contact-info-item">
+                            <div class="info-icon" aria-hidden="true">
+                                <i class="fa fa-map-marker"></i>
+                            </div>
+
+                            <div class="info-content">
+                                <span class="info-label">Ünvan</span>
+
+                                <span class="info-value">
+                                    Bakı, Azərbaycan
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="sidebar-divider"></div>
+
+                <!-- İş saatları -->
+                <div class="sidebar-section">
+                    <span class="sidebar-eyebrow">İŞ REJİMİ</span>
+                    <h2>İş saatları</h2>
+
+                    <div class="working-hours-list">
+
+                        <div class="working-hours-item">
+                            <span>Bazar ertəsi – Cümə</span>
+                            <strong>09:00–18:00</strong>
+                        </div>
+
+                        <div class="working-hours-item">
+                            <span>Şənbə</span>
+                            <strong>10:00–14:00</strong>
+                        </div>
+
+                        <div class="working-hours-item">
+                            <span>Bazar</span>
+                            <strong class="closed-label">Bağlıdır</strong>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="sidebar-footer">
+                    <span class="footer-line"></span>
+                    <p>Sizə kömək etməkdən məmnun olarıq.</p>
+                </div>
+
+            </aside>
+
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

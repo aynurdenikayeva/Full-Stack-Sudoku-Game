@@ -1,0 +1,329 @@
+﻿@model SudokuExamProject.Models.SudokuGame
+
+@{
+    ViewData["Title"] = "Ana səhifə";
+}
+
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/home.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/sudoku-game.css"
+          asp-append-version="true" />
+}
+
+<main class="home-page">
+    <section class="hero-section container-fluid">
+        <div class="container hero-container d-flex flex-column flex-lg-row align-items-center justify-content-between gap-4">
+
+            <!-- Sol tərəf: Mətn və düymə -->
+            <div class="hero-content flex-grow-1">
+
+                <div class="hero-badge">
+                    <i class="fas fa-brain"></i>
+                    <span>Məntiqini kəşf et</span>
+                </div>
+
+                <h1 class="hero-title">
+                    Məntiqini <span>inkişaf etdir!</span>
+                </h1>
+
+                <p class="hero-description">
+                    Məntiqi düşünmə qabiliyyətinizi addım-addım zirvəyə daşıyın.
+                    Gündəlik həll edəcəyiniz hər bir tapmaca diqqətinizi artırır,
+                    beyninizi aktiv saxlayır və strateji qərar vermə bacarığınızı gücləndirir.
+                </p>
+
+                <a href="#oyun" class="hero-button">
+                    Oyuna başla
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+
+                <div class="hero-features">
+                    <span>
+                        <i class="fas fa-check"></i>
+                        Pulsuz oyun
+                    </span>
+
+                    <span>
+                        <i class="fas fa-check"></i>
+                        Məntiqi inkişaf
+                    </span>
+                </div>
+
+            </div>
+
+            <!-- Sağ tərəf: Sudoku şəkli -->
+            <div class="hero-image-wrapper">
+
+                <div class="hero-image-decoration"></div>
+
+                <img src="~/images/sudoku-hero.png"
+                     alt="Sudoku məntiq oyunu illüstrasiyası"
+                     class="hero-image" />
+
+                <div class="hero-floating-card">
+                    <div class="hero-floating-icon">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+
+                    <div class="hero-floating-text">
+                        <strong>Hər gün yeni tapmaca</strong>
+                        <span>Zehnini məşq etdir!</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section class="game-section sudoku-game-section" id="oyun">
+        <div class="section-heading">
+            <span class="game-eyebrow">Gündəlik məntiq məşqi</span>
+            <h2>Sudoku meydançası</h2>
+            <p>
+                Hər sətirdə, sütunda və 3 × 3 blokda 1-dən 9-a qədər
+                rəqəmləri təkrarlamadan yerləşdir.
+            </p>
+        </div>
+
+        <div class="sudoku-game-card"
+             id="sudokuGame"
+             data-add-url="@Url.Action("Add", "Home")"
+             data-hint-url="@Url.Action("Hint", "Home")"
+             data-clear-url="@Url.Action("Clear", "Home")"
+             data-undo-url="@Url.Action("Undo", "Home")">
+
+            <!-- SOL SÜTUN: Başlıq, Lövhə və Mesajlar -->
+            <div class="sudoku-left-column">
+                <div class="sudoku-game-topbar">
+                    <div class="game-heading">
+                        <span class="game-icon" aria-hidden="true">▦</span>
+                        <div>
+                            <h3>Sudoku</h3>
+                            <p>9 × 9 oyun lövhəsi</p>
+                        </div>
+                    </div>
+
+                    <span class="difficulty-badge" id="difficultyLabel">
+                        <span class="badge-icon">📊</span> @Model.Difficulty
+                    </span>
+                </div>
+                <p class="sudoku-message"
+                   id="gameMessage"
+                   role="status"
+                   aria-live="polite">@Model.Message</p>
+
+                <div class="sudoku-completed"
+                     id="completedMessage"
+                     @(!Model.Completed ? "hidden" : null)>
+                    <span aria-hidden="true">✓</span>
+                    <div>
+                        <strong>Əla nəticə!</strong>
+                        <p>Sudoku tapmacasını tamamladın.</p>
+                   
+                    </div>
+               
+                </div>
+
+                <div class="sudoku-board-container">
+                    <table class="sudoku-board professional-board" aria-label="Sudoku oyun lövhəsi">
+                        <tbody>
+                            @for (int row = 0; row < 9; row++)
+                            {
+                                <tr>
+                                    @for (int col = 0; col < 9; col++)
+                                    {
+                                        <td>
+                                            @if (Model.Fixed[row, col])
+                                            {
+                                                <span class="fixed-number"
+                                                      data-row="@row"
+                                                      data-col="@col">
+                                                    @Model.Board[row, col]
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <input class="cell-input"
+                                                       type="text"
+                                                       name="number"
+                                                       inputmode="numeric"
+                                                       maxlength="1"
+                                                       autocomplete="off"
+                                                       aria-label="@($"Sətir {row + 1}, sütun {col + 1}")"
+                                                       data-row="@row"
+                                                       data-col="@col"
+                                                       value="@(Model.Board[row, col] == 0 ? "" : Model.Board[row, col].ToString())" />
+                                            }
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+
+                <div class="game-footnote">
+                    <i class="fas fa-info-circle" aria-hidden="true"></i>
+                    <span>Əvvəlcədən verilmiş rəqəmləri dəyişmək mümkün deyil.</span>
+                </div>
+            </div>
+
+            <!-- SAĞ SÜTUN: Panel (Statistika, 3x3 Klaviatura, Düymələr, Yeni oyun) -->
+            <div class="sudoku-right-column">
+                <div class="right-panel-box">
+                    <!-- 1. Rəqəm seçimi (3x3 şəbəkə) -->
+                    <div class="number-picker-section">
+                        <div class="number-picker-heading">
+                            <strong>Rəqəm seç</strong>
+                            <span>və ya klaviaturadan istifadə et</span>
+                        </div>
+
+                        <div class="number-keypad" aria-label="Rəqəm seçimi">
+                            @for (int number = 1; number <= 9; number++)
+                            {
+                                <button type="button"
+                                        class="number-button"
+                                        data-number="@number">
+                                    @number
+                                </button>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- 2. Statistikalar -->
+                    <div class="sudoku-stats">
+                        <div class="sudoku-stat">
+                            <span class="stat-icon" aria-hidden="true">◷</span>
+                            <span class="stat-label">Oyun vaxtı</span>
+                            <strong id="gameTimer">02:34</strong>
+                        </div>
+
+                        <div class="sudoku-stat">
+                            <span class="stat-icon red-icon" aria-hidden="true">!</span>
+                            <span class="stat-label">Səhvlər</span>
+                            <strong id="mistakesCount">@Model.Mistakes</strong>
+                        </div>
+
+                        <div class="sudoku-stat">
+                            <span class="stat-icon purple-icon" aria-hidden="true">☆</span>
+                            <span class="stat-label">İpucları</span>
+                            <strong id="hintsCount">@Model.HintsUsed</strong>
+                        </div>
+                    </div>
+
+     
+
+                    <!-- 3. Əməliyyat düymələri -->
+                    <div class="game-actions">
+                        <button type="button" class="game-action" id="hintButton">
+                            <span class="action-icon">✦</span>
+                            <span>İpucu</span>
+                        </button>
+
+                        <button type="button" class="game-action" id="clearButton">
+                            <span class="action-icon">⌫</span>
+                            <span>Təmizlə</span>
+                        </button>
+
+                        <button type="button" class="game-action" id="undoButton">
+                            <span class="action-icon">↶</span>
+                            <span>Geri qaytar</span>
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- 4. Çətinlik seçimi və Yeni oyun düyməsi -->
+                <form asp-controller="Home"
+                      asp-action="New"
+                      method="post"
+                      class="new-game-form professional-new-game">
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="difficulty-control">
+                        <label for="difficultySelect">Çətinlik səviyyəsi</label>
+
+                        <select id="difficultySelect" name="difficulty">
+                            <option value="Asan" selected="@(Model.Difficulty == "Asan")">Asan</option>
+                            <option value="Orta" selected="@(Model.Difficulty == "Orta")">Orta</option>
+                            <option value="Çətin" selected="@(Model.Difficulty == "Çətin")">Çətin</option>
+                            <option value="Ekspert" selected="@(Model.Difficulty == "Ekspert")">Ekspert</option>
+                            <option value="Usta" selected="@(Model.Difficulty == "Usta")">Usta</option>
+                            <option value="Ekstremal" selected="@(Model.Difficulty == "Ekstremal")">Ekstremal</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="new-game-button">
+                        <span aria-hidden="true">↻</span>
+                        Yeni oyun
+                    </button>
+                </form>
+            </div>
+
+            @* AJAX sorğuları üçün antiforgery token *@
+            <div id="ajaxTokenContainer" hidden>
+                @Html.AntiForgeryToken()
+            </div>
+        </div>
+    </section>
+
+    <section class="difficulty-section">
+        <div class="section-heading">
+            <h2>Öz səviyyəni seç</h2>
+            <p>
+                Sadə tapmacalardan çətin çağırışlara qədər
+                bacarığını addım-addım inkişaf etdir.
+            </p>
+        </div>
+
+        <div class="difficulty-grid">
+            <div class="difficulty-card">
+                <h3>Asan</h3>
+                <p>Sudokuya yeni başlayanlar və qaydaları öyrənmək istəyənlər üçün mükəmməl başlanğıc. Sadə skanlama və vizual təhlillə həll olunan, zehni yormayan tapmacalar.</p>
+            </div>
+            <div class="difficulty-card">
+                <h3>Orta</h3>
+                <p>Gündəlik məntiq məşqi və beyin gimnastikası üçün balanslı səviyyə. Rəqəmlərin gizli kombinasiyalarını tapmaq və qeydlər aparmaq üçün ideal keçid mərhələsi.</p>
+            </div>
+            <div class="difficulty-card">
+                <h3>Çətin</h3>
+                <p>Daha çox diqqət, dərin təhlil və xüsusi həll strategiyaları tələb edir. Namizəd rəqəmləri izləməli və mürəkkəb blok əlaqələrini kəşf etməli olacaqsınız.</p>
+            </div>
+            <div class="difficulty-card">
+                <h3>Ekspert</h3>
+                <p>Qabaqcıl strategiyalarını və səbrini sına. Lövhədə cəmi 24 rəqəm qalır (57 xana boşdur). Standart baxışın kifayət etmədiyi, hər addımı incəliklə hesablamaq tələb edən peşəkar meydan.</p>
+            </div>
+            <div class="difficulty-card">
+                <h3>Usta</h3>
+                <p>Təcrübəli oyunçular üçün unikal və çətin çağırış. Cəmi 20 rəqəmlə başla (61 xana boşdur). Boşluqların dənizində rəqəmlər arasındakı gizli bağları görmək və bir neçə addım sonrasını təxmin etmək zamanıdır.</p>
+            </div>
+            <div class="difficulty-card">
+                <h3>Ekstremal</h3>
+                <p>Məntiq bacarığını ən yüksək həddə yoxla. Minimum rəqəmlə maksimum çətinlik: lövhədə cəmi 17 rəqəm saxlanılır (64 xana boşdur). Yalnız ən dözümlü və diqqətli oyunçuların tamamlayacağı, səhvə yer qoymayan tapmacalar.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="learning-section">
+        <div class="section-heading">
+            <h2>Hər gün bir addım irəli</h2>
+            <p>
+                Mütəmadi məşq et, yeni strategiyalar öyrən
+                və Sudoku bacarıqlarını inkişaf etdir.
+            </p>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+    <script src="~/js/home.js" asp-append-version="true"></script>
+}

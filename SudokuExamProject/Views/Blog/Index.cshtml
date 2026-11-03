@@ -1,0 +1,232 @@
+﻿@model List<SudokuExamProject.Models.BlogArticle>
+
+@{
+    ViewData["Title"] = "Sudoku Bloqu";
+
+    var categories = Model
+        .Select(a => a.Category)
+        .Distinct()
+        .OrderBy(c => c)
+        .ToList();
+}
+
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/blog.css"
+          asp-append-version="true" />
+}
+
+<main class="blog-page">
+
+    <section class="blog-hero">
+        <div class="blog-hero-content">
+            <span class="blog-label">SUDOKU BİLİK MƏRKƏZİ</span>
+
+            <h1>Sudoku <span>Bloqu</span></h1>
+
+            <p>
+                Sudoku qaydalarını öyrən, məntiqi həll üsullarını
+                kəşf et və tapmacaları daha inamla həll etməyə başla.
+                Faydalı məqalələrimizlə biliklərini inkişaf etdir.
+            </p>
+
+            <a href="#blog-articles" class="blog-hero-btn">
+                Məqalələri kəşf et <span>→</span>
+            </a>
+        </div>
+
+        <div class="blog-hero-decoration">
+            <div class="mini-sudoku">
+                <span>5</span><span></span><span>3</span>
+                <span></span><span>7</span><span></span>
+                <span>9</span><span></span><span>2</span>
+            </div>
+
+            <div class="hero-circle"></div>
+        </div>
+    </section>
+
+    <section class="blog-content" id="blog-articles">
+
+        <div class="blog-section-heading">
+            <div>
+                <span class="section-eyebrow">
+                    ÖYRƏN VƏ İNKİŞAF ET
+                </span>
+
+                <h2>Bloqumuzu kəşf et</h2>
+
+                <p>
+                    Sudoku haqqında faydalı məlumatlar,
+                    praktik məsləhətlər və həll strategiyaları.
+                </p>
+            </div>
+
+            <div class="article-total">
+                <strong>@Model.Count</strong>
+                <span>məqalə</span>
+            </div>
+        </div>
+
+        <div class="blog-toolbar">
+
+            <div class="blog-filters">
+                <button type="button"
+                        class="filter-btn active"
+                        data-category="all">
+                    Bütün məqalələr
+                </button>
+
+                @foreach (var category in categories)
+                {
+                    <button type="button"
+                            class="filter-btn"
+                            data-category="@category">
+                        @category
+                    </button>
+                }
+            </div>
+
+            <label class="blog-search-wrapper">
+                <span aria-hidden="true">⌕</span>
+
+                <input type="search"
+                       id="blogSearch"
+                       class="blog-search"
+                       placeholder="Məqalə axtar..."
+                       aria-label="Məqalə axtar" />
+            </label>
+        </div>
+
+        <div class="blog-results-info">
+            <span id="resultsCount">
+                @Model.Count məqalə göstərilir
+            </span>
+        </div>
+
+        <div class="blog-grid" id="blogGrid">
+
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var article = Model[i];
+
+                <article class="blog-card"
+                         data-category="@article.Category"
+                         data-title="@article.Title"
+                         data-description="@article.Introduction">
+
+                    <div class="article-visual visual-@(i % 6)">
+
+                   
+
+                        <div class="article-icon">
+                            @switch (i % 6)
+                            {
+                                case 0:
+                                    <span>9×9</span>
+                                    break;
+                                case 1:
+                                    <span>1–9</span>
+                                    break;
+                                case 2:
+                                    <span>Sudoku</span>
+                                    break;
+                                case 3:
+                                    <span>✦</span>
+                                    break;
+                                case 4:
+                                    <span>XY</span>
+                                    break;
+                                default:
+                                    <span>✓</span>
+                                    break;
+                            }
+                        </div>
+
+                        <span class="visual-caption">
+                            MƏNTİQİ DÜŞÜNCƏ
+                        </span>
+                    </div>
+
+                    <div class="article-body">
+
+                        <span class="article-category">
+                            @article.Category
+                        </span>
+
+                        <p class="article-date">
+                            @article.Date
+                        </p>
+
+                        <h3>@article.Title</h3>
+
+                        <p class="article-description">
+                            @article.Introduction
+                        </p>
+
+                        <a asp-controller="Blog"
+                           asp-action="Details"
+                           asp-route-slug="@article.Slug"
+                           class="read-more">
+                            Ətraflı oxu <span>→</span>
+                        </a>
+                    </div>
+                </article>
+            }
+
+        </div>
+
+        <div class="blog-empty" id="blogEmpty" hidden>
+            <span class="empty-icon">⌕</span>
+
+            <h3>Məqalə tapılmadı</h3>
+
+            <p>
+                Axtarış sözünü dəyiş və ya başqa kateqoriya seç.
+            </p>
+
+            <button type="button"
+                    id="resetBlogFilters"
+                    class="reset-filter-btn">
+                Bütün məqalələri göstər
+            </button>
+        </div>
+
+
+        <nav class="blog-pagination"
+             id="blogPagination"
+             aria-label="Məqalə səhifələri">
+
+            <button type="button"
+                    class="page-button"
+                    id="prevPage">
+                ← Previous
+            </button>
+
+            <div class="page-numbers" id="pageNumbers">
+            </div>
+
+            <button type="button"
+                    class="page-button"
+                    id="nextPage">
+                Next →
+            </button>
+
+        </nav>
+
+        <div class="blog-bottom">
+            <p>Öyrən. Həll et. İnkişaf et.</p>
+
+            <a asp-controller="Home"
+               asp-action="Index">
+                Sudoku oyununa qayıt →
+            </a>
+        </div>
+
+    </section>
+</main>
+
+@section Scripts {
+    <script src="~/js/blog.js"
+            asp-append-version="true"></script>
+}

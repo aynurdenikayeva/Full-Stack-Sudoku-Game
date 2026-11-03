@@ -1,0 +1,166 @@
+﻿@model User
+@{
+    ViewData["Title"] = "İstifadəçi əlavə et";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid p-4">
+    <!-- PAGE HEADER -->
+    <div class="mb-4">
+        <h2 class="fw-bold mb-2">Yeni istifadəçi əlavə et</h2>
+        <p class="text-muted">AXIOMIX platformasına yeni istifadəçi əlavə edin və onun hesab məlumatlarını idarə edin.</p>
+    </div>
+
+    <div class="row g-4">
+        <!-- USER INFORMATION -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div class="rounded-3 bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center" style="width:50px;height:50px;">
+                            <i class="bi bi-person-plus fs-3"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-1">İstifadəçi məlumatları</h5>
+                            <p class="text-muted small mb-0">Yeni Sudoku hesabı yaratmaq üçün məlumatları daxil edin.</p>
+                        </div>
+                    </div>
+
+                    <form asp-area="Admin" asp-controller="Users" asp-action="Add" method="post" enctype="multipart/form-data">
+                        @Html.AntiForgeryToken()
+
+                        <!-- XƏTALARI EKRANDA GÖRMƏK ÜÇÜN VALİDASİYA XÜLASƏSİ -->
+                        <div asp-validation-summary="All" class="text-danger mb-4 fw-bold"></div>
+
+                        <!-- FIRST NAME / LAST NAME -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label fw-semibold">Ad</label>
+                                <input asp-for="Name" type="text" id="firstName" class="form-control" placeholder="İstifadəçinin adını daxil edin." maxlength="50" required />
+                                <span asp-validation-for="Name" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label fw-semibold">Soyad</label>
+                                <input asp-for="Surname" type="text" id="lastName" class="form-control" placeholder="İstifadəçinin soyadını daxil edin." maxlength="50" required />
+                                <span asp-validation-for="Surname" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <!-- USERNAME -->
+                        <div class="mb-3">
+                            <label for="userName" class="form-label fw-semibold">İstifadəçi adı</label>
+                            <input asp-for="UserName" type="text" id="userName" class="form-control" placeholder="Məsələn: sudoku_player" maxlength="30" required />
+                            <div class="form-text">Oyunçu platformada bu adla tanına bilər.</div>
+                            <span asp-validation-for="UserName" class="text-danger small"></span>
+                        </div>
+
+                        <!-- EMAIL -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-semibold">E-poçt ünvanı</label>
+                            <input asp-for="Email" type="email" id="email" class="form-control" placeholder="game@gmail.com" maxlength="254" required />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <!-- PHONE -->
+                        <div class="mb-3">
+                            <label for="phone" class="form-label fw-semibold">Telefon nömrəsi</label>
+                            <input asp-for="TelephonNumber" type="tel" id="phone" class="form-control" placeholder="+994 XX XXX XX XX" maxlength="20" />
+                            <span asp-validation-for="TelephonNumber" class="text-danger small"></span>
+                        </div>
+
+                        <!-- ROLE / LEVEL -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="role" class="form-label fw-semibold">İstifadəçi rolu</label>
+                                <select id="role" asp-for="UserRole" class="form-select" required>
+                                    <option value="Player" selected>Oyunçu</option>
+                                    <option value="Moderator">Moderator</option>
+                                    <option value="Admin">Admin</option>
+                                </select>
+                                <div class="form-text">Rol istifadəçinin sistemdəki səlahiyyətlərini müəyyən edir.</div>
+                                <span asp-validation-for="UserRole" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="level" class="form-label fw-semibold">Sudoku səviyyəsi</label>
+                                <select id="level" asp-for="SudokuLevel" class="form-select" required>
+                                    <option value="Beginner" selected>Başlanğıc</option>
+                                    <option value="Medium">Orta</option>
+                                    <option value="Hard">Çətin</option>
+                                    <option value="Expert">Ekspert</option>
+                                </select>
+                                <span asp-validation-for="SudokuLevel" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <!-- ACCOUNT STATUS -->
+                        <div class="mb-3">
+                            <label for="status" class="form-label fw-semibold">Hesab statusu</label>
+                            <select id="status" asp-for="AccountStatus" class="form-select" required>
+                                <option value="Active" selected>Aktiv</option>
+                                <option value="Inactive">Deaktiv</option>
+                            </select>
+                            <span asp-validation-for="AccountStatus" class="text-danger small"></span>
+                        </div>
+
+                        <!-- IMAGE ADD -->
+                        <div class="mb-4">
+                            <label for="formFile" class="form-label fw-semibold">Hesab sahibinin şəklini daxil et</label>
+                            <input asp-for="formFile" type="file" id="formFile" class="form-control" accept="image/*" />
+                            <span asp-validation-for="formFile" class="text-danger small"></span>
+                        </div>
+
+                        <!-- NOTES -->
+                        <div class="mb-4">
+                            <label for="notes" class="form-label fw-semibold">Qeydlər</label>
+                            <textarea id="notes" asp-for="Note" class="form-control" rows="4" maxlength="1000" placeholder="Əlavə məlumat..."></textarea>
+                            <span asp-validation-for="Note" class="text-danger small"></span>
+                        </div>
+
+                        <!-- BUTTONS -->
+                        <div class="d-flex flex-wrap gap-2">
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="bi bi-person-check me-2"></i> İstifadəçi yarat
+                            </button>
+                            <a asp-area="Admin" asp-controller="Users" asp-action="Index" class="btn btn-outline-secondary px-4">Ləğv et</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUDOKU ADMIN CHECKLIST -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center gap-2 mb-4">
+                        <i class="bi bi-grid-3x3-gap-fill fs-4 text-primary"></i>
+                        <h5 class="fw-bold mb-0">Oyunçu idarəetməsi</h5>
+                    </div>
+
+                    <!-- ROLE CHECK -->
+                    <div class="d-flex gap-3 mb-4">
+                        <div class="flex-shrink-0">
+                            <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center" style="width:44px;height:44px;">
+                                <i class="bi bi-shield-check fs-5"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 class="fw-semibold mb-1">İstifadəçi rolunu təyin et</h6>
+                            <p class="text-muted small mb-0">Yeni oyunçuya yalnız lazım olan səlahiyyətləri ver.</p>
+                        </div>
+                    </div>
+
+                    <!-- LEVEL CHECK -->
+                    <div class="d-flex gap-3 mb-4">
+                        <div class="flex-shrink-0">
+                            <div class="rounded-circle bg-success bg-opacity-10 text-success d-flex align-items-center justify-content-center" style="width:44px;height:44px;">
+                                <i class="bi bi-trophy fs-5"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 class="fw-semibold mb-1">Oyun səviyyəsini seç</h6>
+                            <p class="text-muted small mb-0">Başlanğıc, orta, çətin və ya ekspert səviyyəsini müəyyən et.</p>
+                        </div>
+                    </div>
+
+                    <!-- STATUS CHECK -->

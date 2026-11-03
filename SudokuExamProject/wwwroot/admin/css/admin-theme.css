@@ -1,0 +1,474 @@
+﻿
+/* =========================================
+   SUDOKUGAME ADMIN THEME
+   Contact page purple palette
+========================================= */
+
+:root {
+    --admin-accent: #7965e8;
+    --admin-accent-hover: #6550d0;
+    --admin-heading: #30284f;
+    --admin-text: #6f6d80;
+    --admin-muted: #77758a;
+    --admin-border: #eae8f4;
+    --admin-soft: #f5f2ff;
+    --admin-white: #ffffff;
+    --admin-page: #fbfaff;
+    --admin-sidebar-width: 260px;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--admin-page);
+    color: var(--admin-text);
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.admin-shell {
+    display: flex;
+    min-height: 100vh;
+    background: var(--admin-page);
+}
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.admin-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    width: var(--admin-sidebar-width);
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: var(--admin-white);
+    border-right: 1px solid var(--admin-border);
+    transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+    padding: 28px 22px 25px;
+    border-bottom: 1px solid var(--admin-border);
+}
+
+.brand-mark {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    color: var(--admin-heading);
+    text-decoration: none;
+}
+
+    .brand-mark:hover {
+        color: var(--admin-accent);
+    }
+
+.brand-icon {
+    display: flex;
+    flex: 0 0 44px;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #e9e3ff;
+    border-radius: 12px;
+    background: var(--admin-soft);
+    color: var(--admin-accent);
+    font-size: 21px;
+}
+
+.brand-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.brand-title {
+    color: var(--admin-heading);
+    font-size: 18px;
+    font-weight: 750;
+    line-height: 1.2;
+}
+
+.brand-subtitle {
+    color: var(--admin-muted);
+    font-size: 11px;
+    letter-spacing: 0.3px;
+}
+
+/* =========================================
+   SIDEBAR NAVIGATION
+========================================= */
+
+.sidebar-nav {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 6px;
+    padding: 24px 14px;
+}
+
+.admin-sidebar .nav-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-height: 46px;
+    padding: 12px 14px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--admin-text);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+    .admin-sidebar .nav-link:hover {
+        background: #faf8ff;
+        color: var(--admin-accent);
+    }
+
+    .admin-sidebar .nav-link.active {
+        border-color: #eee9ff;
+        background: var(--admin-soft);
+        color: var(--admin-accent-hover);
+        font-weight: 650;
+    }
+
+.nav-icon {
+    display: flex;
+    flex: 0 0 22px;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    font-size: 18px;
+}
+
+.nav-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-sidebar .nav-link:focus-visible,
+.brand-mark:focus-visible {
+    outline: 3px solid rgba(121, 101, 232, 0.25);
+    outline-offset: 2px;
+}
+
+/* =========================================
+   SIDEBAR FOOTER
+========================================= */
+
+.sidebar-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 18px;
+    padding: 20px 4px;
+    border-top: 1px solid var(--admin-border);
+}
+
+.status-dot {
+    flex: 0 0 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #40b983;
+    box-shadow: 0 0 0 4px rgba(64, 185, 131, 0.12);
+}
+
+.sidebar-footer-text {
+    color: var(--admin-muted);
+    font-size: 11px;
+}
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.admin-main {
+    flex: 1;
+    min-width: 0;
+    min-height: 100vh;
+    margin-left: var(--admin-sidebar-width);
+    padding: 32px;
+    background: var(--admin-page);
+}
+
+    /* Common headings inside dashboard pages */
+
+    .admin-main h1,
+    .admin-main h2,
+    .admin-main h3,
+    .admin-main h4,
+    .admin-main h5 {
+        color: var(--admin-heading);
+    }
+
+    .admin-main h1 {
+        font-size: clamp(26px, 3vw, 34px);
+        font-weight: 750;
+        letter-spacing: -0.7px;
+    }
+
+    .admin-main h2 {
+        font-size: 23px;
+        font-weight: 700;
+    }
+
+    .admin-main p {
+        color: var(--admin-muted);
+        line-height: 1.8;
+    }
+
+    /* =========================================
+   CARDS
+========================================= */
+
+    .admin-main .card {
+        overflow: hidden;
+        border: 1px solid var(--admin-border);
+        border-radius: 12px;
+        background: var(--admin-white);
+        box-shadow: 0 3px 14px rgba(48, 40, 79, 0.025);
+    }
+
+    .admin-main .card-header {
+        padding: 18px 22px;
+        border-bottom: 1px solid var(--admin-border);
+        background: var(--admin-white);
+        color: var(--admin-heading);
+        font-weight: 650;
+    }
+
+    .admin-main .card-body {
+        padding: 22px;
+    }
+
+    .admin-main .card-footer {
+        border-top: 1px solid var(--admin-border);
+        background: var(--admin-white);
+    }
+
+    /* =========================================
+   BUTTONS
+========================================= */
+
+    .admin-main .btn-primary {
+        border-color: var(--admin-accent);
+        background: var(--admin-accent);
+        color: #fff;
+    }
+
+        .admin-main .btn-primary:hover {
+            border-color: var(--admin-accent-hover);
+            background: var(--admin-accent-hover);
+            color: #fff;
+        }
+
+    .admin-main .btn-outline-primary {
+        border-color: var(--admin-accent);
+        color: var(--admin-accent);
+    }
+
+        .admin-main .btn-outline-primary:hover {
+            border-color: var(--admin-accent);
+            background: var(--admin-accent);
+            color: #fff;
+        }
+
+    .admin-main .btn {
+        border-radius: 8px;
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+        .admin-main .btn:focus-visible {
+            outline: 3px solid rgba(121, 101, 232, 0.22);
+            outline-offset: 2px;
+        }
+
+    /* =========================================
+   FORMS
+========================================= */
+
+    .admin-main .form-label,
+    .admin-main label {
+        color: var(--admin-heading);
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .admin-main .form-control,
+    .admin-main .form-select {
+        min-height: 44px;
+        border: 1px solid var(--admin-border);
+        border-radius: 8px;
+        background-color: #fff;
+        color: var(--admin-heading);
+        box-shadow: none;
+    }
+
+    .admin-main textarea.form-control {
+        min-height: 120px;
+    }
+
+    .admin-main .form-control::placeholder {
+        color: #a19eb2;
+    }
+
+    .admin-main .form-control:focus,
+    .admin-main .form-select:focus {
+        border-color: var(--admin-accent);
+        box-shadow: 0 0 0 3px rgba(121, 101, 232, 0.12);
+    }
+
+    /* =========================================
+   TABLES
+========================================= */
+
+    .admin-main .table {
+        --bs-table-bg: transparent;
+        margin-bottom: 0;
+        color: var(--admin-text);
+        vertical-align: middle;
+    }
+
+        .admin-main .table thead th {
+            padding: 15px 16px;
+            border-bottom: 1px solid var(--admin-border);
+            background: #faf9ff;
+            color: var(--admin-heading);
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .admin-main .table tbody td {
+            padding: 15px 16px;
+            border-bottom-color: #f0eef7;
+            font-size: 13px;
+        }
+
+        .admin-main .table tbody tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .admin-main .table tbody tr:hover td {
+            background: #fcfbff;
+        }
+
+    /* =========================================
+   BADGES AND ALERTS
+========================================= */
+
+    .admin-main .badge.bg-primary {
+        background-color: var(--admin-accent) !important;
+    }
+
+    .admin-main .alert {
+        border-radius: 9px;
+    }
+
+    /* =========================================
+   DROPDOWNS AND PAGINATION
+========================================= */
+
+    .admin-main .dropdown-menu {
+        padding: 8px;
+        border: 1px solid var(--admin-border);
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(48, 40, 79, 0.08);
+    }
+
+    .admin-main .dropdown-item {
+        padding: 9px 12px;
+        border-radius: 6px;
+        color: var(--admin-text);
+    }
+
+        .admin-main .dropdown-item:hover {
+            background: var(--admin-soft);
+            color: var(--admin-accent-hover);
+        }
+
+    .admin-main .page-link {
+        border-color: var(--admin-border);
+        color: var(--admin-accent);
+    }
+
+    .admin-main .page-item.active .page-link {
+        border-color: var(--admin-accent);
+        background: var(--admin-accent);
+        color: #fff;
+    }
+
+/* =========================================
+   MOBILE BACKDROP
+========================================= */
+
+.sidebar-backdrop {
+    display: none;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 991px) {
+    .admin-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .admin-main {
+        margin-left: 0;
+        padding: 26px;
+    }
+
+    .admin-shell.sidebar-open .admin-sidebar {
+        transform: translateX(0);
+        box-shadow: 12px 0 35px rgba(48, 40, 79, 0.08);
+    }
+
+    .admin-shell.sidebar-open .sidebar-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        display: block;
+        background: rgba(48, 40, 79, 0.25);
+        backdrop-filter: blur(2px);
+    }
+}
+
+@media (max-width: 575px) {
+    .admin-main {
+        padding: 18px 14px;
+    }
+
+        .admin-main .card-body {
+            padding: 16px;
+        }
+
+        .admin-main .card-header {
+            padding: 15px 16px;
+        }
+
+        .admin-main h1 {
+            font-size: 26px;
+        }
+
+        .admin-main h2 {
+            font-size: 20px;
+        }
+}

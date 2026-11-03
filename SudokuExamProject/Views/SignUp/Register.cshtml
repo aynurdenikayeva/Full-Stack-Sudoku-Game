@@ -1,0 +1,110 @@
+﻿@model SudokuExamProject.Models.SignUp
+
+@{
+    ViewData["Title"] = "Qeydiyyat";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+    <!-- Yerli Bootstrap (İnternetsiz anında yüklənmə) -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Tam optimallaşdırılmış sürətli xarici CSS -->
+    <link rel="stylesheet" href="~/css/register.css" asp-append-version="true" />
+</head>
+<body>
+
+    <main class="login-split-container">
+
+        <!-- GERİ QAYIT LİNKİ (KARTIN XARİCİNDƏ VƏ YAZI FORMASINDA) -->
+        <div class="outer-back-link-wrapper">
+            <a href="javascript:void(0);" onclick="history.back();" class="outer-back-link">
+                ← Əvvəlki səhifəyə qayıt
+            </a>
+        </div>
+
+        <div class="login-main-card">
+
+            <!-- SOL HİSSƏ: AĞ QEYDİYYAT FORMU -->
+            <section class="login-form-side">
+                <div class="brand-header">
+                    <h1>Hesab yarat</h1>
+                    <p>AXIOMIX ailəsinə qoşul!</p>
+                </div>
+
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["Success"]
+                    </div>
+                }
+
+                <form asp-controller="SignUp" asp-action="Register" method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-1"></div>
+
+                    <div class="form-group-block">
+                        <label asp-for="Name" class="form-label">Ad</label>
+                        <input asp-for="Name" class="form-control" placeholder="Adınızı daxil edin" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group-block">
+                        <label asp-for="Email" class="form-label">E-poçt</label>
+                        <input asp-for="Email" class="form-control" placeholder="example@email.com" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group-block">
+                        <label asp-for="Password" class="form-label">Şifrə</label>
+                        <input asp-for="Password" class="form-control" placeholder="Ən azı 8 simvol" autocomplete="new-password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group-block">
+                        <label asp-for="ConfirmPassword" class="form-label">Şifrəni təkrarla</label>
+                        <input asp-for="ConfirmPassword" class="form-control" placeholder="Şifrəni yenidən yaz" autocomplete="new-password" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="register-button">Qeydiyyatdan keç</button>
+                </form>
+
+                <div class="social-divider">və ya</div>
+                <div class="social-group">
+                    <!-- asp-controller "SignUp" olaraq dəyişdirildi -->
+                    <a asp-controller="SignUp" asp-action="ExternalLogin" asp-route-provider="Google" class="btn-social btn-google">
+                        <span class="icon-google-local"></span> Google ilə davam et
+                    </a>
+
+                    <a asp-controller="SignUp" asp-action="ExternalLogin" asp-route-provider="GitHub" class="btn-social btn-github">
+                        <span class="icon-github-local"></span> GitHub ilə davam et
+                    </a>
+                </div>
+
+                <div class="card-footer-links">
+                    <p>Artıq hesabın var? <a asp-controller="SignIn" asp-action="Index">Daxil ol</a></p>
+                </div>
+            </section>
+
+            <!-- SAĞ HİSSƏ: ŞƏKİL SAHƏSİ -->
+            <section class="login-image-side">
+                <img src="~/images/sudoku-register.jpg" alt="Qeydiyyat İllüstrasiyası" class="custom-register-img" />
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Yerli sürətli skript bazası -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+
+</body>
+</html>
