@@ -113,57 +113,27 @@
                 </a>
 
                 <!-- İstifadəçi hesabı -->
-                <!-- İstifadəçi hesabı -->
                 <div class="auth-links">
 
                     @if (User.Identity != null && User.Identity.IsAuthenticated)
                     {
-                        <!-- İstifadəçi daxil olubsa menyu bloku -->
-                        <div class="dropdown d-inline-block">
-
-                            <a class="nav-link dropdown-toggle login-btn"
-                               href="#"
-                               id="layoutUserDropdown"
-                               role="button"
-                               data-bs-toggle="dropdown"
-                               aria-expanded="false"
-                               style="border: none; background: transparent;">
-                                <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                                @User.Identity.Name
+                        <div class="d-inline-flex align-items-center gap-3">
+                            <!-- Profil linki -->
+                            <a asp-controller="Profile" asp-action="Index" class="text-decoration-none" style="background: none; border: none; color: #3A445C; cursor: pointer;">
+                                <i class="fa fa-user-circle-o"></i> @User.Identity.Name
                             </a>
 
-                            <ul class="dropdown-menu dropdown-menu-end"
-                                aria-labelledby="layoutUserDropdown">
-
-                                <li>
-                                    <a class="dropdown-item"
-                                       asp-controller="Profile"
-                                       asp-action="Index">
-                                        <i class="fa fa-user" aria-hidden="true"></i>
-                                        Profilim
-                                    </a>
-                                </li>
-
-                                <li><hr class="dropdown-divider"></li>
-
-                                <li>
-                                    <!-- Çıxış düyməsi Post metodu ilə və təhlükəsiz ötürülür -->
-                                    <form asp-controller="SignUp"
-                                          asp-action="Logout"
-                                          method="post"
-                                          class="px-2">
-                                        @Html.AntiForgeryToken()
-                                        <button type="submit"
-                                                class="btn btn-sm btn-danger w-100 text-start text-white">
-                                            <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                            Çıxış et
-                                        </button>
-                                    </form>
-                                </li>
-
-                            </ul>
+                            <!-- Sadə Çıxış düyməsi -->
+                            <form asp-controller="Account" asp-action="Logout" method="post" style="display:inline;">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" style="background: none; border: none; color: #3A445C; cursor: pointer; padding: 0;">
+                                    <i class="fa fa-sign-out"></i> Çıxış et
+                                </button>
+                            </form>
                         </div>
                     }
+
+                    
                     else
                     {
                         <!-- İstifadəçi daxil olmayıbsa görünən standart düymələr -->
@@ -172,7 +142,7 @@
                         </a>
 
                         <a class="signup-btn"
-                           asp-controller="SignUp"
+                           asp-controller="Account"
                            asp-action="Register">
                             Qeydiyyat
                             <i class="fa fa-arrow-right"
@@ -293,7 +263,7 @@
                     Daxil ol
                 </a>
 
-                <a asp-controller="SignUp" asp-action="Register">
+                <a asp-controller="Account" asp-action="Register">
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
                     Qeydiyyatdan keç
                 </a>

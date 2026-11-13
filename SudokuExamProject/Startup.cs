@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SudokuExamProject.DataAccessLayer;
+using SudokuExamProject.Models;
 using SudokuExamProject.Services;
-using Microsoft.AspNetCore.Authentication.Cookies; // YENİ: Identity-siz Cookie idarəetməsi üçün vacibdir
+using System;
 
 namespace SudokuExamProject
 {
@@ -30,7 +32,7 @@ namespace SudokuExamProject
             // İstifadəçi sessiyası
             services.AddSession(options =>
             {
-                options.IdleTimeout = System.TimeSpan.FromMinutes(60);
+                options.IdleTimeout = TimeSpan.FromMinutes(60);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
@@ -48,18 +50,35 @@ namespace SudokuExamProject
             // E-poçt xidməti
             services.AddScoped<EmailService>();
 
-            // NOTE: services.AddIdentity() bütövlüklə buradan silindi!
+            // 1. IDENTITY KONFİQURASİYASI (ConfigureServices daxilində)
+            services.AddIdentity<AppUser,IdentityRole>(options =>
+            {
+                // İstifadəçi qaydaları
+                options.User.RequireUniqueEmail = true;
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                // Parol qaydaları
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 8;
+                // Hesabın kilidlənməsi (Lockout)
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(5);
+            })
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
 
-            // SOSİAL ŞƏBƏKƏLƏR ÜÇÜN GİZLİ VƏ TƏHLÜKƏSİZ OXUMA STRUKTURU (IDENTITY-SİZ DOĞRU VARIANT)
-            services.AddAuthentication(options =>
+            // 2. IDENTITY COOKIE AYARLARI (AddCookie əvəzinə bu işlədilir)
+            services.ConfigureApplicationCookie(options =>
             {
-                // Identity silindiyi üçün standart giriş növünü Cookie Authentication təyin edirik
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            })
-            .AddCookie(options =>
-            {
-                options.LoginPath = "/SignIn"; // İstifadəçi icazəsiz səhifəyə girəndə yönlənəcək link
-            })
+                options.LoginPath = "/SignIn"; // İcazəsiz girişdə yönləndiriləcək ünvan
+                options.AccessDeniedPath = "/AccessDenied";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+            });
+
+            // 3. SOSİAL ŞƏBƏKƏLƏR (Google və GitHub)
+            services.AddAuthentication()
             .AddGoogle(options =>
             {
                 options.ClientId = Configuration["Authentication:Google:ClientId"];
@@ -94,7 +113,7 @@ namespace SudokuExamProject
             // Endpoint-lərdən əvvəl Session aktivləşdirilir
             app.UseSession();
 
-            // Giriş məlumatlarının daxili API tərəfindən oxunması üçün mütləq bura yazılmalıdır
+            // Giriş və icazə yoxlamaları
             app.UseAuthentication();
             app.UseAuthorization();
 

@@ -1,0 +1,601 @@
+﻿
+/* =========================================
+   CONTACT PAGE
+   Purple palette — About page ilə uyğun
+========================================= */
+
+#mu-contact {
+    --contact-accent: #7965e8;
+    --contact-accent-hover: #6550d0;
+    --contact-heading: #30284f;
+    --contact-text: #6f6d80;
+    --contact-muted: #77758a;
+    --contact-border: #eae8f4;
+    --contact-background: #ffffff;
+    --contact-soft: #f5f2ff;
+    background: var(--contact-background);
+    color: var(--contact-text);
+    font-family: inherit;
+    padding: 100px 0 110px;
+    min-height: 70vh;
+}
+
+    #mu-contact *,
+    #mu-contact *::before,
+    #mu-contact *::after {
+        box-sizing: border-box;
+    }
+
+    /* =========================================
+   PAGE HEADING
+========================================= */
+
+    #mu-contact .contact-heading {
+        max-width: 760px;
+        margin: 0 auto 65px;
+        text-align: center;
+    }
+
+    #mu-contact .contact-eyebrow {
+        display: inline-block;
+        margin-bottom: 18px;
+        color: var(--contact-accent);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+    }
+
+    #mu-contact .contact-heading h1 {
+        margin: 0 0 20px;
+        color: var(--contact-heading);
+        font-size: clamp(32px, 4vw, 48px);
+        font-weight: 700;
+        line-height: 1.25;
+        letter-spacing: -1.2px;
+    }
+
+    #mu-contact .contact-heading p {
+        max-width: 650px;
+        margin: 0 auto;
+        color: var(--contact-muted);
+        font-size: 16px;
+        line-height: 1.9;
+    }
+
+    /* =========================================
+   MAIN LAYOUT
+========================================= */
+
+    #mu-contact .contact-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.8fr);
+        gap: 65px;
+        align-items: start;
+    }
+
+    #mu-contact .contact-form-section {
+        min-width: 0;
+    }
+
+    #mu-contact .section-heading {
+        margin-bottom: 32px;
+    }
+
+        #mu-contact .section-heading h2 {
+            margin: 0 0 12px;
+            color: var(--contact-heading);
+            font-size: 27px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        #mu-contact .section-heading p {
+            margin: 0;
+            color: var(--contact-muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+    /* =========================================
+   CONTACT FORM
+========================================= */
+
+    #mu-contact .contact-form {
+        width: 100%;
+    }
+
+    #mu-contact .form-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+    }
+
+    #mu-contact .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 24px;
+        min-width: 0;
+    }
+
+        #mu-contact .form-group label {
+            margin-bottom: 10px;
+            color: var(--contact-heading);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+    #mu-contact .form-control {
+        display: block;
+        width: 100%;
+        min-height: 54px;
+        padding: 14px 16px;
+        border: 1px solid var(--contact-border);
+        border-radius: 8px;
+        outline: none;
+        background: #fff;
+        color: var(--contact-heading);
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 1.5;
+        box-shadow: none;
+        transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+    }
+
+    #mu-contact textarea.form-control {
+        min-height: 155px;
+        resize: vertical;
+    }
+
+    #mu-contact .form-control::placeholder {
+        color: #a19eb2;
+        opacity: 1;
+    }
+
+    #mu-contact .form-control:hover {
+        border-color: #d4cdef;
+    }
+
+    #mu-contact .form-control:focus {
+        border-color: var(--contact-accent);
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(121, 101, 232, 0.12);
+    }
+
+    #mu-contact .form-control.input-validation-error {
+        border-color: #dc5555;
+        background: #fffdfd;
+    }
+
+        #mu-contact .form-control.input-validation-error:focus {
+            box-shadow: 0 0 0 3px rgba(220, 85, 85, 0.1);
+        }
+
+    /* =========================================
+   VALIDATION MESSAGES
+========================================= */
+
+    #mu-contact .field-error {
+        display: block;
+        margin-top: 7px;
+        color: #d64545;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    #mu-contact .validation-summary {
+        margin-bottom: 22px;
+        color: #d64545;
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+        #mu-contact .validation-summary:empty {
+            display: none;
+        }
+
+        #mu-contact .validation-summary ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+    /* =========================================
+   SUBMIT BUTTON
+========================================= */
+
+    #mu-contact .contact-submit {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+        min-height: 54px;
+        padding: 15px 24px;
+        border: 1px solid var(--contact-accent);
+        border-radius: 8px;
+        background: var(--contact-accent);
+        color: #fff;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+        #mu-contact .contact-submit:hover {
+            border-color: var(--contact-accent-hover);
+            background: var(--contact-accent-hover);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(101, 80, 208, 0.2);
+        }
+
+        #mu-contact .contact-submit:active {
+            transform: translateY(0);
+        }
+
+        #mu-contact .contact-submit:focus-visible {
+            outline: 3px solid rgba(121, 101, 232, 0.25);
+            outline-offset: 3px;
+        }
+
+    #mu-contact .submit-arrow {
+        display: inline-block;
+        font-size: 20px;
+        line-height: 1;
+        transition: transform 0.25s ease;
+    }
+
+    #mu-contact .contact-submit:hover .submit-arrow {
+        transform: translateX(4px);
+    }
+
+    #mu-contact .form-note {
+        margin: 16px 0 0;
+        color: var(--contact-muted);
+        font-size: 12px;
+        line-height: 1.7;
+    }
+
+    /* =========================================
+   SUCCESS / WARNING ALERTS
+========================================= */
+
+    #mu-contact .contact-alert {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 25px;
+        padding: 16px 18px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+        #mu-contact .contact-alert p {
+            margin: 0;
+        }
+
+    #mu-contact .contact-alert-success {
+        border-color: #cdebd9;
+        background: #f1fbf5;
+        color: #276749;
+    }
+
+    #mu-contact .contact-alert-warning {
+        border-color: #f2dfb0;
+        background: #fffaf0;
+        color: #8a6116;
+    }
+
+    #mu-contact .alert-icon {
+        flex: 0 0 auto;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    /* =========================================
+   CONTACT SIDEBAR
+========================================= */
+
+    #mu-contact .contact-sidebar {
+        min-width: 0;
+        padding: 34px;
+        border: 1px solid var(--contact-border);
+        border-radius: 12px;
+        background: #fff;
+    }
+
+    #mu-contact .sidebar-section {
+        width: 100%;
+    }
+
+    #mu-contact .sidebar-eyebrow {
+        display: inline-block;
+        margin-bottom: 14px;
+        color: var(--contact-accent);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    #mu-contact .sidebar-section h2 {
+        margin: 0 0 14px;
+        color: var(--contact-heading);
+        font-size: 23px;
+        font-weight: 700;
+        line-height: 1.4;
+    }
+
+    #mu-contact .sidebar-description {
+        margin: 0 0 28px;
+        color: var(--contact-muted);
+        font-size: 13px;
+        line-height: 1.9;
+    }
+
+    /* =========================================
+   CONTACT INFORMATION
+========================================= */
+
+    #mu-contact .contact-info-list {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    #mu-contact .contact-info-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        min-width: 0;
+    }
+
+    #mu-contact .info-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 44px;
+        width: 44px;
+        height: 44px;
+        border: 1px solid var(--contact-border);
+        border-radius: 9px;
+        background: var(--contact-soft);
+        color: var(--contact-accent);
+        font-size: 17px;
+    }
+
+    #mu-contact .info-content {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        min-width: 0;
+        padding-top: 2px;
+    }
+
+    #mu-contact .info-label {
+        color: var(--contact-muted);
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    #mu-contact .info-content a,
+    #mu-contact .info-value {
+        overflow-wrap: anywhere;
+        color: var(--contact-heading);
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.7;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+        #mu-contact .info-content a:hover {
+            color: var(--contact-accent);
+        }
+
+    /* =========================================
+   SIDEBAR DIVIDER
+========================================= */
+
+    #mu-contact .sidebar-divider {
+        width: 100%;
+        height: 1px;
+        margin: 32px 0;
+        background: var(--contact-border);
+    }
+
+    /* =========================================
+   WORKING HOURS
+========================================= */
+
+    #mu-contact .working-hours-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    #mu-contact .working-hours-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #f0eef7;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+        #mu-contact .working-hours-item:last-child {
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        #mu-contact .working-hours-item span {
+            color: var(--contact-muted);
+        }
+
+        #mu-contact .working-hours-item strong {
+            color: var(--contact-heading);
+            font-size: 12px;
+            font-weight: 600;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        #mu-contact .working-hours-item .closed-label {
+            color: #d64545;
+        }
+
+    /* =========================================
+   SIDEBAR FOOTER
+========================================= */
+
+    #mu-contact .sidebar-footer {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 30px;
+        padding-top: 22px;
+        border-top: 1px solid var(--contact-border);
+    }
+
+    #mu-contact .footer-line {
+        flex: 0 0 30px;
+        width: 30px;
+        height: 2px;
+        border-radius: 2px;
+        background: var(--contact-accent);
+    }
+
+    #mu-contact .sidebar-footer p {
+        margin: 0;
+        color: var(--contact-muted);
+        font-size: 12px;
+        font-style: italic;
+        line-height: 1.7;
+    }
+
+/* =========================================
+   RESPONSIVE — TABLET
+========================================= */
+
+@media (max-width: 991px) {
+    #mu-contact {
+        padding: 75px 0 85px;
+    }
+
+        #mu-contact .contact-heading {
+            margin-bottom: 48px;
+        }
+
+        #mu-contact .contact-layout {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 45px;
+        }
+
+        #mu-contact .contact-sidebar {
+            padding: 30px;
+        }
+
+        #mu-contact .contact-info-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+}
+
+/* =========================================
+   RESPONSIVE — MOBILE
+========================================= */
+
+@media (max-width: 767px) {
+    #mu-contact {
+        padding: 60px 0 70px;
+    }
+
+        #mu-contact .contact-heading {
+            margin-bottom: 38px;
+            padding: 0 8px;
+        }
+
+            #mu-contact .contact-heading h1 {
+                font-size: 34px;
+                letter-spacing: -0.7px;
+            }
+
+            #mu-contact .contact-heading p {
+                font-size: 14px;
+            }
+
+        #mu-contact .contact-layout {
+            gap: 35px;
+        }
+
+        #mu-contact .section-heading h2 {
+            font-size: 24px;
+        }
+
+        #mu-contact .form-row {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 0;
+        }
+
+        #mu-contact .contact-sidebar {
+            padding: 25px;
+        }
+
+        #mu-contact .contact-info-list {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        #mu-contact .contact-submit {
+            width: 100%;
+        }
+}
+
+/* =========================================
+   RESPONSIVE — SMALL MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+    #mu-contact {
+        padding: 45px 0 55px;
+    }
+
+        #mu-contact .contact-heading h1 {
+            font-size: 29px;
+        }
+
+        #mu-contact .contact-heading p {
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        #mu-contact .section-heading h2 {
+            font-size: 22px;
+        }
+
+        #mu-contact .contact-sidebar {
+            padding: 20px;
+        }
+
+        #mu-contact .sidebar-section h2 {
+            font-size: 21px;
+        }
+
+        #mu-contact .working-hours-item {
+            align-items: flex-start;
+            font-size: 11px;
+        }
+
+            #mu-contact .working-hours-item strong {
+                font-size: 11px;
+            }
+
+        #mu-contact .info-content a,
+        #mu-contact .info-value {
+            font-size: 13px;
+        }
+}

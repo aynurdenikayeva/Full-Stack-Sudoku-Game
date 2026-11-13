@@ -123,8 +123,6 @@ C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\Blog\Index.cshtml.g.cs
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\Contact\Index.cshtml.g.cs
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\FAQ\Index.cshtml.g.cs
-C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\SignIn\Index.cshtml.g.cs
-C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\SignUp\Index.cshtml.g.cs
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\LeaderBoard\Index.cshtml.g.cs
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.dll
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Abstractions.dll
@@ -154,7 +152,6 @@ C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\Blog\Details.cshtml.g.cs
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Areas\Admin\Views\Users\Read.cshtml.g.cs
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Areas\Admin\Views\Users\Update.cshtml.g.cs
-C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\SignUp\Register.cshtml.g.cs
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Areas\Admin\Views\Profiles\Index.cshtml.g.cs
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\bin\Debug\net5.0\Microsoft.Data.SqlClient.dll
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.SqlServer.dll
@@ -186,3 +183,7 @@ C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\bin\Debug\net5.0\
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\bin\Debug\net5.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\SudokuExamProject.sourcelink.json
+C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\Account\Index.cshtml.g.cs
+C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\Account\Register.cshtml.g.cs
