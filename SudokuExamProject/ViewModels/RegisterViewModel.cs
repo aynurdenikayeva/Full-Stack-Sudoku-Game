@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SudokuExamProject.Models
+namespace SudokuExamProject.ViewModels
 {
     public class RegisterViewModel
     {

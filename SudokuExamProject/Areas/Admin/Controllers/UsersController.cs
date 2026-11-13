@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using SudokuExamProject.DataAccessLayer;
 using SudokuExamProject.Models;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 namespace SudokuExamProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles="Admin")]
     public class UsersController : Controller
     {
         private readonly AppDbContext _context;

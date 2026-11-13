@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SudokuExamProject.Models;
+using SudokuExamProject.ViewModels;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -10,7 +12,7 @@ namespace SudokuExamProject.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly RoleManager<IdentityRole> _roleManager;    
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public AccountController(
             UserManager<AppUser> userManager,
@@ -34,17 +36,11 @@ namespace SudokuExamProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            await CreateRoleDB();
+
             if (!ModelState.IsValid)
             {
                 return View("Register", model);
-            }
-            if (!await _roleManager.RoleExistsAsync(Helpers.Helpers.CreateRole.Admin.ToString()))
-            {
-                await _roleManager.CreateAsync(new IdentityRole(Helpers.Helpers.CreateRole.Admin.ToString()));
-            }
-            if (!await _roleManager.RoleExistsAsync(Helpers.Helpers.CreateRole.Member.ToString()))
-            {
-                await _roleManager.CreateAsync(new IdentityRole(Helpers.Helpers.CreateRole.Member.ToString()));
             }
 
             string email = model.Email.Trim();
@@ -52,40 +48,97 @@ namespace SudokuExamProject.Controllers
             AppUser appUser = new AppUser
             {
                 Name = model.Name.Trim(),
-                UserName = model.Name.Trim(),
+                UserName = email, // Boşluq xətası olmaması üçün Email daha uyğundur
                 Email = email
             };
 
-            // Identity şifrəni özü şifrələyib bazaya yazır və e-poçtun təkrar olub-olmadığını yoxlayır
-            IdentityResult result = _userManager.CreateAsync(appUser, model.Password).Result;
+            // .Result yerinə await istifadə edildi
+            IdentityResult result = await _userManager.CreateAsync(appUser, model.Password);
 
             if (result.Succeeded)
             {
-                // İstəsəniz istifadəçiyə standart rol təyin edə bilərsiniz (əvvəlcədən bazada "Player" rolu varsa)
-                // await _userManager.AddToRoleAsync(user, "Player");
+                // İlk istifadəçiyə Admin, digərlərinə Member rolu verilir
+                var userCount = _userManager.Users.Count();
+                if (userCount == 1)
+                {
+                    await _userManager.AddToRoleAsync(appUser, Helpers.Helpers.CreateRole.Admin.ToString());
+                }
+                else
+                {
+                    await _userManager.AddToRoleAsync(appUser, Helpers.Helpers.CreateRole.Member.ToString());
+                }
 
-                TempData["Success"] = "Qeydiyyat uğurla tamamlandı. İndi daxil ola bilərsiniz.";
-                return View(model);
+                await _signInManager.SignInAsync(appUser, isPersistent: false);
+                return RedirectToAction("Index", "Home");
             }
 
-            // Əgər parol zəifdirsə və ya e-poçt artıq varsa, Identity xətalarını ekrana çıxarırıq
+            // Xəta varsa ekrana çıxarır və metod burada bitir
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
-            await _signInManager.SignInAsync(appUser, isPersistent: false);
+
+            return View("Register", model);
+        }
+
+        private async Task CreateRoleDB()
+        {
+            string adminRole = Helpers.Helpers.CreateRole.Admin.ToString();
+            string memberRole = Helpers.Helpers.CreateRole.Member.ToString();
+
+            if (!await _roleManager.RoleExistsAsync(adminRole))
+            {
+                await _roleManager.CreateAsync(new IdentityRole(adminRole));
+            }
+            if (!await _roleManager.RoleExistsAsync(memberRole))
+            {
+                await _roleManager.CreateAsync(new IdentityRole(memberRole));
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel loginModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(loginModel);
+            }
+
+            AppUser appUser = await _userManager.FindByEmailAsync(loginModel.Email.Trim());
+            if (appUser == null)
+            {
+                ModelState.AddModelError("", "Email və ya şifrə səhvdir");
+                return View(loginModel);
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(appUser, loginModel.Password, true, true);
+            if (!result.Succeeded)
+            {
+                if (result.IsLockedOut)
+                {
+                    ModelState.AddModelError("", "Hesabınız müvəqqəti bloklanıb.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Email və ya şifrə səhvdir");
+                }
+                return View(loginModel);
+            }
+
             return RedirectToAction("Index", "Home");
         }
 
-        // ==========================================
-        // SOSİAL ŞƏBƏKƏ (GOOGLE / GITHUB) METODLARI
-        // ==========================================
-
-
+        // SOSİAL ŞƏBƏKƏ (GOOGLE / GITHUB)
         [HttpGet]
         public IActionResult ExternalLogin(string provider)
         {
-            // Controller adı "Account" olaraq düzəldildi
             var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account");
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return Challenge(properties, provider);
@@ -100,7 +153,6 @@ namespace SudokuExamProject.Controllers
                 return RedirectToAction(nameof(Register));
             }
 
-            // Google və ya GitHub-dan gələn məlumatları Identity vasitəsilə alırıq
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
@@ -108,16 +160,17 @@ namespace SudokuExamProject.Controllers
                 return RedirectToAction(nameof(Register));
             }
 
-            // İstifadəçi daha əvvəl bu sosial hesabla daxil olubsa, birbaşa giriş edir
             var signInResult = await _signInManager.ExternalLoginSignInAsync(
-                info.LoginProvider, info.ProviderKey, isPersistent: true, bypassTwoFactor: true);
+                info.LoginProvider,
+                info.ProviderKey,
+                isPersistent: true,
+                bypassTwoFactor: true);
 
             if (signInResult.Succeeded)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            // İlk dəfə daxil olursa, e-poçtunu alıb bazada yeni AppUser yaradırıq
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
             var name = info.Principal.FindFirstValue(ClaimTypes.Name) ?? "Sosial İstifadəçi";
 
@@ -130,6 +183,8 @@ namespace SudokuExamProject.Controllers
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
+                await CreateRoleDB();
+
                 user = new AppUser
                 {
                     UserName = email,
@@ -144,16 +199,22 @@ namespace SudokuExamProject.Controllers
                     TempData["Error"] = "İstifadəçi hesabı yaradılarkən xəta baş verdi.";
                     return RedirectToAction(nameof(Register));
                 }
+
+                // Sosial girişlə gələn ilk/yeni istifadəçiyə də rol təyin edilir
+                var userCount = _userManager.Users.Count();
+                string role = userCount == 1
+                    ? Helpers.Helpers.CreateRole.Admin.ToString()
+                    : Helpers.Helpers.CreateRole.Member.ToString();
+
+                await _userManager.AddToRoleAsync(user, role);
             }
 
-            // Sosial hesabı (Google/GitHub) bazadakı istifadəçiyə bağlayırıq (AspNetUserLogins cədvəli)
             await _userManager.AddLoginAsync(user, info);
             await _signInManager.SignInAsync(user, isPersistent: true);
 
             return RedirectToAction("Index", "Home");
         }
 
-        // Sistemdən təhlükəsiz çıxış metodu
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()

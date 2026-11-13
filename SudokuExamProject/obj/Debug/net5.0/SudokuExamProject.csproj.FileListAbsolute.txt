@@ -187,3 +187,4 @@ C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\Account\Index.cshtml.g.cs
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\Account\Register.cshtml.g.cs
+C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
