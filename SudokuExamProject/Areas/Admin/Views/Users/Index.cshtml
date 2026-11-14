@@ -1,8 +1,14 @@
-﻿@model List<SudokuExamProject.Models.User>
+﻿@model List<SudokuExamProject.Models.AppUser>
+
+@using System.Collections.Generic
+@using System.Linq
 
 @{
     ViewData["Title"] = "İstifadəçilər";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+    var userRoles = ViewBag.UserRoles as Dictionary<string, IList<string>>
+                    ?? new Dictionary<string, IList<string>>();
 }
 
 <div class="container-fluid py-4">
@@ -25,6 +31,14 @@
         </a>
     </div>
 
+    <!-- Xəta mesajı -->
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+
     <!-- İstifadəçilər cədvəli -->
     <div class="card border-0 shadow-sm">
         <div class="card-body">
@@ -36,7 +50,7 @@
                         <tr>
                             <th>#</th>
                             <th>Ad, soyad</th>
-                            <th>İstifadəçi adı</th>     
+                            <th>İstifadəçi adı</th>
                             <th>Rol</th>
                             <th>Sudoku səviyyəsi</th>
                             <th>Status</th>
@@ -47,23 +61,28 @@
                     <tbody>
                         @if (Model != null && Model.Any())
                         {
+                            int count = 1;
+
                             @foreach (var user in Model)
                             {
+                                userRoles.TryGetValue(user.Id, out var roles);
+
+                                string role = roles?.FirstOrDefault() ?? "Təyin edilməyib";
+
                                 <tr>
-                                    <td>@user.Id</td>
+                                    <td>@count</td>
 
                                     <td class="fw-semibold">
                                         @user.Name @user.Surname
                                     </td>
 
-                                    <td>@user.UserName</td>
-
-
-                                  
+                                    <td>
+                                        @user.UserName
+                                    </td>
 
                                     <td>
                                         <span class="badge bg-primary">
-                                            @user.UserRole
+                                            @(role == "Player" ? "Oyunçu" : role)
                                         </span>
                                     </td>
 
@@ -74,9 +93,20 @@
                             </td>
 
                                     <td>
-                                        <form method="post" asp-action="IsActiveStatus">
-                                            <input type="hidden" name="id" value="@user.Id" />
-                                            <button type="submit" class="btn btn-link  text-decoration-none p-0 m-0 align-baseline">
+                                        <form method="post"
+                                              asp-area="Admin"
+                                              asp-controller="Users"
+                                              asp-action="IsActiveStatus">
+
+                                            @Html.AntiForgeryToken()
+
+                                            <input type="hidden"
+                                                   name="id"
+                                                   value="@user.Id" />
+
+                                            <button type="submit"
+                                                    class="btn btn-link text-decoration-none p-0 m-0">
+
                                         @if (user.AccountStatus == "Active")
                                                 {
                                                     <span class="badge bg-success">Aktiv</span>
@@ -87,15 +117,15 @@
                                                 }
                                                 else
                                                 {
-                                                    <span class="badge bg-secondary">Aktiv deyil</span>
+                                                    <span class="badge bg-secondary">Naməlum</span>
                                                 }
+
                                             </button>
                                         </form>
                                     </td>
 
-
                                     <td>
-                                        <div class="d-flex justify-content-between gap-2">
+                                        <div class="d-flex justify-content-center gap-2 flex-wrap">
 
                                             <a asp-area="Admin"
                                                asp-controller="Users"
@@ -115,42 +145,28 @@
                                                 Ətraflı
                                             </a>
 
-                                            <form asp-area="Admin"
-                                                  asp-controller="Users"
-                                                  asp-action="Delete"
-                                                  asp-route-id="@user.Id"
-                                                  method="post"
-                                                  onsubmit="return confirm('Bu istifadəçini silmək istədiyinizə əminsiniz?');">
-
-                                                @Html.AntiForgeryToken()
-
-                                                <button type="submit"
-                                                        class="btn btn-sm btn-outline-danger text-nowrap">
-                                                    <i class="bi bi-trash"></i>
-                                                    Sil
-                                                </button>
-                                            </form>
+                                            <a asp-area="Admin"
+                                               asp-controller="Users"
+                                               asp-action="Delete"
+                                               asp-route-id="@user.Id"
+                                               class="btn btn-sm btn-outline-danger text-nowrap">
+                                                <i class="bi bi-trash"></i>
+                                                Sil
+                                            </a>
 
                                         </div>
                                     </td>
                                 </tr>
+
+                                count++;
                             }
                         }
                         else
                         {
                             <tr>
-                                <td colspan="9" class="text-center text-muted py-5">
-                                    <i class="bi bi-people fs-2 d-block mb-2"></i>
-                                    Hələ istifadəçi əlavə edilməyib.
-
-                                    <div class="mt-3">
-                                        <a asp-area="Admin"
-                                           asp-controller="Users"
-                                           asp-action="Add"
-                                           class="btn btn-sm btn-primary">
-                                            İlk istifadəçini əlavə et
-                                        </a>
-                                    </div>
+                                <td colspan="7" class="text-center py-4 text-muted">
+                                    <i class="bi bi-people fs-3 d-block mb-2"></i>
+                                    Hələ heç bir istifadəçi qeydiyyatdan keçməyib.
                                 </td>
                             </tr>
                         }
@@ -158,8 +174,6 @@
 
                 </table>
             </div>
-
         </div>
     </div>
-
 </div>

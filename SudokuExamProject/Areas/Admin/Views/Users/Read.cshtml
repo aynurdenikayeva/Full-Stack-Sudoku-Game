@@ -1,7 +1,15 @@
-﻿
-@model SudokuExamProject.Models.User
+﻿@model SudokuExamProject.Models.AppUser
 
+@using System.Collections.Generic
+@using System.Linq
 
+@{
+    ViewData["Title"] = "İstifadəçi profili";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+    var userRoles = ViewBag.UserRoles as IList<string> ?? new List<string>();
+    var role = userRoles.FirstOrDefault();
+}
 
 <main class="dashboard-content">
     <div class="container-fluid px-3 px-lg-4 py-4">
@@ -45,13 +53,15 @@
 
                     <div class="card-body text-center px-4 pb-4">
 
-
                         <!-- Profil şəkli -->
                         <div class="d-flex align-items-center justify-content-center mx-auto rounded-circle bg-white shadow-sm overflow-hidden"
-                             style="width:100px;height:100px;margin-top:-65px;position:relative;border: 3px solid #fff;">
+                             style="width:100px;height:100px;margin-top:-65px;position:relative;border:3px solid #fff;">
+
                             @if (!string.IsNullOrWhiteSpace(Model.Image))
                             {
-                                <img src="@Model.Image" alt="Profile" class="w-100 h-100 object-fit-cover" />
+                                <img src="@Model.Image"
+                                     alt="Profile"
+                                     class="w-100 h-100 object-fit-cover" />
                             }
                             else
                             {
@@ -73,9 +83,8 @@
                         <div class="d-flex justify-content-center flex-wrap gap-2">
 
                             <span class="badge bg-primary">
-                                @(string.IsNullOrWhiteSpace(Model.UserRole)
-                                                                ? "Rol təyin edilməyib"
-                                                                : Model.UserRole)
+                                @(role == "Player" ? "Oyunçu" :
+                                                                string.IsNullOrWhiteSpace(role) ? "Rol təyin edilməyib" : role)
                             </span>
 
                             @if (Model.AccountStatus == "Active")
@@ -122,9 +131,9 @@
                                         Telefon nömrəsi
                                     </small>
                                     <span class="fw-semibold">
-                                        @(string.IsNullOrWhiteSpace(Model.TelephonNumber)
+                                        @(string.IsNullOrWhiteSpace(Model.PhoneNumber)
                                                                                 ? "Qeyd edilməyib"
-                                                                                : Model.TelephonNumber)
+                                                                                : Model.PhoneNumber)
                                     </span>
                                 </div>
                             </div>
@@ -135,7 +144,9 @@
                                     <small class="text-muted d-block mb-1">
                                         İstifadəçi ID-si
                                     </small>
-                                    <span class="fw-semibold">#@Model.Id</span>
+                                    <span class="fw-semibold text-break">
+                                        @Model.Id
+                                    </span>
                                 </div>
                             </div>
 
@@ -155,7 +166,6 @@
                             <i class="bi bi-person-lines-fill text-primary me-2"></i>
                             Şəxsi məlumatlar
                         </h2>
-
                         <p class="text-muted small mb-0">
                             İstifadəçinin sistemdə qeydiyyatda olan məlumatları.
                         </p>
@@ -167,18 +177,14 @@
                             <div class="col-md-6">
                                 <small class="text-muted d-block mb-2">Ad</small>
                                 <div class="fw-semibold">
-                                    @(string.IsNullOrWhiteSpace(Model.Name)
-                                                                        ? "—"
-                                                                        : Model.Name)
+                                    @(string.IsNullOrWhiteSpace(Model.Name) ? "—" : Model.Name)
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <small class="text-muted d-block mb-2">Soyad</small>
                                 <div class="fw-semibold">
-                                    @(string.IsNullOrWhiteSpace(Model.Surname)
-                                                                        ? "—"
-                                                                        : Model.Surname)
+                                    @(string.IsNullOrWhiteSpace(Model.Surname) ? "—" : Model.Surname)
                                 </div>
                             </div>
 
@@ -187,27 +193,23 @@
                                     İstifadəçi adı
                                 </small>
                                 <div class="fw-semibold">
-                                    @(string.IsNullOrWhiteSpace(Model.UserName)
-                                                                        ? "—"
-                                                                        : Model.UserName)
+                                    @(string.IsNullOrWhiteSpace(Model.UserName) ? "—" : Model.UserName)
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <small class="text-muted d-block mb-2">Email</small>
                                 <div class="fw-semibold text-break">
-                                    @(string.IsNullOrWhiteSpace(Model.Email)
-                                                                        ? "—"
-                                                                        : Model.Email)
+                                    @(string.IsNullOrWhiteSpace(Model.Email) ? "—" : Model.Email)
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <small class="text-muted d-block mb-2">Telefon</small>
                                 <div class="fw-semibold">
-                                    @(string.IsNullOrWhiteSpace(Model.TelephonNumber)
+                                    @(string.IsNullOrWhiteSpace(Model.PhoneNumber)
                                                                         ? "—"
-                                                                        : Model.TelephonNumber)
+                                                                        : Model.PhoneNumber)
                                 </div>
                             </div>
 
@@ -223,7 +225,6 @@
                             <i class="bi bi-shield-check text-primary me-2"></i>
                             Hesab və oyun məlumatları
                         </h2>
-
                         <p class="text-muted small mb-0">
                             İstifadəçinin rolu, hesab statusu və Sudoku səviyyəsi.
                         </p>
@@ -236,11 +237,9 @@
                                 <small class="text-muted d-block mb-2">
                                     İstifadəçi rolu
                                 </small>
-
                                 <span class="badge bg-primary fs-6">
-                                    @(string.IsNullOrWhiteSpace(Model.UserRole)
-                                                                        ? "Təyin edilməyib"
-                                                                        : Model.UserRole)
+                                    @(role == "Player" ? "Oyunçu" :
+                                                                        string.IsNullOrWhiteSpace(role) ? "Təyin edilməyib" : role)
                                 </span>
                             </div>
 
@@ -271,7 +270,6 @@
                                 <small class="text-muted d-block mb-2">
                                     Sudoku səviyyəsi
                                 </small>
-
                                 <div class="fw-semibold">
                                     @(string.IsNullOrWhiteSpace(Model.SudokuLevel)
                                                                         ? "Təyin edilməyib"
@@ -283,8 +281,16 @@
                                 <small class="text-muted d-block mb-2">
                                     İstifadəçi ID-si
                                 </small>
+                                <div class="fw-semibold text-break">
+                                    @Model.Id
+                                </div>
+                            </div>
 
-                                <div class="fw-semibold">#@Model.Id</div>
+                            <div class="col-12">
+                                <small class="text-muted d-block mb-2">Qeydlər</small>
+                                <div class="fw-semibold">
+                                    @(string.IsNullOrWhiteSpace(Model.Note) ? "Qeyd yoxdur" : Model.Note)
+                                </div>
                             </div>
 
                         </div>

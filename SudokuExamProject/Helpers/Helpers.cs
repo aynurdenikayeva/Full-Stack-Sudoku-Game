@@ -5,7 +5,7 @@
         public enum CreateRole
         {
             Admin,
-            Member
+            Player
         }
     }
 }

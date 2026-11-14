@@ -144,9 +144,7 @@ C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Areas\Admin\Views\_ViewImports.cshtml.g.cs
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Areas\Admin\Views\_ViewStart.cshtml.g.cs
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Areas\Admin\Views\Dashboard\Index.cshtml.g.cs
-C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Areas\Admin\Views\Table\Index.cshtml.g.cs
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Areas\Admin\Views\Settings\Index.cshtml.g.cs
-C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Areas\Admin\Views\Chart\Index.cshtml.g.cs
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Areas\Admin\Views\Users\Add.cshtml.g.cs
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Areas\Admin\Views\Users\Index.cshtml.g.cs
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\Blog\Details.cshtml.g.cs
@@ -188,3 +186,5 @@ C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\bin\Debug\net5.0\
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\Account\Index.cshtml.g.cs
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\Account\Register.cshtml.g.cs
 C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
+C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\Profile\Index.cshtml.g.cs
+C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\obj\Debug\net5.0\Razor\Views\Profile\Edit.cshtml.g.cs

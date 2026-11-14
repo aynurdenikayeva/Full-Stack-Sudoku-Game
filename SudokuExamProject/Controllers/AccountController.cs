@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SudokuExamProject.Models;
 using SudokuExamProject.ViewModels;
+using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -24,6 +27,35 @@ namespace SudokuExamProject.Controllers
             _roleManager = roleManager;
         }
 
+        // ROLLARIN YARADILMASI
+        private async Task<bool> CreateRoleDB()
+        {
+            string[] roles = { "Admin", "Player" };
+
+            foreach (string role in roles)
+            {
+                if (!await _roleManager.RoleExistsAsync(role))
+                {
+                    var result = await _roleManager.CreateAsync(
+                        new IdentityRole(role));
+
+                    if (!result.Succeeded)
+                        return false;
+                }
+            }
+
+            return true;
+        }
+
+        // İLK İSTİFADƏÇİ ADMIN, SONRAKILAR PLAYER
+        private async Task<string> GetNewUserRole()
+        {
+            bool hasUsers = await _userManager.Users.AnyAsync();
+
+            return hasUsers ? "Player" : "Admin";
+        }
+
+        // REGISTER GET
         [HttpGet("/signup")]
         [HttpGet("Account/Register")]
         public IActionResult Register()
@@ -31,196 +63,332 @@ namespace SudokuExamProject.Controllers
             return View("Register");
         }
 
+        // REGISTER POST
         [HttpPost("/signup")]
         [HttpPost("Account/Register")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            await CreateRoleDB();
-
             if (!ModelState.IsValid)
+                return View("Register", model);
+
+            bool rolesCreated = await CreateRoleDB();
+
+            if (!rolesCreated)
             {
+                ModelState.AddModelError(
+                    string.Empty,
+                    "Rollar yaradılarkən xəta baş verdi.");
+
                 return View("Register", model);
             }
 
             string email = model.Email.Trim();
 
+            // Qeydiyyatdan əvvəl rol müəyyən edilir.
+            string role = await GetNewUserRole();
+
             AppUser appUser = new AppUser
             {
                 Name = model.Name.Trim(),
-                UserName = email, // Boşluq xətası olmaması üçün Email daha uyğundur
-                Email = email
+                UserName = email,
+                Email = email,
+                AccountStatus = "Active"
             };
 
-            // .Result yerinə await istifadə edildi
-            IdentityResult result = await _userManager.CreateAsync(appUser, model.Password);
+            var result = await _userManager.CreateAsync(
+                appUser,
+                model.Password);
 
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                // İlk istifadəçiyə Admin, digərlərinə Member rolu verilir
-                var userCount = _userManager.Users.Count();
-                if (userCount == 1)
-                {
-                    await _userManager.AddToRoleAsync(appUser, Helpers.Helpers.CreateRole.Admin.ToString());
-                }
-                else
-                {
-                    await _userManager.AddToRoleAsync(appUser, Helpers.Helpers.CreateRole.Member.ToString());
-                }
+                foreach (var error in result.Errors)
+                    ModelState.AddModelError(string.Empty, error.Description);
 
-                await _signInManager.SignInAsync(appUser, isPersistent: false);
-                return RedirectToAction("Index", "Home");
+                return View("Register", model);
             }
 
-            // Xəta varsa ekrana çıxarır və metod burada bitir
-            foreach (var error in result.Errors)
+            var roleResult = await _userManager.AddToRoleAsync(
+                appUser,
+                role);
+
+            if (!roleResult.Succeeded)
             {
-                ModelState.AddModelError(string.Empty, error.Description);
+                await _userManager.DeleteAsync(appUser);
+
+                foreach (var error in roleResult.Errors)
+                    ModelState.AddModelError(string.Empty, error.Description);
+
+                return View("Register", model);
             }
 
-            return View("Register", model);
+            await _signInManager.SignInAsync(
+                appUser,
+                isPersistent: false);
+
+            return RedirectToAction("Index", "Home");
         }
 
-        private async Task CreateRoleDB()
-        {
-            string adminRole = Helpers.Helpers.CreateRole.Admin.ToString();
-            string memberRole = Helpers.Helpers.CreateRole.Member.ToString();
-
-            if (!await _roleManager.RoleExistsAsync(adminRole))
-            {
-                await _roleManager.CreateAsync(new IdentityRole(adminRole));
-            }
-            if (!await _roleManager.RoleExistsAsync(memberRole))
-            {
-                await _roleManager.CreateAsync(new IdentityRole(memberRole));
-            }
-        }
-
-        [HttpGet]
+        // LOGIN GET
+        [HttpGet("/SignIn")]
         public IActionResult Login()
         {
             return View();
         }
 
-        [HttpPost]
+        // LOGIN POST
+        [HttpPost("/SignIn")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel loginModel)
         {
             if (!ModelState.IsValid)
-            {
-                return View(loginModel);
-            }
+                return View("Login", loginModel);
 
-            AppUser appUser = await _userManager.FindByEmailAsync(loginModel.Email.Trim());
+            string email = loginModel.Email.Trim();
+
+            AppUser appUser = await _userManager.FindByEmailAsync(email);
+
             if (appUser == null)
             {
-                ModelState.AddModelError("", "Email və ya şifrə səhvdir");
-                return View(loginModel);
+                ModelState.AddModelError(
+                    string.Empty,
+                    "Email və ya şifrə səhvdir.");
+
+                return View("Login", loginModel);
             }
 
-            var result = await _signInManager.PasswordSignInAsync(appUser, loginModel.Password, true, true);
+            // Bloklanmış istifadəçi daxil ola bilməz.
+            if (string.Equals(
+                appUser.AccountStatus,
+                "Blocked",
+                StringComparison.OrdinalIgnoreCase))
+            {
+                ModelState.AddModelError(
+                    string.Empty,
+                    "Hesabınız bloklanıb. Daxil olmaq mümkün deyil.");
+
+                return View("Login", loginModel);
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(
+                appUser,
+                loginModel.Password,
+                isPersistent: true,
+                lockoutOnFailure: true);
+
             if (!result.Succeeded)
             {
                 if (result.IsLockedOut)
                 {
-                    ModelState.AddModelError("", "Hesabınız müvəqqəti bloklanıb.");
+                    ModelState.AddModelError(
+                        string.Empty,
+                        "Hesabınız müvəqqəti kilidlənib.");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Email və ya şifrə səhvdir");
+                    ModelState.AddModelError(
+                        string.Empty,
+                        "Email və ya şifrə səhvdir.");
                 }
-                return View(loginModel);
+
+                return View("Login", loginModel);
             }
 
             return RedirectToAction("Index", "Home");
         }
 
-        // SOSİAL ŞƏBƏKƏ (GOOGLE / GITHUB)
+        // GOOGLE / GITHUB LOGIN
         [HttpGet]
         public IActionResult ExternalLogin(string provider)
         {
-            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account");
-            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            if (provider != "Google" && provider != "GitHub")
+                return BadRequest();
+
+            var redirectUrl = Url.Action(
+                nameof(ExternalLoginCallback),
+                "Account");
+
+            var properties =
+                _signInManager.ConfigureExternalAuthenticationProperties(
+                    provider,
+                    redirectUrl);
+
             return Challenge(properties, provider);
         }
 
+        // EXTERNAL LOGIN CALLBACK
         [HttpGet]
-        public async Task<IActionResult> ExternalLoginCallback(string remoteError = null)
+        public async Task<IActionResult> ExternalLoginCallback(
+            string? remoteError = null)
         {
             if (remoteError != null)
             {
-                TempData["Error"] = $"Xarici provayderdən xəta gəldi: {remoteError}";
+                TempData["Error"] =
+                    "Xarici provayderdən giriş zamanı xəta baş verdi.";
+
                 return RedirectToAction(nameof(Register));
             }
 
             var info = await _signInManager.GetExternalLoginInfoAsync();
+
             if (info == null)
             {
-                TempData["Error"] = "Xarici provayder məlumatları oxuna bilmədi.";
+                TempData["Error"] =
+                    "Xarici provayder məlumatları oxuna bilmədi.";
+
                 return RedirectToAction(nameof(Register));
             }
 
-            var signInResult = await _signInManager.ExternalLoginSignInAsync(
+            // Əvvəldən bu sosial hesaba bağlı istifadəçi
+            var user = await _userManager.FindByLoginAsync(
                 info.LoginProvider,
-                info.ProviderKey,
-                isPersistent: true,
-                bypassTwoFactor: true);
+                info.ProviderKey);
 
-            if (signInResult.Succeeded)
+            if (user != null)
             {
-                return RedirectToAction("Index", "Home");
+                if (string.Equals(
+                    user.AccountStatus,
+                    "Blocked",
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    TempData["Error"] =
+                        "Hesabınız bloklanıb. Daxil olmaq mümkün deyil.";
+
+                    return RedirectToAction(nameof(Login));
+                }
+
+                var signInResult =
+                    await _signInManager.ExternalLoginSignInAsync(
+                        info.LoginProvider,
+                        info.ProviderKey,
+                        isPersistent: true,
+                        bypassTwoFactor: true);
+
+                if (signInResult.Succeeded)
+                    return RedirectToAction("Index", "Home");
+
+                TempData["Error"] = "Hesaba giriş mümkün olmadı.";
+
+                return RedirectToAction(nameof(Login));
             }
 
-            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-            var name = info.Principal.FindFirstValue(ClaimTypes.Name) ?? "Sosial İstifadəçi";
+            // Sosial şəbəkədən istifadəçi məlumatları
+            string? email = info.Principal.FindFirstValue(
+                ClaimTypes.Email);
 
-            if (string.IsNullOrEmpty(email))
+            string name = info.Principal.FindFirstValue(
+                ClaimTypes.Name) ?? "Sosial İstifadəçi";
+
+            if (string.IsNullOrWhiteSpace(email))
             {
-                TempData["Error"] = "Sosial şəbəkədən e-poçt ünvanı alına bilmədi.";
+                TempData["Error"] =
+                    "Sosial şəbəkədən e-poçt ünvanı alına bilmədi.";
+
                 return RedirectToAction(nameof(Register));
             }
 
-            var user = await _userManager.FindByEmailAsync(email);
+            email = email.Trim();
+
+            // Email ilə mövcud istifadəçini axtarırıq.
+            user = await _userManager.FindByEmailAsync(email);
+
+            bool newUserCreated = false;
+
             if (user == null)
             {
-                await CreateRoleDB();
+                bool rolesCreated = await CreateRoleDB();
+
+                if (!rolesCreated)
+                {
+                    TempData["Error"] =
+                        "Rollar yaradılarkən xəta baş verdi.";
+
+                    return RedirectToAction(nameof(Register));
+                }
+
+                string role = await GetNewUserRole();
 
                 user = new AppUser
                 {
                     UserName = email,
                     Email = email,
                     Name = name,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    AccountStatus = "Active"
                 };
 
                 var createResult = await _userManager.CreateAsync(user);
+
                 if (!createResult.Succeeded)
                 {
-                    TempData["Error"] = "İstifadəçi hesabı yaradılarkən xəta baş verdi.";
+                    TempData["Error"] =
+                        "İstifadəçi hesabı yaradılarkən xəta baş verdi.";
+
                     return RedirectToAction(nameof(Register));
                 }
 
-                // Sosial girişlə gələn ilk/yeni istifadəçiyə də rol təyin edilir
-                var userCount = _userManager.Users.Count();
-                string role = userCount == 1
-                    ? Helpers.Helpers.CreateRole.Admin.ToString()
-                    : Helpers.Helpers.CreateRole.Member.ToString();
+                newUserCreated = true;
 
-                await _userManager.AddToRoleAsync(user, role);
+                var roleResult = await _userManager.AddToRoleAsync(
+                    user,
+                    role);
+
+                if (!roleResult.Succeeded)
+                {
+                    await _userManager.DeleteAsync(user);
+
+                    TempData["Error"] =
+                        "İstifadəçiyə rol təyin edilərkən xəta baş verdi.";
+
+                    return RedirectToAction(nameof(Register));
+                }
+            }
+            else
+            {
+                if (string.Equals(
+                    user.AccountStatus,
+                    "Blocked",
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    TempData["Error"] =
+                        "Hesabınız bloklanıb. Daxil olmaq mümkün deyil.";
+
+                    return RedirectToAction(nameof(Login));
+                }
             }
 
-            await _userManager.AddLoginAsync(user, info);
-            await _signInManager.SignInAsync(user, isPersistent: true);
+            // Sosial hesabı mövcud və ya yeni istifadəçiyə bağlayırıq.
+            var addLoginResult = await _userManager.AddLoginAsync(
+                user,
+                info);
+
+            if (!addLoginResult.Succeeded)
+            {
+                if (newUserCreated)
+                    await _userManager.DeleteAsync(user);
+
+                TempData["Error"] =
+                    "Sosial hesab əlaqələndirilərkən xəta baş verdi.";
+
+                return RedirectToAction(nameof(Register));
+            }
+
+            await _signInManager.SignInAsync(
+                user,
+                isPersistent: true);
 
             return RedirectToAction("Index", "Home");
         }
 
+        // LOGOUT
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+
             HttpContext.Session.Clear();
+
             return RedirectToAction("Index", "Home");
         }
     }

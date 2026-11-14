@@ -3,5 +3,253 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
 
+@model SudokuExamProject.ViewModels.LeaderboardViewModel
+
+@{
+    ViewData["Title"] = "Leaderboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/leaderboard.css"
+      asp-append-version="true" />
+
+<main class="leaderboard-page">
+    <div class="container">
+
+        <section class="leaderboard-heading">
+            <h1>Liderlər siyahısı</h1>
+            <p>
+                Ən yaxşı nəticələrini göstər və digər oyunçularla
+                rəqabət apar!
+            </p>
+        </section>
+
+        @if (Model.CurrentUserEntry != null)
+        {
+            <section class="my-rank-card">
+                <div>
+                    <span class="my-rank-label">Sənin reytinqin</span>
+                    <h3>@Model.CurrentUserEntry.PlayerName</h3>
+                    <p>
+                        @Model.CurrentUserEntry.GamesPlayed tamamlanmış oyun
+                    </p>
+                </div>
+
+                <div class="my-rank-number">
+                    #@Model.CurrentUserEntry.Rank
+                </div>
+
+                <div class="my-rank-time">
+                    <span>Ən yaxşı vaxt</span>
+                    <strong>
+                        @TimeText(Model.CurrentUserEntry.BestTimeSeconds)
+                    </strong>
+                </div>
+            </section>
+        }
+
+        <section class="leaderboard-filter">
+            <div>
+                <h2>Oyunçuların sıralaması</h2>
+                <p>Ən yaxşı tamamlanma vaxtına görə</p>
+            </div>
+
+            <form method="get"
+                  asp-controller="Leaderboard"
+                  asp-action="Index">
+
+                <select name="difficulty"
+                        onchange="this.form.submit()">
+
+                    @foreach (var difficulty in Model.Difficulties)
+                    {
+                        if (Model.SelectedDifficulty == difficulty)
+                        {
+                            <option value="@difficulty" selected>
+                                @difficulty
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@difficulty">
+                                @difficulty
+                            </option>
+                        }
+                    }
+                </select>
+            </form>
+        </section>
+
+        @if (Model.Entries.Any())
+        {
+            var firstThree = Model.Entries.Take(3).ToList();
+
+            <section class="leaderboard-podium">
+
+                @if (firstThree.Count > 1)
+                {
+                    var second = firstThree[1];
+
+                    <div class="podium-card podium-second">
+                        <div class="podium-medal">🥈</div>
+                        <span class="podium-position">2-ci yer</span>
+                        <h3>@second.PlayerName</h3>
+                        <strong>
+                            @TimeText(second.BestTimeSeconds)
+                        </strong>
+                        <span class="podium-games">
+                            @second.GamesPlayed oyun
+                        </span>
+                    </div>
+                }
+
+                @if (firstThree.Count > 0)
+                {
+                    var first = firstThree[0];
+
+                    <div class="podium-card podium-first">
+                        <div class="podium-medal">🏆</div>
+                        <span class="podium-position">1-ci yer</span>
+                        <h3>@first.PlayerName</h3>
+                        <strong>
+                            @TimeText(first.BestTimeSeconds)
+                        </strong>
+                        <span class="podium-games">
+                            @first.GamesPlayed oyun
+                        </span>
+                    </div>
+                }
+
+                @if (firstThree.Count > 2)
+                {
+                    var third = firstThree[2];
+
+                    <div class="podium-card podium-third">
+                        <div class="podium-medal">🥉</div>
+                        <span class="podium-position">3-cü yer</span>
+                        <h3>@third.PlayerName</h3>
+                        <strong>
+                            @TimeText(third.BestTimeSeconds)
+                        </strong>
+                        <span class="podium-games">
+                            @third.GamesPlayed oyun
+                        </span>
+                    </div>
+                }
+
+            </section>
+
+            <section class="leaderboard-table-wrapper">
+                <div class="leaderboard-table-heading">
+                    <h2>Bütün oyunçular</h2>
+                    <span>@Model.Entries.Count oyunçu</span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Reytinq</th>
+                                <th>Oyunçu</th>
+                                <th>Oyun sayı</th>
+                                <th>Ən yaxşı vaxt</th>
+                                <th>Orta vaxt</th>
+                                <th>Ümumi səhv</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var player in Model.Entries)
+                            {
+                                <tr class="@(player.IsCurrentUser ? "current-player" : "")">
+                                    <td>
+                                        <span class="rank-number">
+                                            @if (player.Rank == 1)
+                                            {
+                                                <text>🥇</text>
+                                            }
+                                            else if (player.Rank == 2)
+                                            {
+                                                <text>🥈</text>
+                                            }
+                                            else if (player.Rank == 3)
+                                            {
+                                                <text>🥉</text>
+                                            }
+                                            else
+                                            {
+                                                <text>#@player.Rank</text>
+                                            }
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <div class="player-name-cell">
+                                            <span class="player-avatar">
+                                                @player.PlayerName.Substring(0, 1).ToUpper()
+                                            </span>
+
+                                            <div>
+                                                <strong>@player.PlayerName</strong>
+
+                                                @if (player.IsCurrentUser)
+                                                {
+                                                    <small>Sən</small>
+                                                }
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>@player.GamesPlayed</td>
+
+                                    <td>
+                                        <strong class="best-time">
+                                            @TimeText(player.BestTimeSeconds)
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        @TimeText((int)Math.Round(
+                                        player.AverageTimeSeconds))
+                            </td>
+
+                            <td>@player.TotalMistakes</td>
+                        </tr>
+                                                }
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        }
+        else
+        {
+            <section class="leaderboard-empty">
+                <div class="empty-icon">🏆</div>
+                <h2>Hələ nəticə yoxdur</h2>
+                <p>
+                    Bu çətinlik səviyyəsində tamamlanmış oyun yoxdur.
+                    İlk nəticəni sən yarat!
+                </p>
+
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   class="leaderboard-play-btn">
+                    Oyuna başla
+                </a>
+            </section>
+        }
+
+    </div>
+</main>
+
+@functions {
+    public string TimeText(int seconds)
+    {
+        var time = TimeSpan.FromSeconds(seconds);
+
+        return time.TotalHours >= 1
+            ? time.ToString(@"h\:mm\:ss")
+            : time.ToString(@"mm\:ss");
+    }
+}

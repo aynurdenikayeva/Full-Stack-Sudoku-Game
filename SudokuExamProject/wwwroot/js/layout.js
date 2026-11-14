@@ -37,14 +37,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         menuToggle.addEventListener("click", function () {
-            if (siteNav.classList.contains("is-open")) {
+            const isOpen = siteNav.classList.contains("is-open");
+
+            if (isOpen) {
                 closeMenu();
             } else {
                 openMenu();
             }
         });
 
-        // Linkə klik etdikdə mobil menyunu bağla
         siteNav.querySelectorAll("a").forEach(function (link) {
             link.addEventListener("click", function () {
                 if (window.innerWidth <= 850) {
@@ -53,14 +54,12 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
 
-        // Escape düyməsi ilə menyunu bağla
         document.addEventListener("keydown", function (event) {
             if (event.key === "Escape") {
                 closeMenu();
             }
         });
 
-        // Ekran ölçüsü dəyişdikdə menyunu yenilə
         window.addEventListener("resize", function () {
             if (window.innerWidth > 850) {
                 closeMenu();
@@ -70,56 +69,54 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // ========================================
-    // 2. DROPDOWN MENYULAR
+    // 2. İSTİFADƏÇİ PROFİL DROPDOWN
     // ========================================
 
-    document.querySelectorAll(".dropdown-toggle").forEach(function (button) {
-
-        button.addEventListener("click", function (event) {
-            event.preventDefault();
-
-            const dropdown = button.closest(".nav-dropdown");
-
-            if (!dropdown) return;
-
-            const isOpen = dropdown.classList.contains("open");
-
-            // Digər açıq dropdown-ları bağla
-            document.querySelectorAll(".nav-dropdown.open").forEach(function (item) {
-                if (item !== dropdown) {
-                    item.classList.remove("open");
-
-                    const otherButton = item.querySelector(".dropdown-toggle");
-
-                    if (otherButton) {
-                        otherButton.setAttribute("aria-expanded", "false");
-                    }
-                }
-            });
-
-            // Cari dropdown-u aç və ya bağla
-            dropdown.classList.toggle("open", !isOpen);
-
-            button.setAttribute("aria-expanded", String(!isOpen));
-        });
-    });
+    const profileButton = document.getElementById("profileDropdownBtn");
+    const profileMenu = document.getElementById("profileDropdownMenu");
 
 
-    // Dropdown xaricinə klik etdikdə bağla
-    document.addEventListener("click", function (event) {
-        if (!event.target.closest(".nav-dropdown")) {
 
-            document.querySelectorAll(".nav-dropdown.open").forEach(function (dropdown) {
-                dropdown.classList.remove("open");
+    if (profileButton && profileMenu) {
 
-                const button = dropdown.querySelector(".dropdown-toggle");
-
-                if (button) {
-                    button.setAttribute("aria-expanded", "false");
-                }
-            });
+        function closeProfileDropdown() {
+            profileMenu.classList.remove("show");
+            profileButton.setAttribute("aria-expanded", "false");
         }
-    });
+
+        profileButton.addEventListener("click", function (event) {
+            event.stopPropagation();
+
+            const isOpen = profileMenu.classList.contains("show");
+
+            if (isOpen) {
+                closeProfileDropdown();
+            } else {
+                profileMenu.classList.add("show");
+                profileButton.setAttribute("aria-expanded", "true");
+            }
+        });
+
+        // Menyudan kənara klik etdikdə bağlanır
+        document.addEventListener("click", function (event) {
+            if (!profileButton.contains(event.target) &&
+                !profileMenu.contains(event.target)) {
+                closeProfileDropdown();
+            }
+        });
+
+        // Escape düyməsi ilə bağlanır
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                closeProfileDropdown();
+            }
+        });
+
+        // Profil menyusundakı keçidə klik etdikdə bağlanır
+        profileMenu.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", closeProfileDropdown);
+        });
+    }
 
 
     // ========================================
@@ -142,9 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
             passive: true
         });
 
-        backToTop.addEventListener("click", function (event) {
-            event.preventDefault();
-
+        backToTop.addEventListener("click", function () {
             window.scrollTo({
                 top: 0,
                 behavior: "smooth"

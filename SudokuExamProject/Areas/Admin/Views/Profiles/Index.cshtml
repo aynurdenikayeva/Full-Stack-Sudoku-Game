@@ -1,4 +1,4 @@
-﻿@model SudokuExamProject.Models.Profile
+﻿@model SudokuExamProject.Models.AppUser
 
 @{
     ViewData["Title"] = "İstifadəçi profili";
@@ -34,14 +34,7 @@
                 </div>
             </div>
 
-            <a asp-area="Admin"
-               asp-controller="Profiles"
-               asp-action="Index"
-               asp-route-id="@Model.Id"
-               class="btn btn-light border">
-                <i class="bi bi-arrow-left me-1"></i>
-                Profilə qayıt
-            </a>
+ 
         </div>
 
         <div class="row g-4">
@@ -125,10 +118,9 @@
                                     </small>
 
                                     <span class="fw-semibold text-break">
-                                        @(string.IsNullOrWhiteSpace(
-                                                                                Model.TelephonNumber)
+                                        @(string.IsNullOrWhiteSpace(Model.PhoneNumber)
                                                                                 ? "Qeyd edilməyib"
-                                                                                : Model.TelephonNumber)
+                                                                                : Model.PhoneNumber)
                                     </span>
                                 </div>
                             </div>
@@ -141,7 +133,7 @@
                                         Profil ID-si
                                     </small>
 
-                                    <span class="fw-semibold">
+                                    <span class="fw-semibold text-break">
                                         #@Model.Id
                                     </span>
                                 </div>
@@ -223,9 +215,8 @@
                                 </small>
 
                                 <div class="fw-semibold">
-                                    @(string.IsNullOrWhiteSpace(
-                                                                        Model.TelephonNumber)
-                                                                        ? "—" : Model.TelephonNumber)
+                                    @(string.IsNullOrWhiteSpace(Model.PhoneNumber)
+                                                                        ? "—" : Model.PhoneNumber)
                                 </div>
                             </div>
 
@@ -234,9 +225,39 @@
                                     Profil ID-si
                                 </small>
 
-                                <div class="fw-semibold">
+                                <div class="fw-semibold text-break">
                                     #@Model.Id
                                 </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <small class="text-muted d-block mb-2">
+                                    Sudoku səviyyəsi
+                                </small>
+
+                                <div class="fw-semibold">
+                                    @(string.IsNullOrWhiteSpace(Model.SudokuLevel)
+                                                                        ? "—" : Model.SudokuLevel)
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <small class="text-muted d-block mb-2">
+                                    Hesab statusu
+                                </small>
+
+                                @if (Model.AccountStatus == "Blocked")
+                                {
+                                    <span class="badge bg-danger-subtle text-danger">
+                                        Bloklanmış
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success-subtle text-success">
+                                        Aktiv
+                                    </span>
+                                }
                             </div>
 
                         </div>

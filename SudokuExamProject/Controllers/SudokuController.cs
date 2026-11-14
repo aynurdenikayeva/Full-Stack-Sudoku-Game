@@ -1,26 +1,39 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using SudokuExamProject.Services;
 
 namespace SudokuExamProject.Controllers
 {
     public class SudokuController : Controller
     {
-        private readonly SudokuService _sudokuService;
+        private readonly SudokuGameManager _gameManager;
 
-        public SudokuController(SudokuService sudokuService)
+        public SudokuController(SudokuGameManager gameManager)
         {
-            _sudokuService = sudokuService;
+            _gameManager = gameManager;
+        }
+
+        private SudokuService CurrentSudoku
+        {
+            get
+            {
+                HttpContext.Session.SetString(
+                    "SudokuSessionInitialized", "true");
+
+                return _gameManager.GetGame(
+                    HttpContext.Session.Id);
+            }
         }
 
         // GET: /Sudoku
         [HttpGet]
         public IActionResult Index()
         {
-            _sudokuService.Game.Completed =
-                _sudokuService.IsCompleted();
+            CurrentSudoku.Game.Completed =
+                CurrentSudoku.IsCompleted();
 
-            return View(_sudokuService.Game);
+            return View(CurrentSudoku.Game);
         }
 
         // POST: /Sudoku/Add
@@ -36,11 +49,11 @@ namespace SudokuExamProject.Controllers
                 return BadRequest("Xana düzgün seçilməyib.");
             }
 
-            _sudokuService.Game.Message =
-                _sudokuService.AddNumber(row, col, number);
+            CurrentSudoku.Game.Message =
+                CurrentSudoku.AddNumber(row, col, number);
 
-            _sudokuService.Game.Completed =
-                _sudokuService.IsCompleted();
+            CurrentSudoku.Game.Completed =
+                CurrentSudoku.IsCompleted();
 
             return RedirectToAction(nameof(Index));
         }
@@ -50,7 +63,7 @@ namespace SudokuExamProject.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult New(string difficulty = "Orta")
         {
-            _sudokuService.NewGame(difficulty);
+            CurrentSudoku.NewGame(difficulty);
 
             return RedirectToAction(nameof(Index));
         }
@@ -65,8 +78,8 @@ namespace SudokuExamProject.Controllers
                 return BadRequest("Xana düzgün seçilməyib.");
             }
 
-            _sudokuService.Game.Message =
-                _sudokuService.UseHint(row, col);
+            CurrentSudoku.Game.Message =
+                CurrentSudoku.UseHint(row, col);
 
             return RedirectToAction(nameof(Index));
         }
@@ -81,8 +94,8 @@ namespace SudokuExamProject.Controllers
                 return BadRequest("Xana düzgün seçilməyib.");
             }
 
-            _sudokuService.Game.Message =
-                _sudokuService.ClearCell(row, col);
+            CurrentSudoku.Game.Message =
+                CurrentSudoku.ClearCell(row, col);
 
             return RedirectToAction(nameof(Index));
         }
@@ -92,11 +105,11 @@ namespace SudokuExamProject.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Undo()
         {
-            _sudokuService.Game.Message =
-                _sudokuService.Undo();
+            CurrentSudoku.Game.Message =
+                CurrentSudoku.Undo();
 
-            _sudokuService.Game.Completed =
-                _sudokuService.IsCompleted();
+            CurrentSudoku.Game.Completed =
+                CurrentSudoku.IsCompleted();
 
             return RedirectToAction(nameof(Index));
         }

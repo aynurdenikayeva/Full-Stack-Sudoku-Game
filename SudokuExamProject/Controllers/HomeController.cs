@@ -1,7 +1,13 @@
 ﻿
+using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SudokuExamProject.DataAccessLayer;
 using SudokuExamProject.Models;
 using SudokuExamProject.Services;
 
@@ -10,30 +16,51 @@ namespace SudokuExamProject.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly SudokuService _sudokuService;
+        private readonly SudokuGameManager _gameManager;
+        private readonly AppDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
         public HomeController(
             ILogger<HomeController> logger,
-            SudokuService sudokuService)
+            SudokuGameManager gameManager,
+            AppDbContext context,
+            UserManager<AppUser> userManager)
         {
             _logger = logger;
-            _sudokuService = sudokuService;
+            _gameManager = gameManager;
+            _context = context;
+            _userManager = userManager;
         }
 
-        // Ana səhifə
+        private SudokuService CurrentSudoku
+        {
+            get
+            {
+                HttpContext.Session.SetString(
+                    "SudokuSessionInitialized", "true");
+
+                return _gameManager.GetGame(
+                    HttpContext.Session.Id);
+            }
+        }
+
+        // GET: /
         [HttpGet]
         public IActionResult Index()
         {
-            _sudokuService.Game.Completed =
-                _sudokuService.IsCompleted();
+            CurrentSudoku.Game.Completed =
+                CurrentSudoku.IsCompleted();
 
-            return View(_sudokuService.Game);
+            return View(CurrentSudoku.Game);
         }
 
-        // Rəqəm daxil etmək
+        // POST: /Home/Add
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Add(int row, int col, int? number)
+        public async Task<IActionResult> Add(
+            int row,
+            int col,
+            int? number)
         {
             if (!IsValidCell(row, col))
             {
@@ -44,25 +71,30 @@ namespace SudokuExamProject.Controllers
             }
 
             string message =
-                _sudokuService.AddNumber(row, col, number);
+                CurrentSudoku.AddNumber(row, col, number);
+
+            CurrentSudoku.Game.Completed =
+                CurrentSudoku.IsCompleted();
+
+            await SaveCompletedResultAsync();
 
             return Json(GetGameResult(message, row, col));
         }
 
-        // Yeni oyun və çətinlik seçimi
+        // POST: /Home/New
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult New(string difficulty = "Orta")
         {
-            _sudokuService.NewGame(difficulty);
+            CurrentSudoku.NewGame(difficulty);
 
             return Redirect(Url.Action(nameof(Index)) + "#oyun");
         }
 
-        // İpucu
+        // POST: /Home/Hint
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Hint(int row, int col)
+        public async Task<IActionResult> Hint(int row, int col)
         {
             if (!IsValidCell(row, col))
             {
@@ -72,12 +104,18 @@ namespace SudokuExamProject.Controllers
                 });
             }
 
-            string message = _sudokuService.UseHint(row, col);
+            string message =
+                CurrentSudoku.UseHint(row, col);
+
+            CurrentSudoku.Game.Completed =
+                CurrentSudoku.IsCompleted();
+
+            await SaveCompletedResultAsync();
 
             return Json(GetGameResult(message, row, col));
         }
 
-        // Seçilmiş xananı təmizləmək
+        // POST: /Home/Clear
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Clear(int row, int col)
@@ -91,20 +129,22 @@ namespace SudokuExamProject.Controllers
             }
 
             string message =
-                _sudokuService.ClearCell(row, col);
+                CurrentSudoku.ClearCell(row, col);
 
             return Json(GetGameResult(message, row, col));
         }
 
-        // Son əməliyyatı geri qaytarmaq
+        // POST: /Home/Undo
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Undo()
         {
-            string message = _sudokuService.Undo();
+            string message = CurrentSudoku.Undo();
 
-            var game = _sudokuService.Game;
-            game.Completed = _sudokuService.IsCompleted();
+            var game = CurrentSudoku.Game;
+
+            game.Completed =
+                CurrentSudoku.IsCompleted();
 
             return Json(new
             {
@@ -117,13 +157,66 @@ namespace SudokuExamProject.Controllers
             });
         }
 
-        // Əməliyyatların ümumi cavabı
+        // Nəticəni PostgreSQL bazasına yazır
+
+        private async Task SaveCompletedResultAsync()
+        {
+            if (User.Identity == null ||
+                !User.Identity.IsAuthenticated)
+                return;
+
+            var userId = _userManager.GetUserId(User);
+
+            if (string.IsNullOrEmpty(userId))
+                return;
+
+            var sessionId = HttpContext.Session.Id;
+
+            await _gameManager.SaveResultOnceAsync(
+                sessionId,
+                async () =>
+                {
+                    var game = CurrentSudoku.Game;
+
+                    var result = new SudokuResult
+                    {
+                        UserId = userId,
+                        ElapsedSeconds =
+                            CurrentSudoku.GetElapsedSeconds(),
+                        Mistakes = game.Mistakes,
+                        HintsUsed = game.HintsUsed,
+                        Difficulty = game.Difficulty,
+                        CompletedAt = DateTime.UtcNow
+                    };
+
+                    _context.SudokuResults.Add(result);
+
+                    try
+                    {
+                        await _context.SaveChangesAsync();
+
+                        _logger.LogInformation(
+                            "Sudoku nəticəsi yadda saxlanıldı. UserId: {UserId}",
+                            userId);
+                    }
+                    catch
+                    {
+                        _context.Entry(result).State =
+                            EntityState.Detached;
+
+                        throw;
+                    }
+                });
+        }
+
+
+        // AJAX cavabı
         private object GetGameResult(
             string message,
             int row,
             int col)
         {
-            var game = _sudokuService.Game;
+            var game = CurrentSudoku.Game;
 
             return new
             {
@@ -139,7 +232,7 @@ namespace SudokuExamProject.Controllers
             };
         }
 
-        // Lövhəni JavaScript üçün uyğun formata çevirmək
+        // Sudoku lövhəsini JSON formatına çevirir
         private int[][] GetBoard()
         {
             var board = new int[9][];
@@ -151,26 +244,27 @@ namespace SudokuExamProject.Controllers
                 for (int col = 0; col < 9; col++)
                 {
                     board[row][col] =
-                        _sudokuService.Game.Board[row, col];
+                        CurrentSudoku.Game.Board[row, col];
                 }
             }
 
             return board;
         }
 
-        // Xana indekslərini yoxlamaq
         private bool IsValidCell(int row, int col)
         {
             return row >= 0 && row < 9
                 && col >= 0 && col < 9;
         }
 
+        // GET: /Home/Privacy
         [HttpGet]
         public IActionResult Privacy()
         {
             return View();
         }
 
+        // Error
         [ResponseCache(
             Duration = 0,
             Location = ResponseCacheLocation.None,
@@ -183,6 +277,5 @@ namespace SudokuExamProject.Controllers
                     ?? HttpContext.TraceIdentifier
             });
         }
-
     }
 }

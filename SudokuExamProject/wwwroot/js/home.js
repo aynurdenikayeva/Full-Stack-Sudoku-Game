@@ -1,5 +1,4 @@
-﻿
-document.addEventListener("DOMContentLoaded", function () {
+﻿document.addEventListener("DOMContentLoaded", function () {
     const game = document.getElementById("sudokuGame");
 
     if (!game) return;
@@ -223,15 +222,7 @@ document.addEventListener("DOMContentLoaded", function () {
         sendRequest(undoUrl);
     });
 
-    // Rəqəm düymələri
-    document.querySelectorAll(".number-button").forEach(function (button) {
-        button.addEventListener("click", function () {
-            const cell = getSelectedCell();
-            if (!cell) return;
 
-            submitNumber(cell, button.dataset.number);
-        });
-    });
 
     // Klaviatura ilə rəqəm daxil etmək
     board.addEventListener("input", function (event) {

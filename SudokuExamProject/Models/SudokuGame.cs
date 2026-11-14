@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 
 namespace SudokuExamProject.Models
@@ -27,6 +28,12 @@ namespace SudokuExamProject.Models
         public bool Completed { get; set; } = false;
         public bool Lost { get; set; } = false;
 
+        // Oyunun başlama vaxtı.
+        public DateTime StartedAt { get; set; } = DateTime.UtcNow;
+
+        // Nəticənin bazaya yazılıb-yazılmadığı.
+        public bool ResultSaved { get; set; } = false;
+
         // İcazə verilən maksimum limitlər.
         public const int MaxMistakes = 5;
         public const int MaxHints = 3;
@@ -46,10 +53,8 @@ namespace SudokuExamProject.Models
 
         public int Col { get; set; }
 
-        // Əməliyyatdan əvvəl xanada olan rəqəm.
         public int PreviousValue { get; set; }
 
-        // Əməliyyatdan sonra xanaya yazılan rəqəm.
         public int NewValue { get; set; }
     }
 }

@@ -1,15 +1,4 @@
-﻿/* =====================================================
-   SUDOKUGAME — LÖVHƏ İNTERAKSİYASI
-   Fayl: wwwroot/js/sudoku-board.js
-
-   - Sətir, sütun, seçilmiş xana və eyni rəqəmlərin vurğulanması
-   - Seçimin səhifə yenilənəndən sonra bərpası (sessionStorage)
-   - Tab ilə keçid, ox düymələri ilə naviqasiya
-   - Xanada yalnız 1-9 qəbul edilir, mövcud rəqəmin üstünə yazmaq olur
-   - Sağdakı rəqəm düymələri seçilmiş xanaya rəqəm yazır
-   ===================================================== */
-
-(function () {
+﻿(function () {
     'use strict';
 
     if (window.__sudokuBoardInit) return;

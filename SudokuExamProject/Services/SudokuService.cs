@@ -31,7 +31,9 @@ namespace SudokuExamProject.Services
                 HintsUsed = 0,
                 Completed = false,
                 Lost = false,
-                Message = string.Empty
+                Message = string.Empty,
+                StartedAt = DateTime.UtcNow,
+                ResultSaved = false
             };
 
             Array.Copy(solution, Game.Board, solution.Length);
@@ -500,6 +502,13 @@ namespace SudokuExamProject.Services
             }
 
             return true;
+        }
+        public int GetElapsedSeconds()
+        {
+            return Math.Max(
+                0,
+                (int)(DateTime.UtcNow - Game.StartedAt).TotalSeconds
+            );
         }
 
     }

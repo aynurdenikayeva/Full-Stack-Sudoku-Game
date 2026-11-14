@@ -24,10 +24,16 @@ using SudokuExamProject.Models
 
 #nullable disable
     ;
+#nullable restore
+#line 3 "C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\Views\_ViewImports.cshtml"
+using Microsoft.AspNetCore.Identity
+
+#nullable disable
+    ;
     #line default
     #line hidden
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"Sha256", @"6f4b7e6fee95e396f06a3bd67ad8a2b8689e684f1ee2733f430f64b5c15630ac", @"/Views/FAQ/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"Sha256", @"3fb498e25c790d34f1611795ee05f8ef1e229282a873d61032c1490bd3b4914a", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"Sha256", @"3332e8b688294d8d181b6e658760db3b917f1902dd09c9186fcda1bfea7868a8", @"/Views/_ViewImports.cshtml")]
     #nullable restore
     internal sealed class Views_FAQ_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     #nullable disable
@@ -75,7 +81,7 @@ using SudokuExamProject.Models
             WriteLiteral("\r\n");
             DefineSection("Styles", async() => {
                 WriteLiteral("\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "6f4b7e6fee95e396f06a3bd67ad8a2b8689e684f1ee2733f430f64b5c15630ac5541", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "6f4b7e6fee95e396f06a3bd67ad8a2b8689e684f1ee2733f430f64b5c15630ac5725", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -576,7 +582,7 @@ using SudokuExamProject.Models
                 Asan səviyyədən başla və tədricən daha çətin tapmacalara keç.
             <");
             WriteLiteral("/p>\r\n\r\n            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6f4b7e6fee95e396f06a3bd67ad8a2b8689e684f1ee2733f430f64b5c15630ac30191", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6f4b7e6fee95e396f06a3bd67ad8a2b8689e684f1ee2733f430f64b5c15630ac30375", async() => {
                 WriteLiteral("\r\n                Pulsuz Sudoku oyna <span aria-hidden=\"true\">→</span>\r\n            ");
             }
             );
@@ -686,6 +692,25 @@ using SudokuExamProject.Models
             );
         }
         #pragma warning restore 1998
+        [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
+        public 
+#nullable restore
+#line 4 "C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\Views\_ViewImports.cshtml"
+UserManager<AppUser>
+
+#line default
+#line hidden
+#nullable disable
+         
+#nullable restore
+#line 4 "C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\Views\_ViewImports.cshtml"
+UserManager
+
+#line default
+#line hidden
+#nullable disable
+         { get; private set; }
+         = default!;
         #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
         public global::Microsoft.AspNetCore.Mvc.ViewFeatures.IModelExpressionProvider ModelExpressionProvider { get; private set; } = default!;

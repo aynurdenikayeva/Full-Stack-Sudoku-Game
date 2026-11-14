@@ -11,7 +11,9 @@ namespace SudokuExamProject.DataAccessLayer
         {
         }
         public DbSet<ContactMessage> ContactMessages { get; set; } 
-        public DbSet<User> Users { get; set; }
         public DbSet<Profile> Profiles { get; set; }
+
+        public DbSet<SudokuResult> SudokuResults { get; set; }
+
     }
 }

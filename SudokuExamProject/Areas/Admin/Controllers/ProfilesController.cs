@@ -1,37 +1,34 @@
 ﻿
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SudokuExamProject.DataAccessLayer;
+using SudokuExamProject.Models;
 using System.Threading.Tasks;
 
 namespace SudokuExamProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
-
     public class ProfilesController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public ProfilesController(AppDbContext context)
+        public ProfilesController(UserManager<AppUser> userManager)
         {
-            _context = context;
+            _userManager = userManager;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(int id = 1)
+        public async Task<IActionResult> Index()
         {
-            var profile = await _context.Profiles
-                .AsNoTracking()
-                .FirstOrDefaultAsync(p => p.Id == id);
+            var user = await _userManager.GetUserAsync(User);
 
-            if (profile == null)
+            if (user == null)
             {
-                return NotFound();
+                return RedirectToAction("Login", "Account");
             }
 
-            return View(profile);
+            return View(user);
         }
     }
 }

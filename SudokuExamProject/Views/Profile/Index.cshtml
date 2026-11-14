@@ -1,0 +1,252 @@
+﻿@model SudokuExamProject.Models.AppUser
+
+@{
+    ViewData["Title"] = "Profilim";
+}
+
+<main class="dashboard-content">
+    <div class="container-fluid px-3 px-lg-4 py-4">
+
+        <!-- Səhifə başlığı -->
+        <div class="profile-heading">
+            <div>
+                <span class="profile-eyebrow">ŞƏXSİ HESAB</span>
+                <h1>Profilim</h1>
+                <p>Şəxsi məlumatlarınızı idarə edin və hesabınıza nəzər salın.</p>
+            </div>
+
+            <div class="profile-heading-actions">
+                <a asp-area=""
+                   asp-controller="Profile"
+                   asp-action="Edit"
+                   class="profile-edit-btn">
+                    <i class="bi bi-pencil-square"></i>
+                    Profili redaktə et
+                </a>
+
+                <a asp-area=""
+                   asp-controller="Home"
+                   asp-action="Index"
+                   class="profile-back-btn">
+                    <i class="bi bi-arrow-left"></i>
+                    Geri
+                </a>
+            </div>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Sol profil kartı -->
+            <div class="col-12 col-xl-4">
+                <div class="profile-user-card">
+
+                    <div class="profile-user-cover">
+                        <div class="profile-cover-decoration"></div>
+                    </div>
+
+                    <div class="profile-user-content">
+
+                        <!-- Profil şəkli -->
+                        <div class="profile-avatar">
+                            @if (!string.IsNullOrWhiteSpace(Model.Image))
+                            {
+                                <img src="@Model.Image" alt="Profil şəkli" />
+                            }
+                            else
+                            {
+                                <i class="bi bi-person-fill"></i>
+                            }
+                        </div>
+
+                        <h2>
+                            @Model.Name @Model.Surname
+                        </h2>
+
+                        <p class="profile-username">
+                            @@@(string.IsNullOrWhiteSpace(Model.UserName)
+                                                        ? "istifadəçi"
+                                                        : Model.UserName)
+                        </p>
+
+                        <span class="profile-role">
+                            <i class="bi bi-person-check-fill"></i>
+                            Oyunçu hesabı
+                        </span>
+
+                        <div class="profile-user-divider"></div>
+
+                        <!-- Əlaqə məlumatları -->
+                        <div class="profile-contact-list">
+
+                            <div class="profile-contact-row">
+                                <div class="profile-contact-icon">
+                                    <i class="bi bi-envelope"></i>
+                                </div>
+
+                                <div>
+                                    <span>Email ünvanı</span>
+                                    <p>
+                                        @(string.IsNullOrWhiteSpace(Model.Email)
+                                                                                ? "Qeyd edilməyib"
+                                                                                : Model.Email)
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="profile-contact-row">
+                                <div class="profile-contact-icon">
+                                    <i class="bi bi-telephone"></i>
+                                </div>
+
+                                <div>
+                                    <span>Telefon nömrəsi</span>
+                                    <p>
+                                        @(string.IsNullOrWhiteSpace(Model.PhoneNumber)
+                                                                                ? "Qeyd edilməyib"
+                                                                                : Model.PhoneNumber)
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sağ məlumat kartları -->
+            <div class="col-12 col-xl-8">
+
+                <!-- Şəxsi məlumatlar -->
+                <section class="profile-section-card">
+
+                    <div class="profile-section-heading">
+                        <div class="profile-section-icon">
+                            <i class="bi bi-person-lines-fill"></i>
+                        </div>
+
+                        <div>
+                            <h3>Şəxsi məlumatlar</h3>
+                            <p>Hesabınızda qeyd edilmiş şəxsi məlumatlar.</p>
+                        </div>
+                    </div>
+
+                    <div class="profile-details-grid">
+
+                        <div class="profile-detail">
+                            <span>Ad</span>
+                            <strong>
+                                @(string.IsNullOrWhiteSpace(Model.Name)
+                                                                ? "—" : Model.Name)
+                            </strong>
+                        </div>
+
+                        <div class="profile-detail">
+                            <span>Soyad</span>
+                            <strong>
+                                @(string.IsNullOrWhiteSpace(Model.Surname)
+                                                                ? "—" : Model.Surname)
+                            </strong>
+                        </div>
+
+                        <div class="profile-detail">
+                            <span>İstifadəçi adı</span>
+                            <strong>
+                                @(string.IsNullOrWhiteSpace(Model.UserName)
+                                                                ? "—" : Model.UserName)
+                            </strong>
+                        </div>
+
+                        <div class="profile-detail">
+                            <span>Email ünvanı</span>
+                            <strong>
+                                @(string.IsNullOrWhiteSpace(Model.Email)
+                                                                ? "—" : Model.Email)
+                            </strong>
+                        </div>
+
+                        <div class="profile-detail">
+                            <span>Telefon nömrəsi</span>
+                            <strong>
+                                @(string.IsNullOrWhiteSpace(Model.PhoneNumber)
+                                                                ? "—" : Model.PhoneNumber)
+                            </strong>
+                        </div>
+
+                        <div class="profile-detail">
+                            <span>Sudoku səviyyəsi</span>
+                            <strong>
+                                @(string.IsNullOrWhiteSpace(Model.SudokuLevel)
+                                                                ? "—" : Model.SudokuLevel)
+                            </strong>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Hesab məlumatları -->
+                <section class="profile-section-card mt-4">
+
+                    <div class="profile-section-heading">
+                        <div class="profile-section-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+
+                        <div>
+                            <h3>Hesab məlumatları</h3>
+                            <p>Hesabınızın hazırkı vəziyyəti.</p>
+                        </div>
+                    </div>
+
+                    <div class="profile-status-content">
+                        <div>
+                            <span>Hesab statusu</span>
+                            <p>Hesabınızın aktivlik vəziyyəti</p>
+                        </div>
+
+                        @if (Model.AccountStatus == "Blocked")
+                        {
+                            <span class="profile-status blocked">
+                                <i class="bi bi-x-circle-fill"></i>
+                                Bloklanmış
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="profile-status active">
+                                <i class="bi bi-check-circle-fill"></i>
+                                Aktiv
+                            </span>
+                        }
+                    </div>
+                </section>
+
+                <!-- Əlavə məlumat -->
+                <section class="profile-section-card mt-4">
+
+                    <div class="profile-section-heading">
+                        <div class="profile-section-icon">
+                            <i class="bi bi-card-text"></i>
+                        </div>
+
+                        <div>
+                            <h3>Əlavə məlumat</h3>
+                            <p>Profiliniz haqqında əlavə qeyd.</p>
+                        </div>
+                    </div>
+
+                    <div class="profile-note">
+                        @if (!string.IsNullOrWhiteSpace(Model.Note))
+                        {
+                            <p>@Model.Note</p>
+                        }
+                        else
+                        {
+                            <span>Əlavə məlumat qeyd edilməyib.</span>
+                        }
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+</main>

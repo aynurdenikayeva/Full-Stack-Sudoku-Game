@@ -24,10 +24,16 @@ using SudokuExamProject.Models
 
 #nullable disable
     ;
+#nullable restore
+#line 3 "C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\Views\_ViewImports.cshtml"
+using Microsoft.AspNetCore.Identity
+
+#nullable disable
+    ;
     #line default
     #line hidden
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"Sha256", @"9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b", @"/Views/Account/Register.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"Sha256", @"3fb498e25c790d34f1611795ee05f8ef1e229282a873d61032c1490bd3b4914a", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"Sha256", @"3332e8b688294d8d181b6e658760db3b917f1902dd09c9186fcda1bfea7868a8", @"/Views/_ViewImports.cshtml")]
     #nullable restore
     internal sealed class Views_Account_Register : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<
 #nullable restore
@@ -114,7 +120,7 @@ using SudokuExamProject.Models
 #nullable disable
 
             WriteLiteral("\r\n<!DOCTYPE html>\r\n<html lang=\"az\">\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b14987", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b15171", async() => {
                 WriteLiteral("\r\n    <meta charset=\"utf-8\" />\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\r\n    <title>");
                 Write(
 #nullable restore
@@ -126,7 +132,7 @@ using SudokuExamProject.Models
 #nullable disable
                 );
                 WriteLiteral("</title>\r\n\r\n    <!-- Yerli Bootstrap (İnternetsiz anında yüklənmə) -->\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b15765", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b15949", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -141,7 +147,7 @@ using SudokuExamProject.Models
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n\r\n    <!-- Tam optimallaşdırılmış sürətli xarici CSS -->\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b17030", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b17214", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -181,7 +187,7 @@ using SudokuExamProject.Models
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b19907", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b20091", async() => {
                 WriteLiteral(@"
 
     <main class=""login-split-container"">
@@ -232,7 +238,7 @@ using SudokuExamProject.Models
 #nullable disable
 
                 WriteLiteral("\r\n\r\n                ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b21798", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b21982", async() => {
                     WriteLiteral("\r\n                    ");
                     Write(
 #nullable restore
@@ -244,7 +250,7 @@ using SudokuExamProject.Models
 #nullable disable
                     );
                     WriteLiteral("\r\n                    ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("div", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b22444", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("div", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b22628", async() => {
                     }
                     );
                     __Microsoft_AspNetCore_Mvc_TagHelpers_ValidationSummaryTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.ValidationSummaryTagHelper>();
@@ -268,7 +274,7 @@ using SudokuExamProject.Models
                     Write(__tagHelperExecutionContext.Output);
                     __tagHelperExecutionContext = __tagHelperScopeManager.End();
                     WriteLiteral("\r\n\r\n                    <div class=\"form-group-block\">\r\n                        ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b24386", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b24570", async() => {
                         WriteLiteral("Ad");
                     }
                     );
@@ -293,7 +299,7 @@ using SudokuExamProject.Models
                     Write(__tagHelperExecutionContext.Output);
                     __tagHelperExecutionContext = __tagHelperScopeManager.End();
                     WriteLiteral("\r\n                        ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b26213", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b26397", async() => {
                     }
                     );
                     __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.InputTagHelper>();
@@ -318,7 +324,7 @@ using SudokuExamProject.Models
                     Write(__tagHelperExecutionContext.Output);
                     __tagHelperExecutionContext = __tagHelperScopeManager.End();
                     WriteLiteral("\r\n                        ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("span", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b28080", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("span", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b28264", async() => {
                     }
                     );
                     __Microsoft_AspNetCore_Mvc_TagHelpers_ValidationMessageTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.ValidationMessageTagHelper>();
@@ -342,7 +348,7 @@ using SudokuExamProject.Models
                     Write(__tagHelperExecutionContext.Output);
                     __tagHelperExecutionContext = __tagHelperScopeManager.End();
                     WriteLiteral("\r\n                    </div>\r\n\r\n                    <div class=\"form-group-block\">\r\n                        ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b30032", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b30216", async() => {
                         WriteLiteral("E-poçt");
                     }
                     );
@@ -367,7 +373,7 @@ using SudokuExamProject.Models
                     Write(__tagHelperExecutionContext.Output);
                     __tagHelperExecutionContext = __tagHelperScopeManager.End();
                     WriteLiteral("\r\n                        ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b31864", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b32048", async() => {
                     }
                     );
                     __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.InputTagHelper>();
@@ -392,7 +398,7 @@ using SudokuExamProject.Models
                     Write(__tagHelperExecutionContext.Output);
                     __tagHelperExecutionContext = __tagHelperScopeManager.End();
                     WriteLiteral("\r\n                        ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("span", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b33732", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("span", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b33916", async() => {
                     }
                     );
                     __Microsoft_AspNetCore_Mvc_TagHelpers_ValidationMessageTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.ValidationMessageTagHelper>();
@@ -416,7 +422,7 @@ using SudokuExamProject.Models
                     Write(__tagHelperExecutionContext.Output);
                     __tagHelperExecutionContext = __tagHelperScopeManager.End();
                     WriteLiteral("\r\n                    </div>\r\n\r\n                    <div class=\"form-group-block\">\r\n                        ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b35685", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b35869", async() => {
                         WriteLiteral("Şifrə");
                     }
                     );
@@ -441,7 +447,7 @@ using SudokuExamProject.Models
                     Write(__tagHelperExecutionContext.Output);
                     __tagHelperExecutionContext = __tagHelperScopeManager.End();
                     WriteLiteral("\r\n                        ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b37519", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b37703", async() => {
                     }
                     );
                     __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.InputTagHelper>();
@@ -467,7 +473,7 @@ using SudokuExamProject.Models
                     Write(__tagHelperExecutionContext.Output);
                     __tagHelperExecutionContext = __tagHelperScopeManager.End();
                     WriteLiteral("\r\n                        ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("span", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b39482", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("span", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b39666", async() => {
                     }
                     );
                     __Microsoft_AspNetCore_Mvc_TagHelpers_ValidationMessageTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.ValidationMessageTagHelper>();
@@ -491,7 +497,7 @@ using SudokuExamProject.Models
                     Write(__tagHelperExecutionContext.Output);
                     __tagHelperExecutionContext = __tagHelperScopeManager.End();
                     WriteLiteral("\r\n                    </div>\r\n\r\n                    <div class=\"form-group-block\">\r\n                        ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b41438", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("label", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b41622", async() => {
                         WriteLiteral("Şifrəni təkrarla");
                     }
                     );
@@ -516,7 +522,7 @@ using SudokuExamProject.Models
                     Write(__tagHelperExecutionContext.Output);
                     __tagHelperExecutionContext = __tagHelperScopeManager.End();
                     WriteLiteral("\r\n                        ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b43290", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b43474", async() => {
                     }
                     );
                     __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.InputTagHelper>();
@@ -542,7 +548,7 @@ using SudokuExamProject.Models
                     Write(__tagHelperExecutionContext.Output);
                     __tagHelperExecutionContext = __tagHelperScopeManager.End();
                     WriteLiteral("\r\n                        ");
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("span", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b45261", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("span", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b45445", async() => {
                     }
                     );
                     __Microsoft_AspNetCore_Mvc_TagHelpers_ValidationMessageTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.ValidationMessageTagHelper>();
@@ -586,7 +592,7 @@ using SudokuExamProject.Models
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n\r\n                <div class=\"social-divider\">və ya</div>\r\n                <div class=\"social-group\">\r\n                    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b49055", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b49239", async() => {
                     WriteLiteral("\r\n                        <span class=\"icon-google-local\"></span> Google ilə davam et\r\n                    ");
                 }
                 );
@@ -611,7 +617,7 @@ using SudokuExamProject.Models
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n\r\n                    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b51284", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b51468", async() => {
                     WriteLiteral("\r\n                        <span class=\"icon-github-local\"></span> GitHub ilə davam et\r\n                    ");
                 }
                 );
@@ -636,7 +642,7 @@ using SudokuExamProject.Models
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n                </div>\r\n\r\n                <div class=\"card-footer-links\">\r\n                    <p>Artıq hesabın var? ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b53614", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b53798", async() => {
                     WriteLiteral("Daxil ol");
                 }
                 );
@@ -654,7 +660,7 @@ using SudokuExamProject.Models
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("</p>\r\n                </div>\r\n            </section>\r\n\r\n            <!-- SAĞ HİSSƏ: ŞƏKİL SAHƏSİ -->\r\n            <section class=\"login-image-side\">\r\n                ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b55254", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b55438", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -670,7 +676,7 @@ using SudokuExamProject.Models
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n            </section>\r\n\r\n        </div>\r\n    </main>\r\n\r\n    <!-- Yerli sürətli skript bazası -->\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b56657", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b56841", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -684,7 +690,7 @@ using SudokuExamProject.Models
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b57782", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b57966", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -698,7 +704,7 @@ using SudokuExamProject.Models
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("partial", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b58907", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("partial", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "9c69805196b2ad24b4ba3a0f54673c0e693d5ed99c5b9233f23357994066989b59091", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_PartialTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.PartialTagHelper>();
@@ -727,6 +733,25 @@ using SudokuExamProject.Models
             WriteLiteral("\r\n</html>\r\n");
         }
         #pragma warning restore 1998
+        [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
+        public 
+#nullable restore
+#line 4 "C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\Views\_ViewImports.cshtml"
+UserManager<AppUser>
+
+#line default
+#line hidden
+#nullable disable
+         
+#nullable restore
+#line 4 "C:\Users\User\source\repos\SudokuExamProject\SudokuExamProject\Views\_ViewImports.cshtml"
+UserManager
+
+#line default
+#line hidden
+#nullable disable
+         { get; private set; }
+         = default!;
         #nullable restore
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
         public global::Microsoft.AspNetCore.Mvc.ViewFeatures.IModelExpressionProvider ModelExpressionProvider { get; private set; } = default!;

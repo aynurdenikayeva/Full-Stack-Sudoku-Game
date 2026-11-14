@@ -26,10 +26,9 @@ namespace SudokuExamProject
             // MVC
             services.AddControllersWithViews();
 
-            // Session üçün keş xidməti
+            // Session
             services.AddDistributedMemoryCache();
 
-            // İstifadəçi sessiyası
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(60);
@@ -37,58 +36,70 @@ namespace SudokuExamProject
                 options.Cookie.IsEssential = true;
             });
 
-            // Sudoku xidməti
-            services.AddSingleton<SudokuService>();
+            // Sudoku service
+            services.AddMemoryCache();
 
-            // PostgreSQL bağlantısı
+            services.AddSingleton<SudokuGameManager>();
+            // PostgreSQL
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(
                     Configuration.GetConnectionString("PostgresConnection")
                 )
             );
 
-            // E-poçt xidməti
+            // Email service
             services.AddScoped<EmailService>();
 
-            // 1. IDENTITY KONFİQURASİYASI (ConfigureServices daxilində)
-            services.AddIdentity<AppUser,IdentityRole>(options =>
+            // ASP.NET Core Identity
+            services.AddIdentity<AppUser, IdentityRole>(options =>
             {
-                // İstifadəçi qaydaları
                 options.User.RequireUniqueEmail = true;
-                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                // Parol qaydaları
+
+                options.User.AllowedUserNameCharacters =
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+
+                // Password rules
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireUppercase = true;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredLength = 8;
-                // Hesabın kilidlənməsi (Lockout)
+
+                // Lockout
                 options.Lockout.MaxFailedAccessAttempts = 5;
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(5);
+                options.Lockout.DefaultLockoutTimeSpan =
+                    TimeSpan.FromSeconds(5);
             })
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
 
-            // 2. IDENTITY COOKIE AYARLARI (AddCookie əvəzinə bu işlədilir)
+            // Identity cookie
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = "/SignIn"; // İcazəsiz girişdə yönləndiriləcək ünvan
+                options.LoginPath = "/SignIn";
                 options.AccessDeniedPath = "/AccessDenied";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                options.SlidingExpiration = true;
             });
 
-            // 3. SOSİAL ŞƏBƏKƏLƏR (Google və GitHub)
+            // Google and GitHub authentication
             services.AddAuthentication()
-            .AddGoogle(options =>
-            {
-                options.ClientId = Configuration["Authentication:Google:ClientId"];
-                options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-            })
-            .AddGitHub(options =>
-            {
-                options.ClientId = Configuration["Authentication:GitHub:ClientId"];
-                options.ClientSecret = Configuration["Authentication:GitHub:ClientSecret"];
-            });
+                .AddGoogle(options =>
+                {
+                    options.ClientId =
+                        Configuration["Authentication:Google:ClientId"];
+
+                    options.ClientSecret =
+                        Configuration["Authentication:Google:ClientSecret"];
+                })
+                .AddGitHub(options =>
+                {
+                    options.ClientId =
+                        Configuration["Authentication:GitHub:ClientId"];
+
+                    options.ClientSecret =
+                        Configuration["Authentication:GitHub:ClientSecret"];
+                });
         }
 
         public void Configure(
@@ -110,22 +121,20 @@ namespace SudokuExamProject
 
             app.UseRouting();
 
-            // Endpoint-lərdən əvvəl Session aktivləşdirilir
             app.UseSession();
 
-            // Giriş və icazə yoxlamaları
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                // Admin paneli
+                // Admin Area
                 endpoints.MapControllerRoute(
                     name: "areas",
                     pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
                 );
 
-                // Əsas MVC marşrutu
+                // Default route
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}"
