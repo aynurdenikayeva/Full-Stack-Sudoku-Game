@@ -36,5 +36,7 @@ namespace SudokuExamProject.ViewModels
 
         [StringLength(1000)]
         public string? Note { get; set; }
+
+
     }
 }

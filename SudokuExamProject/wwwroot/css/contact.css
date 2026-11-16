@@ -1,10 +1,4 @@
-﻿
-/* =========================================
-   CONTACT PAGE
-   Purple palette — About page ilə uyğun
-========================================= */
-
-#mu-contact {
+﻿#mu-contact {
     --contact-accent: #7965e8;
     --contact-accent-hover: #6550d0;
     --contact-heading: #30284f;
@@ -25,11 +19,6 @@
     #mu-contact *::after {
         box-sizing: border-box;
     }
-
-    /* =========================================
-   PAGE HEADING
-========================================= */
-
     #mu-contact .contact-heading {
         max-width: 760px;
         margin: 0 auto 65px;
@@ -62,11 +51,6 @@
         font-size: 16px;
         line-height: 1.9;
     }
-
-    /* =========================================
-   MAIN LAYOUT
-========================================= */
-
     #mu-contact .contact-layout {
         display: grid;
         grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.8fr);
@@ -96,11 +80,6 @@
             font-size: 14px;
             line-height: 1.8;
         }
-
-    /* =========================================
-   CONTACT FORM
-========================================= */
-
     #mu-contact .contact-form {
         width: 100%;
     }
@@ -171,10 +150,6 @@
             box-shadow: 0 0 0 3px rgba(220, 85, 85, 0.1);
         }
 
-    /* =========================================
-   VALIDATION MESSAGES
-========================================= */
-
     #mu-contact .field-error {
         display: block;
         margin-top: 7px;
@@ -198,11 +173,6 @@
             margin: 0;
             padding-left: 20px;
         }
-
-    /* =========================================
-   SUBMIT BUTTON
-========================================= */
-
     #mu-contact .contact-submit {
         display: inline-flex;
         align-items: center;
@@ -255,11 +225,6 @@
         font-size: 12px;
         line-height: 1.7;
     }
-
-    /* =========================================
-   SUCCESS / WARNING ALERTS
-========================================= */
-
     #mu-contact .contact-alert {
         display: flex;
         align-items: flex-start;
@@ -293,11 +258,6 @@
         font-size: 18px;
         font-weight: 700;
     }
-
-    /* =========================================
-   CONTACT SIDEBAR
-========================================= */
-
     #mu-contact .contact-sidebar {
         min-width: 0;
         padding: 34px;
@@ -334,11 +294,6 @@
         font-size: 13px;
         line-height: 1.9;
     }
-
-    /* =========================================
-   CONTACT INFORMATION
-========================================= */
-
     #mu-contact .contact-info-list {
         display: flex;
         flex-direction: column;
@@ -394,22 +349,12 @@
         #mu-contact .info-content a:hover {
             color: var(--contact-accent);
         }
-
-    /* =========================================
-   SIDEBAR DIVIDER
-========================================= */
-
     #mu-contact .sidebar-divider {
         width: 100%;
         height: 1px;
         margin: 32px 0;
         background: var(--contact-border);
     }
-
-    /* =========================================
-   WORKING HOURS
-========================================= */
-
     #mu-contact .working-hours-list {
         display: flex;
         flex-direction: column;
@@ -447,11 +392,6 @@
         #mu-contact .working-hours-item .closed-label {
             color: #d64545;
         }
-
-    /* =========================================
-   SIDEBAR FOOTER
-========================================= */
-
     #mu-contact .sidebar-footer {
         display: flex;
         align-items: center;
@@ -476,11 +416,6 @@
         font-style: italic;
         line-height: 1.7;
     }
-
-/* =========================================
-   RESPONSIVE — TABLET
-========================================= */
-
 @media (max-width: 991px) {
     #mu-contact {
         padding: 75px 0 85px;
@@ -505,11 +440,6 @@
             gap: 24px;
         }
 }
-
-/* =========================================
-   RESPONSIVE — MOBILE
-========================================= */
-
 @media (max-width: 767px) {
     #mu-contact {
         padding: 60px 0 70px;
@@ -554,11 +484,6 @@
             width: 100%;
         }
 }
-
-/* =========================================
-   RESPONSIVE — SMALL MOBILE
-========================================= */
-
 @media (max-width: 480px) {
     #mu-contact {
         padding: 45px 0 55px;

@@ -30,5 +30,6 @@ namespace SudokuExamProject.Areas.Admin.Controllers
 
             return View(user);
         }
+
     }
 }

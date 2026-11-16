@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -31,11 +30,25 @@ namespace SudokuExamProject.Areas.Admin.Controllers
             _roleManager = roleManager;
             _webHostEnvironment = webHostEnvironment;
         }
-
-        // Bütün istifadəçilər
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(string search)
         {
-            List<AppUser> users = await _userManager.Users.ToListAsync();
+            var query = _userManager.Users.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                search = search.Trim().ToLower();
+
+                query = query.Where(u =>
+                    (u.Name != null && u.Name.ToLower().Contains(search)) ||
+                    (u.Surname != null && u.Surname.ToLower().Contains(search)) ||
+                    (u.UserName != null && u.UserName.ToLower().Contains(search)) ||
+                    (u.Email != null && u.Email.ToLower().Contains(search)));
+            }
+
+            List<AppUser> users = await query
+                .OrderBy(u => u.Name)
+                .ToListAsync();
 
             var userRoles = new Dictionary<string, IList<string>>();
 
@@ -45,10 +58,10 @@ namespace SudokuExamProject.Areas.Admin.Controllers
             }
 
             ViewBag.UserRoles = userRoles;
+            ViewBag.Search = search;
 
             return View(users);
         }
-
         // İstifadəçi əlavə etmək - GET
         [HttpGet]
         public IActionResult Add()

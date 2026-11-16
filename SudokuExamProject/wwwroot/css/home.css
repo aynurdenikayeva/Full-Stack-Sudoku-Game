@@ -1,15 +1,4 @@
-﻿/* =========================================
-   SUDOKUGAME — ANA SƏHİFƏ (DÜZƏLDİLMİŞ VERSİYA)
-   Dizayn dəyişməyib. Düzəlişlər:
-   1. Hero konteyneri masaüstündə flex (mətn solda, şəkil sağda)
-   2. Mobil input şrifti ≥ 16px (iOS zoom problemi)
-   3. Mobil lövhə 100% enində
-   4. Tamamlanmış düymə: !important yoxdur, prefikslidir
-   5. Ölü və təkrarlanan qaydalar silinib
-   Breakpoint-lər: 992px, 600px, 380px.
-   ========================================= */
-
-:root {
+﻿:root {
     --home-primary: #7965e8;
     --home-primary-dark: #604bc8;
     --home-primary-light: #eeeaff;
@@ -53,11 +42,6 @@ body:has(.home-page) {
     .home-page a:hover {
         text-decoration: none;
     }
-
-    /* =========================================
-   HERO — ANA TANITIM BÖLMƏSİ
-========================================= */
-
     .home-page .hero-section {
         position: relative;
         isolation: isolate;
@@ -70,8 +54,6 @@ body:has(.home-page) {
         border-radius: 28px;
         background: radial-gradient(circle at 82% 30%, rgba(192, 178, 255, 0.45), transparent 32%), radial-gradient(circle at 5% 100%, rgba(225, 219, 255, 0.42), transparent 35%), linear-gradient(120deg, #f0edff 0%, #fbfaff 52%, #eeebff 100%);
     }
-
-        /* Dekorativ dairə */
         .home-page .hero-section::before {
             content: "";
             position: absolute;
@@ -85,8 +67,6 @@ body:has(.home-page) {
             background: rgba(151, 132, 255, 0.06);
             pointer-events: none;
         }
-
-        /* Dekorativ 9 × 9 elementi */
         .home-page .hero-section::after {
             content: "9 × 9";
             position: absolute;
@@ -105,8 +85,6 @@ body:has(.home-page) {
             transform: rotate(-12deg);
             pointer-events: none;
         }
-
-    /* Masaüstü: mətn solda, şəkil sağda */
     .home-page .hero-container {
         position: relative;
         z-index: 1;
@@ -166,8 +144,6 @@ body:has(.home-page) {
         font-size: 16px;
         line-height: 1.9;
     }
-
-    /* Oyuna başla düyməsi */
     .home-page .hero-button {
         display: inline-flex;
         align-items: center;
@@ -200,7 +176,6 @@ body:has(.home-page) {
                 transform: translateX(4px);
             }
 
-    /* Üstünlüklər */
     .home-page .hero-features {
         display: flex;
         align-items: center;
@@ -229,8 +204,6 @@ body:has(.home-page) {
             color: #fff;
             font-size: 11px;
         }
-
-    /* Sağ tərəf — şəkil */
     .home-page .hero-image-wrapper {
         position: relative;
         display: flex;
@@ -262,8 +235,6 @@ body:has(.home-page) {
         filter: drop-shadow(0 18px 25px rgba(75, 57, 155, 0.14));
         animation: sudokuFloat 4s ease-in-out infinite;
     }
-
-    /* Şəklin üzərində məlumat kartı */
     .home-page .hero-floating-card {
         position: absolute;
         z-index: 3;

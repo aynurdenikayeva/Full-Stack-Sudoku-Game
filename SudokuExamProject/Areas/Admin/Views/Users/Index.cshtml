@@ -107,17 +107,17 @@
                                             <button type="submit"
                                                     class="btn btn-link text-decoration-none p-0 m-0">
 
-                                        @if (user.AccountStatus == "Active")
-                                                {
-                                                    <span class="badge bg-success">Aktiv</span>
-                                                }
-                                                else if (user.AccountStatus == "Blocked")
+                                        @if (user.AccountStatus == "Blocked")
                                                 {
                                                     <span class="badge bg-danger">Bloklanıb</span>
                                                 }
+                                                else if (user.IsOnline)
+                                                {
+                                                    <span class="badge bg-success">Aktiv</span>
+                                                }
                                                 else
                                                 {
-                                                    <span class="badge bg-secondary">Naməlum</span>
+                                                    <span class="badge bg-secondary">Deaktiv</span>
                                                 }
 
                                             </button>

@@ -1,1 +1,309 @@
-﻿<h1>Dashboard page</h1>
+﻿@model SudokuExamProject.ViewModels.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<main class="dashboard-page">
+
+    <!-- Başlıq -->
+    <div class="dashboard-heading">
+        <h2>Dashboard</h2>
+        <p>AXIOMIX idarəetmə panelinə xoş gəlmisiniz.</p>
+    </div>
+
+    <!-- Statistik kartlar -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-12 col-sm-6 col-xl-4">
+            <div class="stat-card">
+                <div class="stat-top">
+                    <div>
+                        <p>Ümumi istifadəçilər</p>
+                        <h3>@Model.TotalUsers</h3>
+                    </div>
+                    <div class="stat-icon icon-purple">
+                        <i class="fa fa-users"></i>
+                    </div>
+                </div>
+                <p>Sistemdəki bütün hesablar</p>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-xl-4">
+            <div class="stat-card">
+                <div class="stat-top">
+                    <div>
+                        <p>Adminlər</p>
+                        <h3>@Model.AdminCount</h3>
+                    </div>
+                    <div class="stat-icon icon-blue">
+                        <i class="fa fa-user-secret"></i>
+                    </div>
+                </div>
+                <p>Admin roluna sahib hesablar</p>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-xl-4">
+            <div class="stat-card">
+                <div class="stat-top">
+                    <div>
+                        <p>Oyunçular</p>
+                        <h3>@Model.PlayerCount</h3>
+                    </div>
+                    <div class="stat-icon icon-green">
+                        <i class="fa fa-gamepad"></i>
+                    </div>
+                </div>
+                <p>Player roluna sahib hesablar</p>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-xl-4">
+            <div class="stat-card">
+                <div class="stat-top">
+                    <div>
+                        <p>Aktiv hesablar</p>
+                        <h3>@Model.ActiveUsers</h3>
+                    </div>
+                    <div class="stat-icon icon-cyan">
+                        <i class="fa fa-check-circle"></i>
+                    </div>
+                </div>
+                <p>Hazırda sayta daxil olan istifadəçilər</p>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-xl-4">
+            <div class="stat-card">
+                <div class="stat-top">
+                    <div>
+                        <p>Deaktiv hesablar</p>
+                        <h3>@Model.InactiveUsers</h3>
+                    </div>
+                    <div class="stat-icon icon-orange">
+                        <i class="fa fa-user-times"></i>
+                    </div>
+                </div>
+                <p>Hazırda sayta daxil olmayan hesablar</p>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-xl-4">
+            <div class="stat-card">
+                <div class="stat-top">
+                    <div>
+                        <p>Bloklanmış hesablar</p>
+                        <h3>@Model.BlockedUsers</h3>
+                    </div>
+                    <div class="stat-icon icon-red">
+                        <i class="fa fa-ban"></i>
+                    </div>
+                </div>
+                <p>Blok statusunda olan hesablar</p>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-xl-4">
+            <div class="stat-card">
+                <div class="stat-top">
+                    <div>
+                        <p>Əlaqə mesajları</p>
+                        <h3>@Model.TotalMessages</h3>
+                    </div>
+                    <div class="stat-icon icon-orange">
+                        <i class="fa fa-envelope"></i>
+                    </div>
+                </div>
+                <p>Sistemə göndərilmiş mesajlar</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Statistik bölgü -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-lg-6">
+            <div class="dashboard-panel">
+                <h5 class="panel-title">İstifadəçi bölgüsü</h5>
+
+                <div class="progress-item">
+                    <div class="progress-info">
+                        <span>Adminlər</span>
+                        <strong>@Model.AdminCount / @Model.TotalUsers</strong>
+                    </div>
+                    <div class="custom-progress">
+                        <div class="custom-progress-bar bar-purple"
+                             style="width: @Model.AdminPercentage.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)%">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-item">
+                    <div class="progress-info">
+                        <span>Oyunçular</span>
+                        <strong>@Model.PlayerCount / @Model.TotalUsers</strong>
+                    </div>
+                    <div class="custom-progress">
+                        <div class="custom-progress-bar bar-blue"
+                             style="width: @Model.PlayerPercentage.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)%">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-item mb-0">
+                    <div class="progress-info">
+                        <span>Aktiv hesablar</span>
+                        <strong>@Model.ActiveUsers / @Model.TotalUsers</strong>
+                    </div>
+                    <div class="custom-progress">
+                        <div class="custom-progress-bar bar-green"
+                             style="width: @Model.ActivePercentage.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="dashboard-panel">
+                <h5 class="panel-title">Hesabların vəziyyəti</h5>
+
+                <div class="progress-item">
+                    <div class="progress-info">
+                        <span>Aktiv</span>
+                        <strong>@Model.ActiveUsers / @Model.TotalUsers</strong>
+                    </div>
+                    <div class="custom-progress">
+                        <div class="custom-progress-bar bar-green"
+                             style="width: @Model.ActivePercentage.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)%">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-item">
+                    <div class="progress-info">
+                        <span>Deaktiv</span>
+                        <strong>@Model.InactiveUsers / @Model.TotalUsers</strong>
+                    </div>
+                    <div class="custom-progress">
+                        <div class="custom-progress-bar bar-orange"
+                             style="width: @Model.InactivePercentage.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)%">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-item mb-0">
+                    <div class="progress-info">
+                        <span>Bloklanmış</span>
+                        <strong>@Model.BlockedUsers / @Model.TotalUsers</strong>
+                    </div>
+                    <div class="custom-progress">
+                        <div class="custom-progress-bar bar-red"
+                             style="width: @Model.BlockedPercentage.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)%">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- İstifadəçilər cədvəli -->
+    <div class="dashboard-panel">
+
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+            <h5 class="panel-title mb-0">İstifadəçilər</h5>
+
+            <a asp-area="Admin"
+               asp-controller="Users"
+               asp-action="Index"
+               class="view-all">
+                Bütün istifadəçilər
+                <i class="fa fa-arrow-right ms-1"></i>
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="dashboard-table">
+
+                <thead>
+                    <tr>
+                        <th>İstifadəçi</th>
+                        <th>E-poçt</th>
+                        <th>İstifadəçi adı</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model.Users != null && Model.Users.Any())
+                    {
+                        @foreach (var user in Model.Users)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+
+                                        @if (!string.IsNullOrEmpty(user.Image))
+                                        {
+                                            <img src="@user.Image"
+                                                 class="user-avatar"
+                                                 alt="Profil şəkli" />
+                                        }
+                                        else
+                                        {
+                                            <div class="user-avatar d-flex align-items-center justify-content-center">
+                                                <i class="fa fa-user text-secondary"></i>
+                                            </div>
+                                        }
+
+                                        <span class="user-name">
+                                            @user.Name @user.Surname
+                                        </span>
+                                    </div>
+                                </td>
+
+                                <td>@user.Email</td>
+
+                                <td>@user.UserName</td>
+
+                                <td>
+                                    @if (user.AccountStatus == "Blocked")
+                                    {
+                                        <span class="status-badge status-blocked">Bloklanıb</span>
+                                    }
+                                    else if (user.IsOnline)
+                                    {
+                                        <span class="status-badge status-active">Aktiv</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status-badge status-other">Deaktiv</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4">
+                                <div class="empty-users">
+                                    Hələ istifadəçi yoxdur.
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+</main>

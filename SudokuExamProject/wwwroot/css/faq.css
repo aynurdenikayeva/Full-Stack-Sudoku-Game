@@ -1,9 +1,4 @@
-﻿
-/* ==============================
-   FAQ PAGE
-============================== */
-
-.faq-page {
+﻿.faq-page {
     --faq-primary: #5b5ce2;
     --faq-primary-dark: #4546c8;
     --faq-text: #20233a;
@@ -23,11 +18,6 @@
     .faq-page *::after {
         box-sizing: border-box;
     }
-
-/* ==============================
-   HERO SECTION
-============================== */
-
 .faq-hero {
     padding: 76px 20px 64px;
     text-align: center;
@@ -64,10 +54,6 @@
     font-size: 16px;
     line-height: 1.8;
 }
-
-/* ==============================
-   SEARCH
-============================== */
 
 .faq-search {
     display: flex;
@@ -119,10 +105,6 @@
     font-size: 12px;
 }
 
-/* ==============================
-   FAQ CONTAINER
-============================== */
-
 .faq-container {
     width: min(100% - 40px, 850px);
     margin: 0 auto;
@@ -146,10 +128,6 @@
         font-size: 14px;
         line-height: 1.7;
     }
-
-/* ==============================
-   CATEGORY
-============================== */
 
 .faq-category {
     margin-bottom: 34px;
@@ -177,10 +155,6 @@
     color: var(--faq-primary);
     font-size: 23px;
 }
-
-/* ==============================
-   ACCORDION
-============================== */
 
 .faq-list {
     display: flex;
@@ -261,11 +235,6 @@
     color: #ffffff;
     transform: rotate(180deg);
 }
-
-/* ==============================
-   ANSWER CONTENT
-============================== */
-
 .faq-answer {
     padding: 0 22px 23px;
     color: #666b80;
@@ -333,10 +302,6 @@
     .faq-no-results[hidden] {
         display: none !important;
     }
-
-/* ==============================
-   CALL TO ACTION
-============================== */
 
 .faq-cta {
     margin-top: 55px;
@@ -407,10 +372,6 @@
         outline: 3px solid rgba(91, 92, 226, 0.4);
         outline-offset: 4px;
     }
-
-/* ==============================
-   RESPONSIVE DESIGN
-============================== */
 
 @media (max-width: 768px) {
     .faq-hero {
@@ -513,8 +474,6 @@
         width: 100%;
     }
 }
-
-/* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
     .faq-page *,
     .faq-page *::before,
@@ -525,8 +484,6 @@
         animation-iteration-count: 1 !important;
     }
 }
-
-/* Azərbaycan hərfləri üçün şrift düzəlişi */
 .faq-page,
 .faq-page input,
 .faq-page button,
@@ -535,22 +492,29 @@
     font-synthesis: weight;
 }
 
-    /* Başlıqlar */
     .faq-page h1,
     .faq-page h2,
     .faq-page h3,
     .faq-page .faq-category-title {
         font-weight: 800;
     }
-
-    /* FAQ sualları və düymələr */
     .faq-page .faq-question,
     .faq-page .faq-play-button {
         font-weight: 700;
     }
 
-/* Mətnin ekranda göstərilməsi */
 .faq-page {
     -webkit-font-smoothing: auto;
     text-rendering: optimizeLegibility;
 }
+    /* FAQ suallarında klik zamanı yaranan qara çərçivəni sil */
+    .faq-page .faq-question:focus,
+    .faq-page .faq-question:focus-visible {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Klik zamanı əlavə border yaranmasının qarşısını al */
+    .faq-page .faq-question {
+        border: none !important;
+    }

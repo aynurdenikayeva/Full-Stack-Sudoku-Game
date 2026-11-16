@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SudokuExamProject.Models;
@@ -55,6 +54,15 @@ namespace SudokuExamProject.Controllers
             return hasUsers ? "Player" : "Admin";
         }
 
+        // İSTİFADƏÇİNİN BLOKLANIB-BLOKLANMADIĞINI YOXLAYIR
+        private bool IsUserBlocked(AppUser user)
+        {
+            return string.Equals(
+                user.AccountStatus,
+                "Blocked",
+                StringComparison.OrdinalIgnoreCase);
+        }
+
         // REGISTER GET
         [HttpGet("/signup")]
         [HttpGet("Account/Register")]
@@ -85,7 +93,7 @@ namespace SudokuExamProject.Controllers
 
             string email = model.Email.Trim();
 
-            // Qeydiyyatdan əvvəl rol müəyyən edilir.
+            // Yeni istifadəçinin rolunu müəyyən edirik.
             string role = await GetNewUserRole();
 
             AppUser appUser = new AppUser
@@ -93,7 +101,8 @@ namespace SudokuExamProject.Controllers
                 Name = model.Name.Trim(),
                 UserName = email,
                 Email = email,
-                AccountStatus = "Active"
+                AccountStatus = "Active",
+                IsOnline = false
             };
 
             var result = await _userManager.CreateAsync(
@@ -103,7 +112,9 @@ namespace SudokuExamProject.Controllers
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    ModelState.AddModelError(
+                        string.Empty,
+                        error.Description);
 
                 return View("Register", model);
             }
@@ -117,10 +128,16 @@ namespace SudokuExamProject.Controllers
                 await _userManager.DeleteAsync(appUser);
 
                 foreach (var error in roleResult.Errors)
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    ModelState.AddModelError(
+                        string.Empty,
+                        error.Description);
 
                 return View("Register", model);
             }
+
+            // Qeydiyyatdan sonra istifadəçini sistemə daxil edirik.
+            appUser.IsOnline = true;
+            await _userManager.UpdateAsync(appUser);
 
             await _signInManager.SignInAsync(
                 appUser,
@@ -158,10 +175,7 @@ namespace SudokuExamProject.Controllers
             }
 
             // Bloklanmış istifadəçi daxil ola bilməz.
-            if (string.Equals(
-                appUser.AccountStatus,
-                "Blocked",
-                StringComparison.OrdinalIgnoreCase))
+            if (IsUserBlocked(appUser))
             {
                 ModelState.AddModelError(
                     string.Empty,
@@ -193,6 +207,10 @@ namespace SudokuExamProject.Controllers
 
                 return View("Login", loginModel);
             }
+
+            // Uğurlu giriş zamanı aktiv edirik.
+            appUser.IsOnline = true;
+            await _userManager.UpdateAsync(appUser);
 
             return RedirectToAction("Index", "Home");
         }
@@ -239,17 +257,14 @@ namespace SudokuExamProject.Controllers
                 return RedirectToAction(nameof(Register));
             }
 
-            // Əvvəldən bu sosial hesaba bağlı istifadəçi
+            // Əvvəldən bu sosial hesaba bağlı istifadəçi.
             var user = await _userManager.FindByLoginAsync(
                 info.LoginProvider,
                 info.ProviderKey);
 
             if (user != null)
             {
-                if (string.Equals(
-                    user.AccountStatus,
-                    "Blocked",
-                    StringComparison.OrdinalIgnoreCase))
+                if (IsUserBlocked(user))
                 {
                     TempData["Error"] =
                         "Hesabınız bloklanıb. Daxil olmaq mümkün deyil.";
@@ -265,14 +280,20 @@ namespace SudokuExamProject.Controllers
                         bypassTwoFactor: true);
 
                 if (signInResult.Succeeded)
-                    return RedirectToAction("Index", "Home");
+                {
+                    user.IsOnline = true;
+                    await _userManager.UpdateAsync(user);
 
-                TempData["Error"] = "Hesaba giriş mümkün olmadı.";
+                    return RedirectToAction("Index", "Home");
+                }
+
+                TempData["Error"] =
+                    "Hesaba giriş mümkün olmadı.";
 
                 return RedirectToAction(nameof(Login));
             }
 
-            // Sosial şəbəkədən istifadəçi məlumatları
+            // Sosial şəbəkədən istifadəçi məlumatları.
             string? email = info.Principal.FindFirstValue(
                 ClaimTypes.Email);
 
@@ -314,7 +335,8 @@ namespace SudokuExamProject.Controllers
                     Email = email,
                     Name = name,
                     EmailConfirmed = true,
-                    AccountStatus = "Active"
+                    AccountStatus = "Active",
+                    IsOnline = false
                 };
 
                 var createResult = await _userManager.CreateAsync(user);
@@ -345,10 +367,7 @@ namespace SudokuExamProject.Controllers
             }
             else
             {
-                if (string.Equals(
-                    user.AccountStatus,
-                    "Blocked",
-                    StringComparison.OrdinalIgnoreCase))
+                if (IsUserBlocked(user))
                 {
                     TempData["Error"] =
                         "Hesabınız bloklanıb. Daxil olmaq mümkün deyil.";
@@ -357,7 +376,7 @@ namespace SudokuExamProject.Controllers
                 }
             }
 
-            // Sosial hesabı mövcud və ya yeni istifadəçiyə bağlayırıq.
+            // Sosial hesabı istifadəçiyə bağlayırıq.
             var addLoginResult = await _userManager.AddLoginAsync(
                 user,
                 info);
@@ -373,6 +392,10 @@ namespace SudokuExamProject.Controllers
                 return RedirectToAction(nameof(Register));
             }
 
+            // Sosial hesabla giriş zamanı aktiv edirik.
+            user.IsOnline = true;
+            await _userManager.UpdateAsync(user);
+
             await _signInManager.SignInAsync(
                 user,
                 isPersistent: true);
@@ -385,6 +408,14 @@ namespace SudokuExamProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user != null)
+            {
+                user.IsOnline = false;
+                await _userManager.UpdateAsync(user);
+            }
+
             await _signInManager.SignOutAsync();
 
             HttpContext.Session.Clear();

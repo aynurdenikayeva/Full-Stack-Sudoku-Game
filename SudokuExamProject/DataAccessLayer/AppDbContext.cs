@@ -15,5 +15,7 @@ namespace SudokuExamProject.DataAccessLayer
 
         public DbSet<SudokuResult> SudokuResults { get; set; }
 
+        public DbSet<SiteSettings> SiteSettings { get; set; }
+
     }
 }

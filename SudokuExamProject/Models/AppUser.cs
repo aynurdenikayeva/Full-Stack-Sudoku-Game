@@ -19,6 +19,9 @@ namespace SudokuExamProject.Models
 
         public string Image { get; set; } = string.Empty;
 
+        public bool IsOnline { get; set; } = false;
+
+
         [NotMapped]
         public IFormFile? FormFile { get; set; }
     }

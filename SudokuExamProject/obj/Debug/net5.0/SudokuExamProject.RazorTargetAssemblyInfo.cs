@@ -17,7 +17,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyProductAttribute("SudokuExamProject")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+375d5039f08fa781c557f23e3f505ac2085db626")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+53c13c6efab02797944230ef02348c1fb4433e4e")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SudokuExamProject.Views")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 

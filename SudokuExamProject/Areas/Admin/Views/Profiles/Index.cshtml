@@ -1,13 +1,11 @@
 ﻿@model SudokuExamProject.Models.AppUser
 
 @{
-    ViewData["Title"] = "İstifadəçi profili";
+    ViewData["Title"] = "Admin profili";
 }
 
 <main class="dashboard-content">
     <div class="container-fluid px-3 px-lg-4 py-4">
-
-        <!-- Başlıq -->
         <div class="d-flex justify-content-between align-items-center
                     flex-wrap gap-3 mb-4">
 
@@ -25,7 +23,7 @@
                     </p>
 
                     <h1 class="h3 fw-bold mb-1">
-                        İstifadəçi profili
+                        Admin profili
                     </h1>
 
                     <p class="text-muted mb-0">
@@ -38,8 +36,6 @@
         </div>
 
         <div class="row g-4">
-
-            <!-- Sol tərəf: Profil kartı -->
             <div class="col-12 col-xl-4">
                 <div class="card border-0 shadow-sm h-100 overflow-hidden">
 
@@ -50,7 +46,6 @@
 
                     <div class="card-body text-center px-4 pb-4">
 
-                        <!-- Profil şəkli -->
                         <div class="d-flex align-items-center
                                     justify-content-center mx-auto
                                     rounded-circle bg-white shadow-sm
@@ -89,8 +84,6 @@
                         </span>
 
                         <hr class="my-4" />
-
-                        <!-- Əlaqə məlumatları -->
                         <div class="text-start">
 
                             <div class="d-flex gap-3 align-items-start mb-4">
@@ -144,10 +137,8 @@
                 </div>
             </div>
 
-            <!-- Sağ tərəf: Ətraflı məlumatlar -->
             <div class="col-12 col-xl-8">
 
-                <!-- Şəxsi məlumatlar -->
                 <div class="card border-0 shadow-sm mb-4">
 
                     <div class="card-header bg-white p-4">
@@ -264,7 +255,6 @@
                     </div>
                 </div>
 
-                <!-- Qeyd -->
                 <div class="card border-0 shadow-sm mb-4">
 
                     <div class="card-header bg-white p-4">
@@ -293,7 +283,6 @@
                     </div>
                 </div>
 
-                <!-- Geri düyməsi -->
                 <div class="d-flex justify-content-end">
                     <a asp-area="Admin"
                        asp-controller="Users"

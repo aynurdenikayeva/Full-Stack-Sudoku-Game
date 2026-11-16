@@ -174,6 +174,9 @@ namespace SudokuExamProject.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsOnline")
+                        .HasColumnType("boolean");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
 
@@ -293,6 +296,48 @@ namespace SudokuExamProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Profiles");
+                });
+
+            modelBuilder.Entity("SudokuExamProject.Models.SiteSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool>("AllowHints")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("AllowRegistration")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ContactEmail")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DefaultDifficulty")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsGameEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("MaxFailedLoginAttempts")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MinimumPasswordLength")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SiteDescription")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("SiteName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SiteSettings");
                 });
 
             modelBuilder.Entity("SudokuExamProject.Models.SudokuResult", b =>

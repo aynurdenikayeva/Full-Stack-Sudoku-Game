@@ -8,11 +8,15 @@
     <base href="~/admin/">
     <title>Dashboard | AXIOMIX</title>
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/admin/css/bootstrap.min.css">
     <link rel="stylesheet" href="vendors/bootstrap-icons/bootstrap-icons.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/admin-theme.css"
+    <link rel="stylesheet" href="~/admin/css/style.css">
+    <link rel="stylesheet" href="~/admin/css/admin-theme.css"
           asp-append-version="true">
+    <link rel="stylesheet" href="~/admin/css/dashboard.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -72,7 +76,8 @@
                         <i class="bi bi-gear" aria-hidden="true"></i>
                     </span>
                     <span class="nav-text">Parametrlər</span>
-                </a>            
+                </a>        
+    
             </nav>
 
             <div class="sidebar-footer">
@@ -90,8 +95,19 @@
                         <span></span>
                     </button>
 
-                    <form class="d-none d-md-flex ms-3 flex-grow-1" role="search">
-                        <input class="form-control search-input" type="search" placeholder="Search users, orders, reports" aria-label="Search">
+                    <form asp-area="Admin"
+                          asp-controller="Users"
+                          asp-action="Index"
+                          method="get"
+                          class="d-none d-md-flex ms-3 flex-grow-1"
+                          role="search">
+
+                        <input class="form-control search-input"
+                               type="search"
+                               name="search"
+                               value="@Context.Request.Query["search"]"
+                               placeholder="İstifadəçi axtar..."
+                               aria-label="İstifadəçi axtar" />
                     </form>
 
                     <div class="navbar-actions ms-auto">
