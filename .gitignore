@@ -1,1 +1,32 @@
-.vs/ 
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio generated files
+*.pdb
+*.cache
+*.log
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+
+# Publish
+publish/
+artifacts/
+
+# Environment and secrets
+appsettings.Development.json
+secrets.json
+
+# Operating system
+.DS_Store
+Thumbs.db
