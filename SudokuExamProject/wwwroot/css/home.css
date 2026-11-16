@@ -49,10 +49,8 @@ body:has(.home-page) {
         display: flex;
         align-items: center;
         min-height: 480px;
-        width: 100%;
-        max-width: 1320px; /* Hər iki bölmə üçün ortaq maksimal en */
-        margin: 30px auto 45px; /* Yanlardakı 10px silindi, auto ilə mərkəzləşdi */
-        padding: 60px 40px;
+        margin: 30px 10px 45px;
+        padding: 60px 35px;
         border-radius: 28px;
         background: radial-gradient(circle at 82% 30%, rgba(192, 178, 255, 0.45), transparent 32%), radial-gradient(circle at 5% 100%, rgba(225, 219, 255, 0.42), transparent 35%), linear-gradient(120deg, #f0edff 0%, #fbfaff 52%, #eeebff 100%);
     }
@@ -95,8 +93,7 @@ body:has(.home-page) {
         justify-content: space-between;
         gap: 40px;
         width: 100%;
-        max-width: 100%; /* Daxili sıxılmanı aradan qaldırır */
-        padding: 0; /* Bootstrap .container padding-ini sıfırlayır */
+        max-width: 1250px;
     }
 
     .home-page .hero-content {
@@ -351,7 +348,7 @@ body:has(.home-page) {
     align-items: start;
     gap: 30px;
     width: 70%; /* yalnız masaüstü; tablet və mobildə 100% */
-    max-width: 1100px; /* Ekran böyüdükdə kartın həddindən artıq genişlənməsinin qarşısını alır */
+    max-width: none;
     margin: 0 auto;
     padding: 32px;
     border: 1px solid rgba(220, 216, 255, 0.9);
@@ -916,8 +913,6 @@ body:has(.home-page) {
 
 .home-page .difficulty-section {
     width: 100%;
-    max-width: 1320px; /* .hero-section ilə eyni en */
-    margin: 0 auto;
     padding: 15px 0 35px;
 }
 
@@ -1121,6 +1116,14 @@ body:has(.home-page) {
         padding-right: 22px;
         padding-left: 22px;
     }
+
+        /* Hero */
+        .home-page .hero-section {
+            width: calc(100% + 44px);
+            min-height: 340px;
+            margin: 20px -22px 35px;
+            padding: 42px 30px;
+        }
 
         .home-page .hero-container {
             flex-direction: column;
