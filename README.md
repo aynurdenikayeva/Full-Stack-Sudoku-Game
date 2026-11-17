@@ -127,7 +127,12 @@ Update the connection string in your configuration:
   "ConnectionStrings": {
     "DefaultConnection": "Server=YOUR_SERVER;Database=SudokuDB;Trusted_Connection=True;TrustServerCertificate=True;"
   }
-}
+}//MSSql
+{
+  "ConnectionStrings": {
+    "PostgresConnection": "Host=localhost;Port=5432;Database=sudokuGame_db;Username=postgres;Password=;"
+  }
+}//PostreSql
 ```
 
 Replace `YOUR_SERVER` with your SQL Server instance name.
