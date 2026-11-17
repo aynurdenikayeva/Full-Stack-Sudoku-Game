@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="az">
 <head>
     <meta charset="utf-8" />
@@ -92,42 +91,41 @@
             <!-- Naviqasiya -->
             <nav class="site-nav" id="siteNav">
 
-                <a class="nav-link-custom"
+                <a class="nav-link-custom @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")"
                    asp-controller="Home"
                    asp-action="Index">
                     Ana səhifə
                 </a>
 
-                <a class="nav-link-custom"
+                <a class="nav-link-custom @(ViewContext.RouteData.Values["controller"]?.ToString() == "About" ? "active" : "")"
                    asp-controller="About"
                    asp-action="Index">
                     Haqqımızda
                 </a>
 
-                <a class="nav-link-custom"
+                <a class="nav-link-custom @(ViewContext.RouteData.Values["controller"]?.ToString() == "FAQ" ? "active" : "")"
                    asp-controller="FAQ"
                    asp-action="Index">
                     FAQ
                 </a>
 
-                <a class="nav-link-custom"
+                <a class="nav-link-custom @(ViewContext.RouteData.Values["controller"]?.ToString() == "Blog" ? "active" : "")"
                    asp-controller="Blog"
                    asp-action="Index">
                     Bloq
                 </a>
 
-                <a class="nav-link-custom"
+                <a class="nav-link-custom @(ViewContext.RouteData.Values["controller"]?.ToString() == "Leaderboard" ? "active" : "")"
                    asp-controller="Leaderboard"
                    asp-action="Index">
                     Liderlər
                 </a>
 
-                <a class="nav-link-custom"
+                <a class="nav-link-custom @(ViewContext.RouteData.Values["controller"]?.ToString() == "Contact" ? "active" : "")"
                    asp-controller="Contact"
                    asp-action="Index">
                     Əlaqə
                 </a>
-
 
                 <!-- İstifadəçi hesabı -->
                 <div class="auth-links">

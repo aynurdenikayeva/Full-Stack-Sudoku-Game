@@ -1,6 +1,6 @@
 ﻿@model SudokuExamProject.ViewModels.LoginViewModel
 @{
-    ViewData["Title"] = "Qeydiyyat";
+    ViewData["Title"] = "Daxil ol";
     Layout = null;
 }
 
@@ -10,18 +10,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-
-    <!-- Yerli Bootstrap (İnternetsiz anında yüklənmə) -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
-    <!-- Tam optimallaşdırılmış sürətli xarici CSS -->
     <link rel="stylesheet" href="~/css/register.css" asp-append-version="true" />
 </head>
 <body>
 
     <main class="login-split-container">
 
-        <!-- GERİ QAYIT LİNKİ (KARTIN XARİCİNDƏ VƏ YAZI FORMASINDA) -->
         <div class="outer-back-link-wrapper">
             <a href="javascript:void(0);" onclick="history.back();" class="outer-back-link">
                 ← Əvvəlki səhifəyə qayıt
@@ -30,7 +26,6 @@
 
         <div class="login-main-card">
 
-            <!-- SOL HİSSƏ: AĞ QEYDİYYAT FORMU -->
             <section class="login-form-side">
                 <div class="brand-header">
                     <h1>Hesab yarat</h1>
@@ -89,7 +84,6 @@
         </div>
     </main>
 
-    <!-- Yerli sürətli skript bazası -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <partial name="_ValidationScriptsPartial" />

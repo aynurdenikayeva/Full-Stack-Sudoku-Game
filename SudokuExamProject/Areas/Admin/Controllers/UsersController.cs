@@ -11,7 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SudokuExamProject.Areas.Admin.Controllers
+namespace SudokuProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
@@ -253,7 +253,6 @@ namespace SudokuExamProject.Areas.Admin.Controllers
             }
 
             AppUser user = await _userManager.FindByIdAsync(model.Id);
-
             if (user == null)
             {
                 return NotFound();
@@ -263,6 +262,36 @@ namespace SudokuExamProject.Areas.Admin.Controllers
             {
                 ModelState.AddModelError("Role", "Seçilmiş rol sistemdə mövcud deyil.");
                 return View(model);
+            }
+
+            // YENİ ƏLAVƏ OLUNAN HİSSƏ: Şəkil yüklənməsi
+            if (model.FormFile != null && model.FormFile.Length > 0)
+            {
+                string uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+                if (!Directory.Exists(uploadFolder))
+                {
+                    Directory.CreateDirectory(uploadFolder);
+                }
+
+                // Köhnə şəkli serverdən silmək (əgər varsa)
+                if (!string.IsNullOrEmpty(user.Image))
+                {
+                    string oldFilePath = Path.Combine(_webHostEnvironment.WebRootPath, user.Image.TrimStart('/'));
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                }
+
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(Path.GetFileName(model.FormFile.FileName));
+                string filePath = Path.Combine(uploadFolder, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await model.FormFile.CopyToAsync(stream);
+                }
+
+                user.Image = "/uploads/" + fileName;
             }
 
             user.Name = model.Name.Trim();
@@ -275,49 +304,43 @@ namespace SudokuExamProject.Areas.Admin.Controllers
             user.Note = model.Note ?? string.Empty;
 
             var updateResult = await _userManager.UpdateAsync(user);
-
             if (!updateResult.Succeeded)
             {
                 foreach (var error in updateResult.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
-
                 return View(model);
             }
 
             // Köhnə rollar silinir, yeni rol təyin edilir.
             var oldRoles = await _userManager.GetRolesAsync(user);
-
             if (oldRoles.Any())
             {
                 var removeResult = await _userManager.RemoveFromRolesAsync(user, oldRoles);
-
                 if (!removeResult.Succeeded)
                 {
                     foreach (var error in removeResult.Errors)
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
-
                     return View(model);
                 }
             }
 
             var addRoleResult = await _userManager.AddToRoleAsync(user, model.Role);
-
             if (!addRoleResult.Succeeded)
             {
                 foreach (var error in addRoleResult.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
-
                 return View(model);
             }
 
             return RedirectToAction(nameof(Index));
         }
+
 
         // İstifadəçini silmək - GET
         [HttpGet]

@@ -39,7 +39,9 @@
                     <form asp-area="Admin"
                           asp-controller="Users"
                           asp-action="Update"
-                          method="post">
+                          method="post"
+                          enctype="multipart/form-data">
+                        
 
                         @Html.AntiForgeryToken()
 
@@ -186,6 +188,19 @@
 
                             <span asp-validation-for="AccountStatus"
                                   class="text-danger small"></span>
+                        </div>
+                        <!-- IMAGE ADD -->
+                        <div class="mb-4">
+                            <label asp-for="FormFile" class="form-label fw-semibold">
+                                Hesab sahibinin şəkli
+                            </label>
+
+                            <input asp-for="FormFile"
+                                   type="file"
+                                   class="form-control"
+                                   accept="image/*" />
+
+                            <span asp-validation-for="FormFile" class="text-danger small"></span>
                         </div>
 
                         <!-- NOTES -->

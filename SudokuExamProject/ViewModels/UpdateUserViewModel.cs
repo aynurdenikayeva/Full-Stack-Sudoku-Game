@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace SudokuExamProject.ViewModels
@@ -36,6 +37,9 @@ namespace SudokuExamProject.ViewModels
 
         [StringLength(1000)]
         public string? Note { get; set; }
+
+        public IFormFile? FormFile { get; set; }
+
 
 
     }

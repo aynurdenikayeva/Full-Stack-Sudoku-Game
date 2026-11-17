@@ -1,5 +1,4 @@
-﻿
-/* =========================================
+﻿/* =========================================
    SUDOKUGAME ADMIN THEME
    Contact page purple palette
 ========================================= */
@@ -436,18 +435,26 @@ body {
         padding: 26px;
     }
 
-    .admin-shell.sidebar-open .admin-sidebar {
+    body.sidebar-open .admin-sidebar {
         transform: translateX(0);
         box-shadow: 12px 0 35px rgba(48, 40, 79, 0.08);
     }
 
-    .admin-shell.sidebar-open .sidebar-backdrop {
+    .sidebar-backdrop {
         position: fixed;
         inset: 0;
         z-index: 999;
         display: block;
         background: rgba(48, 40, 79, 0.25);
         backdrop-filter: blur(2px);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    body.sidebar-open .sidebar-backdrop {
+        opacity: 1;
+        visibility: visible;
     }
 }
 
@@ -471,4 +478,224 @@ body {
         .admin-main h2 {
             font-size: 20px;
         }
+}
+
+.admin-main .flex-wrap {
+    flex-wrap: nowrap !important;
+}
+/* =========================================
+   USERS TABLE RESPONSIVE
+========================================= */
+
+.admin-main .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.admin-main .users-table {
+    width: 100%;
+    min-width: 1050px;
+    table-layout: auto;
+}
+
+    .admin-main .users-table th,
+    .admin-main .users-table td {
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+        .admin-main .users-table td:last-child {
+            min-width: 260px;
+        }
+
+    /* Action buttons */
+    .admin-main .users-table .flex-wrap {
+        display: flex;
+        flex-wrap: nowrap !important;
+        align-items: center;
+        gap: 6px;
+    }
+
+/* Tablet */
+@media (max-width: 991px) {
+    .admin-main {
+        min-width: 0;
+        width: 100%;
+    }
+
+        .admin-main .users-table {
+            min-width: 1000px;
+        }
+}
+
+/* Mobile */
+@media (max-width: 575px) {
+    .admin-main {
+        padding: 14px 10px;
+    }
+
+        .admin-main .card-body {
+            padding: 12px;
+        }
+
+        .admin-main .users-table {
+            min-width: 1000px;
+        }
+
+            .admin-main .users-table th,
+            .admin-main .users-table td {
+                padding: 12px 10px;
+                font-size: 12px;
+            }
+
+            .admin-main .users-table .btn {
+                padding: 6px 9px;
+                font-size: 11px;
+            }
+}
+
+/* =========================================
+   ADMIN NAVBAR — COMPACT & CLEAN
+========================================= */
+
+.admin-navbar {
+    height: 60px;
+    min-height: 60px;
+    padding: 0;
+    background: #fff;
+    border-bottom: 1px solid var(--admin-border);
+    box-shadow: 0 2px 8px rgba(48, 40, 79, 0.035);
+}
+
+    .admin-navbar .container-fluid {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    /* Sidebar toggle */
+    .admin-navbar .sidebar-toggle {
+        width: 35px;
+        height: 35px;
+        min-width: 35px;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        border: 1px solid var(--admin-border);
+        border-radius: 9px;
+        background: #fff;
+    }
+
+        .admin-navbar .sidebar-toggle span {
+            width: 15px;
+            height: 2px;
+            border-radius: 3px;
+            background: var(--admin-heading);
+        }
+
+    /* Search */
+    .admin-navbar .search-input {
+        width: 100%;
+        max-width: 290px;
+        height: 35px;
+        border: 1px solid var(--admin-border);
+        border-radius: 8px;
+        background: #faf9ff;
+        font-size: 12px;
+        box-shadow: none;
+    }
+
+        .admin-navbar .search-input:focus {
+            border-color: var(--admin-accent);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(121, 101, 232, .09);
+        }
+
+    /* Right actions */
+    .admin-navbar .navbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* Profile button */
+    .admin-navbar .profile-button {
+        min-height: 35px;
+        padding: 0 11px;
+        border: 1px solid var(--admin-border);
+        border-radius: 8px;
+        background: #fff;
+        color: var(--admin-heading);
+        font-size: 15px;
+        font-weight: 600;
+        box-shadow: none;
+    }
+
+        .admin-navbar .profile-button:hover {
+            background: var(--admin-soft);
+            color: var(--admin-accent-hover);
+        }
+
+    /* Dropdown */
+    .admin-navbar .dropdown-menu {
+        min-width: 175px;
+        margin-top: 8px !important;
+        padding: 6px;
+        border: 1px solid var(--admin-border);
+        border-radius: 9px;
+        box-shadow: 0 8px 22px rgba(48, 40, 79, .08);
+    }
+
+    .admin-navbar .dropdown-item {
+        padding: 8px 10px;
+        border-radius: 6px;
+        color: var(--admin-text);
+        font-size: 12px;
+    }
+
+        .admin-navbar .dropdown-item:hover {
+            background: var(--admin-soft);
+            color: var(--admin-accent-hover);
+        }
+
+/* Mobile */
+@media (max-width: 767.98px) {
+    .admin-navbar {
+        height: 54px;
+        min-height: 54px;
+    }
+
+        .admin-navbar .container-fluid {
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+            gap: 8px;
+        }
+
+        .admin-navbar .sidebar-toggle {
+            width: 33px;
+            height: 33px;
+            min-width: 33px;
+        }
+
+        .admin-navbar .navbar-actions {
+            gap: 5px;
+        }
+
+        .admin-navbar .profile-button {
+            min-height: 33px;
+            padding: 0 9px;
+            font-size: 15px;
+            width: 164px;
+        }
+}
+/* Hide top navbar when mobile sidebar is open */
+@media (max-width: 991px) {
+    body.sidebar-open .admin-navbar {
+        display: none !important;
+    }
 }

@@ -11,17 +11,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
 
-    <!-- Yerli Bootstrap (İnternetsiz anında yüklənmə) -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
-    <!-- Tam optimallaşdırılmış sürətli xarici CSS -->
     <link rel="stylesheet" href="~/css/register.css" asp-append-version="true" />
 </head>
 <body>
 
     <main class="login-split-container">
 
-        <!-- GERİ QAYIT LİNKİ (KARTIN XARİCİNDƏ VƏ YAZI FORMASINDA) -->
         <div class="outer-back-link-wrapper">
             <a href="javascript:void(0);" onclick="history.back();" class="outer-back-link">
                 ← Əvvəlki səhifəyə qayıt
@@ -30,7 +27,6 @@
 
         <div class="login-main-card">
 
-            <!-- SOL HİSSƏ: AĞ QEYDİYYAT FORMU -->
             <section class="login-form-side">
                 <div class="brand-header">
                     <h1>Hesab yarat</h1>
@@ -76,23 +72,13 @@
                     <button type="submit" class="register-button">Qeydiyyatdan keç</button>
                 </form>
 
-                <div class="social-divider">və ya</div>
-                <div class="social-group">
-                    <a asp-controller="Account" asp-action="ExternalLogin" asp-route-provider="Google" class="btn-social btn-google">
-                        <span class="icon-google-local"></span> Google ilə davam et
-                    </a>
 
-                    <a asp-controller="Account" asp-action="ExternalLogin" asp-route-provider="GitHub" class="btn-social btn-github">
-                        <span class="icon-github-local"></span> GitHub ilə davam et
-                    </a>
-                </div>
 
                 <div class="card-footer-links">
                     <p>Artıq hesabın var? <a asp-controller="SignIn" asp-action="Index">Daxil ol</a></p>
                 </div>
             </section>
 
-            <!-- SAĞ HİSSƏ: ŞƏKİL SAHƏSİ -->
             <section class="login-image-side">
                 <img src="~/images/sudoku-register.jpg" alt="Qeydiyyat İllüstrasiyası" class="custom-register-img" />
             </section>
@@ -100,7 +86,6 @@
         </div>
     </main>
 
-    <!-- Yerli sürətli skript bazası -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <partial name="_ValidationScriptsPartial" />

@@ -42,6 +42,7 @@ body:has(.home-page) {
     .home-page a:hover {
         text-decoration: none;
     }
+
     .home-page .hero-section {
         position: relative;
         isolation: isolate;
@@ -49,11 +50,14 @@ body:has(.home-page) {
         display: flex;
         align-items: center;
         min-height: 480px;
-        margin: 30px 10px 45px;
-        padding: 60px 35px;
+        width: 100%;
+        max-width: 1320px;
+        margin: 30px auto 45px;
+        padding: 60px 40px;
         border-radius: 28px;
         background: radial-gradient(circle at 82% 30%, rgba(192, 178, 255, 0.45), transparent 32%), radial-gradient(circle at 5% 100%, rgba(225, 219, 255, 0.42), transparent 35%), linear-gradient(120deg, #f0edff 0%, #fbfaff 52%, #eeebff 100%);
     }
+
         .home-page .hero-section::before {
             content: "";
             position: absolute;
@@ -67,6 +71,7 @@ body:has(.home-page) {
             background: rgba(151, 132, 255, 0.06);
             pointer-events: none;
         }
+
         .home-page .hero-section::after {
             content: "9 × 9";
             position: absolute;
@@ -85,6 +90,7 @@ body:has(.home-page) {
             transform: rotate(-12deg);
             pointer-events: none;
         }
+
     .home-page .hero-container {
         position: relative;
         z-index: 1;
@@ -93,7 +99,8 @@ body:has(.home-page) {
         justify-content: space-between;
         gap: 40px;
         width: 100%;
-        max-width: 1250px;
+        max-width: 100%;
+        padding: 0;
     }
 
     .home-page .hero-content {
@@ -144,6 +151,7 @@ body:has(.home-page) {
         font-size: 16px;
         line-height: 1.9;
     }
+
     .home-page .hero-button {
         display: inline-flex;
         align-items: center;
@@ -204,6 +212,7 @@ body:has(.home-page) {
             color: #fff;
             font-size: 11px;
         }
+
     .home-page .hero-image-wrapper {
         position: relative;
         display: flex;
@@ -235,6 +244,7 @@ body:has(.home-page) {
         filter: drop-shadow(0 18px 25px rgba(75, 57, 155, 0.14));
         animation: sudokuFloat 4s ease-in-out infinite;
     }
+
     .home-page .hero-floating-card {
         position: absolute;
         z-index: 3;
@@ -347,8 +357,8 @@ body:has(.home-page) {
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
     align-items: start;
     gap: 30px;
-    width: 70%; /* yalnız masaüstü; tablet və mobildə 100% */
-    max-width: none;
+    width: 70%;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 32px;
     border: 1px solid rgba(220, 216, 255, 0.9);
@@ -913,8 +923,11 @@ body:has(.home-page) {
 
 .home-page .difficulty-section {
     width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
     padding: 15px 0 35px;
 }
+
 
 .home-page .difficulty-grid {
     display: grid;
@@ -1117,13 +1130,6 @@ body:has(.home-page) {
         padding-left: 22px;
     }
 
-        /* Hero */
-        .home-page .hero-section {
-            width: calc(100% + 44px);
-            min-height: 340px;
-            margin: 20px -22px 35px;
-            padding: 42px 30px;
-        }
 
         .home-page .hero-container {
             flex-direction: column;

@@ -1440,3 +1440,17 @@ a {
     .profile-logout-btn:hover {
         background: #fff1f1;
     }
+/* =========================================
+   ACTIVE NAVIGATION LINK
+========================================= */
+
+.site-nav .nav-link-custom.active {
+    color: var(--layout-primary);
+    background: var(--layout-primary-light);
+    font-weight: 700;
+}
+
+    .site-nav .nav-link-custom.active:hover {
+        color: var(--layout-primary-dark);
+        background: #e3eaff;
+    }
