@@ -189,4 +189,10 @@ This project was developed to strengthen practical skills in full-stack web deve
 
 ---
 
+## 🚀 Live Demo
+
+The application is built with **ASP.NET Core 9.0** and deployed on MonsterASP.NET.
+
+🌐 **Live Website:** [AXIOMIX – Sudoku Game](https://axiomix-sudoku.runasp.net/)
+
 ⭐ If you find this project interesting, feel free to explore the repository!
