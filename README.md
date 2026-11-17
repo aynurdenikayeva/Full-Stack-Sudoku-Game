@@ -142,7 +142,9 @@ Replace `YOUR_SERVER` with your SQL Server instance name.
 If migrations are configured in the project, run:
 
 ```bash
-dotnet ef database update
+add-migration init
+add-migration CreateTable
+update-database
 ```
 
 ### 5. Run the application
