@@ -72,6 +72,7 @@ SudokuExamProject/
 ├── DataAccessLayer/
 ├── Models/
 ├── ViewModels/
+├── Helpers/
 ├── Services/
 ├── Views/
 │   ├── Home/
@@ -102,6 +103,7 @@ Make sure you have installed:
 - .NET SDK
 - Visual Studio
 - SQL Server
+- Postre Sql
 - SQL Server Management Studio (SSMS)
 
 ### 1. Clone the repository
